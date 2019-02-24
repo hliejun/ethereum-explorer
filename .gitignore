@@ -1,0 +1,15 @@
+### OS Generated Files ###
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+._*
+Thumbs.db
+ehthumbs.db
+
+### Visual Studio Code ###
+.history
+.vscode/*
+
+### NodeJS Modules ###
+/node_modules
