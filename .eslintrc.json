@@ -1,0 +1,44 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "plugins": ["import", "jsx-a11y", "prettier", "react", "react-hooks"],
+  "globals": {
+    "Atomics": "readable",
+    "Blob": true,
+    "FileReader": true,
+    "FormData": true,
+    "SharedArrayBuffer": "readable",
+    "document": true,
+    "localStorage": true,
+    "navigator": true,
+    "window": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "import/imports-first": ["error", "absolute-first"],
+    "import/newline-after-import": "error",
+    "indent": ["error", "tab"],
+    "linebreak-style": ["error", "unix"],
+    "no-underscore-dangle": 0,
+    "quotes": ["error", "single"],
+    "react-hooks/rules-of-hooks": "error",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "react/prop-types": 0
+  }
+}
