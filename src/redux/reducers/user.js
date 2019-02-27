@@ -1,73 +1,52 @@
-import {
-	USER_UPDATE_STARTED,
-	USER_UPDATE_SUCCESS,
-	USER_UPDATE_ERROR,
-	USER_SET_NAME_STARTED,
-	USER_SET_NAME_SUCCESS,
-	USER_SET_NAME_ERROR,
-	USER_SET_AVATAR_STARTED,
-	USER_SET_AVATAR_SUCCESS,
-	USER_SET_AVATAR_ERROR,
-	USER_SET_EMAIL_STARTED,
-	USER_SET_EMAIL_SUCCESS,
-	USER_SET_EMAIL_ERROR,
-	USER_SET_NUMBER_STARTED,
-	USER_SET_NUMBER_SUCCESS,
-	USER_SET_NUMBER_ERROR,
-	USER_SET_COUNTRY_STARTED,
-	USER_SET_COUNTRY_SUCCESS,
-	USER_SET_COUNTRY_ERROR,
-	USER_SET_ADDRESS_STARTED,
-	USER_SET_ADDRESS_SUCCESS,
-	USER_SET_ADDRESS_ERROR,
-	USER_CLEAR_ALL
-} from '../actionTypes';
+import { USER } from '../actions/types';
+
+// TODO: make OTP opt-in
 
 const initialState = {
-	id: null,
-	isLoading: false,
-	error: null,
 	avatar: {
-		url: null,
+		error: null,
 		isLoading: false,
-		error: null
+		url: null
 	},
 	country: {
 		code: null,
-		isLoading: false,
-		error: null
+		error: null,
+		isLoading: false
 	},
 	email: {
 		address: null,
-		isLoading: false,
-		error: null
+		error: null,
+		isLoading: false
 	},
+	error: null,
 	ethAccount: {
 		address: null,
-		isLoading: false,
-		error: null
+		error: null,
+		isLoading: false
 	},
+	id: null,
+	isLoading: false,
 	mobile: {
-		number: null,
+		error: null,
 		isLoading: false,
-		error: null
+		number: null
 	},
 	name: {
-		preferred: null,
+		error: null,
 		isLoading: false,
-		error: null
+		preferred: null
 	}
 };
 
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
-	case USER_UPDATE_STARTED: {
+	case USER.UPDATE_STARTED: {
 		return {
 			...state,
 			isLoading: true
 		};
 	}
-	case USER_UPDATE_SUCCESS: {
+	case USER.UPDATE_SUCCESS: {
 		const {
 			avatar,
 			country,
@@ -107,7 +86,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_UPDATE_ERROR: {
+	case USER.UPDATE_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -115,7 +94,7 @@ const userReducer = (state = initialState, action) => {
 			isLoading: false
 		};
 	}
-	case USER_SET_NAME_STARTED: {
+	case USER.SET_NAME_STARTED: {
 		return {
 			...state,
 			name: {
@@ -124,7 +103,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_NAME_SUCCESS: {
+	case USER.SET_NAME_SUCCESS: {
 		const { name } = action.payload;
 		return {
 			...state,
@@ -135,7 +114,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_NAME_ERROR: {
+	case USER.SET_NAME_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -146,7 +125,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_AVATAR_STARTED: {
+	case USER.SET_AVATAR_STARTED: {
 		return {
 			...state,
 			avatar: {
@@ -155,7 +134,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_AVATAR_SUCCESS: {
+	case USER.SET_AVATAR_SUCCESS: {
 		const { avatar } = action.payload;
 		return {
 			...state,
@@ -166,7 +145,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_AVATAR_ERROR: {
+	case USER.SET_AVATAR_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -178,7 +157,7 @@ const userReducer = (state = initialState, action) => {
 		};
 	}
 
-	case USER_SET_EMAIL_STARTED: {
+	case USER.SET_EMAIL_STARTED: {
 		return {
 			...state,
 			email: {
@@ -187,7 +166,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_EMAIL_SUCCESS: {
+	case USER.SET_EMAIL_SUCCESS: {
 		const { email } = action.payload;
 		return {
 			...state,
@@ -198,7 +177,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_EMAIL_ERROR: {
+	case USER.SET_EMAIL_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -209,7 +188,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_NUMBER_STARTED: {
+	case USER.SET_NUMBER_STARTED: {
 		return {
 			...state,
 			mobile: {
@@ -218,7 +197,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_NUMBER_SUCCESS: {
+	case USER.SET_NUMBER_SUCCESS: {
 		const { number } = action.payload;
 		return {
 			...state,
@@ -229,7 +208,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_NUMBER_ERROR: {
+	case USER.SET_NUMBER_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -240,7 +219,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_COUNTRY_STARTED: {
+	case USER.SET_COUNTRY_STARTED: {
 		return {
 			...state,
 			country: {
@@ -249,7 +228,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_COUNTRY_SUCCESS: {
+	case USER.SET_COUNTRY_SUCCESS: {
 		const { country } = action.payload;
 		return {
 			...state,
@@ -260,7 +239,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_COUNTRY_ERROR: {
+	case USER.SET_COUNTRY_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -271,7 +250,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_ADDRESS_STARTED: {
+	case USER.SET_ADDRESS_STARTED: {
 		return {
 			...state,
 			ethAccount: {
@@ -280,7 +259,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_ADDRESS_SUCCESS: {
+	case USER.SET_ADDRESS_SUCCESS: {
 		const { address } = action.payload;
 		return {
 			...state,
@@ -291,7 +270,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_SET_ADDRESS_ERROR: {
+	case USER.SET_ADDRESS_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -302,7 +281,7 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case USER_CLEAR_ALL: {
+	case USER.CLEAR_ALL: {
 		return initialState;
 	}
 	default:

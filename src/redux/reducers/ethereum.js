@@ -1,51 +1,40 @@
-import {
-	ETHEREUM_UPDATE_BALANCE_STARTED,
-	ETHEREUM_UPDATE_BALANCE_SUCCESS,
-	ETHEREUM_UPDATE_BALANCE_ERROR,
-	ETHEREUM_CLEAR_BALANCE,
-	ETHEREUM_UPDATE_TRANSACTIONS_STARTED,
-	ETHEREUM_UPDATE_TRANSACTIONS_SUCCESS,
-	ETHEREUM_UPDATE_TRANSACTIONS_ERROR,
-	ETHEREUM_PAGINATE_TRANSACTIONS_STARTED,
-	ETHEREUM_PAGINATE_TRANSACTIONS_SUCCESS,
-	ETHEREUM_PAGINATE_TRANSACTIONS_ERROR,
-	ETHEREUM_CLEAR_TRANSACTIONS
-} from '../actionTypes';
+import { ETHEREUM } from '../actions/types';
 
 /* Shape of Transaction:
  *  [id]: {
- *		type,
- *		status,
- *		date,
  *		confirmations,
- *		transactionAddress,
+ *		date,
  *		ethAmount,
- *		gasFee
+ *		gasFee,
+ *		status,
+ *		transactionAddress,
+ *		type
  *	}
  */
 
 const initialState = {
 	balance: {
-		value: null,
+		error: null,
 		isLoading: false,
-		error: null
+		value: null
 	},
 	transactions: {
-		list: [],
 		byIds: {},
+		error: null,
 		isLoading: false,
-		error: null
+		list: []
 	},
 	pagination: {
+		error: null,
 		isLoading: false,
 		lastPage: 0,
-		error: null
+		total: 0
 	}
 };
 
 const ethereumReducer = (state = initialState, action) => {
 	switch (action.type) {
-	case ETHEREUM_UPDATE_BALANCE_STARTED: {
+	case ETHEREUM.UPDATE_BALANCE_STARTED: {
 		return {
 			...state,
 			balance: {
@@ -54,7 +43,7 @@ const ethereumReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case ETHEREUM_UPDATE_BALANCE_SUCCESS: {
+	case ETHEREUM.UPDATE_BALANCE_SUCCESS: {
 		const { balance } = action.payload;
 		return {
 			...state,
@@ -65,7 +54,7 @@ const ethereumReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case ETHEREUM_UPDATE_BALANCE_ERROR: {
+	case ETHEREUM.UPDATE_BALANCE_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -76,7 +65,7 @@ const ethereumReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case ETHEREUM_CLEAR_BALANCE: {
+	case ETHEREUM.CLEAR_BALANCE: {
 		return {
 			...state,
 			balance: {
@@ -85,38 +74,7 @@ const ethereumReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case ETHEREUM_UPDATE_TRANSACTIONS_STARTED: {
-		return {
-			...state,
-			transactions: {
-				...state.transactions,
-				isLoading: true
-			}
-		};
-	}
-	case ETHEREUM_UPDATE_TRANSACTIONS_SUCCESS: {
-		const { transactions } = action.payload;
-		return {
-			...state,
-			transactions: {
-				...state.transactions,
-				isLoading: false,
-				list: transactions
-			}
-		};
-	}
-	case ETHEREUM_UPDATE_TRANSACTIONS_ERROR: {
-		const { error } = action.payload;
-		return {
-			...state,
-			transactions: {
-				...state.transactions,
-				error,
-				isLoading: false
-			}
-		};
-	}
-	case ETHEREUM_PAGINATE_TRANSACTIONS_STARTED: {
+	case ETHEREUM.PAGINATE_TRANSACTIONS_STARTED: {
 		return {
 			...state,
 			pagination: {
@@ -125,8 +83,8 @@ const ethereumReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case ETHEREUM_PAGINATE_TRANSACTIONS_SUCCESS: {
-		const { transactions, byIds, page } = action.payload;
+	case ETHEREUM.PAGINATE_TRANSACTIONS_SUCCESS: {
+		const { transactions, byIds, page, total } = action.payload;
 		return {
 			...state,
 			transactions: {
@@ -139,12 +97,13 @@ const ethereumReducer = (state = initialState, action) => {
 			},
 			pagination: {
 				...state.pagination,
+				total,
 				isLoading: false,
 				lastPage: page
 			}
 		};
 	}
-	case ETHEREUM_PAGINATE_TRANSACTIONS_ERROR: {
+	case ETHEREUM.PAGINATE_TRANSACTIONS_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
@@ -155,7 +114,7 @@ const ethereumReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case ETHEREUM_CLEAR_TRANSACTIONS: {
+	case ETHEREUM.CLEAR_TRANSACTIONS: {
 		return {
 			...state,
 			transactions: {
@@ -165,7 +124,8 @@ const ethereumReducer = (state = initialState, action) => {
 			},
 			pagination: {
 				...state.pagination,
-				lastPage: 0
+				lastPage: 0,
+				total: 0
 			}
 		};
 	}

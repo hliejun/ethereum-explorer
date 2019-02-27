@@ -8,7 +8,9 @@ import Onboarding from './scenes/Onboarding';
 import Register from './scenes/Register';
 import Settings from './scenes/Settings';
 import SignIn from './scenes/SignIn';
-import Splash from './scenes/Splash';
+
+// import Splash from './scenes/Splash';
+
 import Transaction from './scenes/Transaction';
 import TransactionList from './scenes/TransactionList';
 
@@ -22,7 +24,10 @@ const App = ({ store }) => (
 				<Route exact path="/settings/:item?" component={Settings} />
 				<Route exact path="/list/:filter?" component={TransactionList} />
 				<Route exact path="/transaction/:id?" component={Transaction} />
-				<Route exact path="/" component={Splash} />
+
+				{/* <Route exact path="/" component={Splash} /> */}
+				<Route exact path="/" component={TransactionList} />
+
 				<Route component={Missing} />
 			</Switch>
 		</Router>

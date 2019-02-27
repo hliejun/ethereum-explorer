@@ -1,14 +1,19 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 import combinedReducer from './reducers';
 import storage from './storage';
 
 const persistedSessionState = storage.session.loadState();
 const persistedLocalState = storage.local.loadState();
-const store = createStore(combinedReducer, {
-	...persistedLocalState,
-	...persistedSessionState
-});
+const store = createStore(
+	combinedReducer,
+	{
+		...persistedLocalState,
+		...persistedSessionState
+	},
+	applyMiddleware(thunk)
+);
 
 store.subscribe(() => {
 	const { settings, ...sessionData } = store.getState();

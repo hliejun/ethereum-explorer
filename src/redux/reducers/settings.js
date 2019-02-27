@@ -1,8 +1,4 @@
-import {
-	SETTINGS_SET_CURRENCY,
-	SETTINGS_TOGGLE_NIGHT_MODE,
-	SETTINGS_RESET
-} from '../actionTypes';
+import { SETTINGS } from '../actions/types';
 
 const initialState = {
 	currency: 'SGD', // USD, JPY, SGD, KRW, GBP, CNY
@@ -11,21 +7,20 @@ const initialState = {
 
 const settingsReducer = (state = initialState, action) => {
 	switch (action.type) {
-	case SETTINGS_SET_CURRENCY: {
+	case SETTINGS.SET_CURRENCY: {
 		const { currency } = action.payload;
 		return {
 			...state,
 			currency
 		};
 	}
-	case SETTINGS_TOGGLE_NIGHT_MODE: {
-		const { nightMode } = action.payload;
+	case SETTINGS.TOGGLE_NIGHT_MODE: {
 		return {
 			...state,
-			nightMode: !!nightMode
+			nightMode: !state.nightMode
 		};
 	}
-	case SETTINGS_RESET: {
+	case SETTINGS.RESET: {
 		return initialState;
 	}
 	default:

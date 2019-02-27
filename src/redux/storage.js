@@ -1,6 +1,8 @@
 const KEY_LOCAL_STATE = 'localState';
 const KEY_SESSION_STATE = 'sessionState';
 
+// TODO: Encrypt sensitive data (end-to-end incl. storage)
+
 const loadStateFromSession = () => {
 	try {
 		const serialisedState = sessionStorage.getItem(KEY_SESSION_STATE);
