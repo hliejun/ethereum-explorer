@@ -1,0 +1,28 @@
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.414;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.monotype {
+  font-family: 'Roboto Mono', sans-serif;
+}
+
+@media only screen and (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
+}

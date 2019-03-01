@@ -15,6 +15,7 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.3",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
@@ -42,16 +43,20 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "@svgr/webpack": "^4.1.0",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-hot-loader": "^4.7.0",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
+    "react-waypoint": "^9.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "webfontloader": "^1.6.28"
   },
   "husky": {
     "hooks": {

@@ -1,0 +1,15 @@
+$modal-mask: rgba(black, 0.5);
+
+#modal-root {
+  position: relative;
+  z-index: 999;
+}
+
+.modal {
+  background-color: $modal-mask;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}

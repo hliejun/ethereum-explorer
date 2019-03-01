@@ -1,0 +1,70 @@
+import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+
+import Home from './scenes/Home';
+import Missing from './scenes/Missing';
+import Profile from './scenes/Profile';
+import Settings from './scenes/Settings';
+import Transaction from './scenes/Transaction';
+import TransactionList from './scenes/TransactionList';
+
+import AppBar from './common/AppBar';
+
+const attachOptions = Page => options => props => (
+	<Page {...options} {...props} />
+);
+
+const Container = ({ match }) => {
+	const [backLink, setBackLink] = useState(false);
+	const [pageTitle, setPageTitle] = useState('Tx');
+	const [pageSubtitle, setPageSubtitle] = useState(null);
+	const [pageOptions, setPageOptions] = useState([]);
+
+	const options = {
+		setBackLink,
+		setTitle: setPageTitle,
+		setSubtitle: setPageSubtitle,
+		setOptions: setPageOptions
+	};
+
+	return (
+		<div className="container">
+			<AppBar
+				useBackLink={backLink}
+				options={pageOptions}
+				subtitle={pageSubtitle}
+				title={pageTitle}
+			/>
+			<Switch>
+				<Route
+					exact
+					path={`${match.url}/`}
+					render={attachOptions(Home)(options)}
+				/>
+				<Route
+					exact
+					path={`${match.url}/profile/:mode?/:item?`}
+					render={attachOptions(Profile)(options)}
+				/>
+				<Route
+					exact
+					path={`${match.url}/settings/:mode?/:item?`}
+					render={attachOptions(Settings)(options)}
+				/>
+				<Route
+					exact
+					path={`${match.url}/portfolio/:filter?/:sort?`}
+					render={attachOptions(TransactionList)(options)}
+				/>
+				<Route
+					exact
+					path={`${match.url}/transaction/:id`}
+					render={attachOptions(Transaction)(options)}
+				/>
+				<Route component={Missing} />
+			</Switch>
+		</div>
+	);
+};
+
+export default Container;
