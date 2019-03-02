@@ -7,6 +7,12 @@ import store from './redux/store';
 
 import './assets/styles.scss';
 
+// TODO: Props check
+
+// TODO: Classnames passthrough
+
+// TODO: Jest specs
+
 WebFont.load({
 	google: {
 		families: [

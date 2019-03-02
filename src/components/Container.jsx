@@ -3,10 +3,10 @@ import { Route, Switch } from 'react-router-dom';
 
 import Home from './scenes/Home';
 import Missing from './scenes/Missing';
+import Portfolio from './scenes/Portfolio';
 import Profile from './scenes/Profile';
 import Settings from './scenes/Settings';
 import Transaction from './scenes/Transaction';
-import TransactionList from './scenes/TransactionList';
 
 import AppBar from './common/AppBar';
 
@@ -20,11 +20,19 @@ const Container = ({ match }) => {
 	const [pageSubtitle, setPageSubtitle] = useState(null);
 	const [pageOptions, setPageOptions] = useState([]);
 
+	const resetAppBar = () => {
+		setBackLink(false);
+		setPageTitle('Tx');
+		setPageSubtitle(null);
+		setPageOptions([]);
+	};
+
 	const options = {
 		setBackLink,
 		setTitle: setPageTitle,
 		setSubtitle: setPageSubtitle,
-		setOptions: setPageOptions
+		setOptions: setPageOptions,
+		reset: resetAppBar
 	};
 
 	return (
@@ -54,7 +62,7 @@ const Container = ({ match }) => {
 				<Route
 					exact
 					path={`${match.url}/portfolio/:filter?/:sort?`}
-					render={attachOptions(TransactionList)(options)}
+					render={attachOptions(Portfolio)(options)}
 				/>
 				<Route
 					exact

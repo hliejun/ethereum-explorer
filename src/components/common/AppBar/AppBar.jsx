@@ -1,4 +1,5 @@
 import React from 'react';
+import clns from 'classnames';
 
 import { RouterContext } from '../../Router';
 import Modal from '../Modal';
@@ -30,7 +31,7 @@ class AppBar extends React.Component {
 
   render() {
   	const { history } = this.context;
-  	const { useBackLink, title, subtitle, options } = this.props;
+  	const { useBackLink, title, subtitle, options, className } = this.props;
   	const { showMenu } = this.state;
 
   	const Glyph = useBackLink ? Back : Menu;
@@ -61,7 +62,7 @@ class AppBar extends React.Component {
   	);
 
   	return (
-  		<div className="app-bar app-bar--normal">
+  		<div className={clns('app-bar', 'app-bar--normal', className)}>
   			{leftButton}
   			<div className="app-bar__title-set">
   				<span className="title-set__title">{title}</span>

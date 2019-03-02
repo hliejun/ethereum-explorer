@@ -1,0 +1,16 @@
+@import '../../../assets/mixins';
+
+.currency {
+  @include ellipsize-content('.currency__amount');
+  display: flex;
+  align-items: flex-start;
+}
+
+.currency__code {
+  font-size: 0.5em;
+  margin-right: 0.25em;
+}
+
+.currency__amount {
+  font-size: 1em;
+}

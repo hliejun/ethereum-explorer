@@ -1,3 +1,5 @@
+@import '../../../assets/mixins';
+
 $side-bar-background: white; // black
 $side-bar-labels: #202124; // white
 $side-bar-content: rgba(#202124, 0.75); // #5f6368
@@ -5,7 +7,6 @@ $side-bar-background-hover: rgba(black, 0.1);
 $side-bar-content-hover: #202124; // #5f6368
 $side-bar-glyph-tint: #202124; // white
 $side-bar-hover: #202124; // white
-$side-bar-shadow: 2px 4px 10px rgba(black, 0.2); // 0 2px 4px -1px rgba(black, 0.2), 0 4px 5px 0 rgba(black, 0.14), 0 1px 10px 0 rgba(black, 0.12);
 $side-bar-border: rgba(black, 0.12);
 
 .app-bar__menu-portal {
@@ -23,6 +24,7 @@ $side-bar-border: rgba(black, 0.12);
 }
 
 .side-menu {
+  @include elevation(3);
   background-color: $side-bar-background;
   border-right: 1px solid $side-bar-border;
   font-size: 1em;
@@ -83,7 +85,7 @@ $side-bar-border: rgba(black, 0.12);
   width: calc(100% - 4.8em);
 }
 
-.section__label {
+.side-menu__section-label {
   color: $side-bar-labels;
   display: block;
   font-size: 0.8em;
@@ -91,6 +93,7 @@ $side-bar-border: rgba(black, 0.12);
 }
 
 .side-menu__item {
+  @include ellipsize-content('span');
   align-items: center;
   background-color: transparent;
   border-radius: 0.25em;
@@ -101,7 +104,6 @@ $side-bar-border: rgba(black, 0.12);
   fill: $side-bar-content;
   font-size: 1em;
   height: 3em;
-  min-width: 0;
   text-align: center;
   width: 100%;
 }
@@ -115,14 +117,12 @@ $side-bar-border: rgba(black, 0.12);
 .item__glyph {
   fill: inherit;
   margin-right: 1em;
-  min-width: 1.8em;
+  min-width: 1.5em;
+  min-height: 1.5em;
 }
 
 .item__label {
   font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 @media only screen and (min-width: 768px) {
