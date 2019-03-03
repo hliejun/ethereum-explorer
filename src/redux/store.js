@@ -6,6 +6,7 @@ import storage from './storage';
 
 const persistedSessionState = storage.session.loadState();
 const persistedLocalState = storage.local.loadState();
+
 const store = createStore(
 	combinedReducer,
 	{

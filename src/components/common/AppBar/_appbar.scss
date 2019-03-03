@@ -1,9 +1,8 @@
 @import '../../../assets/mixins';
-@import './_sidemenu';
 
-$app-bar-background: white; // black
-$app-bar-content: #202124; // white
-$side-bar-background-hover: rgba(black, 0.1);
+$app-bar-background-hover: rgba(black, 0.1);
+$app-bar-background: white;
+$app-bar-content: #202124;
 
 .app-bar {
   @include elevation(2);
@@ -12,7 +11,7 @@ $side-bar-background-hover: rgba(black, 0.1);
   display: flex;
   left: 0;
   padding: 1em 0 1em;
-  position: sticky;
+  position: fixed;
   right: 0;
   top: 0;
   width: 100%;
@@ -45,7 +44,7 @@ $side-bar-background-hover: rgba(black, 0.1);
 }
 
 .app-bar__button:hover {
-  background-color: $side-bar-background-hover;
+  background-color: $app-bar-background-hover;
 }
 
 .app-bar__button--option {
@@ -54,8 +53,8 @@ $side-bar-background-hover: rgba(black, 0.1);
 
 .app-bar__button-glyph {
   fill: $app-bar-content;
-  min-width: 1.75em;
   min-height: 1.75em;
+  min-width: 1.75em;
 }
 
 .app-bar__title-set {

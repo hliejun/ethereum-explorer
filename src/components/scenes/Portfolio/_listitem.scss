@@ -1,0 +1,104 @@
+@import '../../../assets/mixins';
+
+$list-item-background-hover: rgba(black, 0.05);
+$list-item-background: white;
+$list-item-content-hover: #202124;
+$list-item-content: #202124;
+$list-item-hint-hover: #202124;
+$list-item-hint: #5f6368;
+
+.transaction-list-item {
+  @include card;
+  @include elevation(1);
+  background-color: $list-item-background;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.transaction-list-item:hover {
+  @include elevation(2);
+  background-color: $list-item-background-hover;
+}
+
+.transaction-list-item__header {
+  align-items: flex-start;
+  color: $list-item-hint;
+  display: flex;
+  fill: $list-item-hint;
+  font-size: 0.85em;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+}
+
+.transaction-list-item__overline {
+  @include ellipsize-content('span');
+  align-items: center;
+  display: flex;
+  flex-shrink: 1;
+  justify-content: flex-start;
+  margin-right: 1em;
+  .overline__glyph {
+    min-height: 0.85em;
+    min-width: 0.85em;
+  }
+  .overline__label {
+    margin-left: 0.25em;
+  }
+}
+
+.transaction-list-item__meta {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.transaction-list-item__currencies {
+  align-items: center;
+  display: flex;
+  font-size: 1.2em;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.transaction-list-item__amount {
+  color: $list-item-content;
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+.transaction-list-item__separator {
+  @include ellipsize;
+  color: $list-item-hint;
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 0 0.5em;
+}
+
+.transaction-list-item__ethereum {
+  color: $list-item-content;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.transaction-list-item__section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em;
+}
+
+.transaction-list-item__info-label {
+  color: $list-item-hint;
+  font-size: 0.6em;
+}
+
+.transaction-list-item__address {
+  @include ellipsize;
+  color: $list-item-content;
+  font-size: 0.85em;
+}
+
+@media only screen and (min-width: 768px) {
+  .transaction-list-item {
+    max-width: 400px;
+  }
+}

@@ -7,9 +7,13 @@ import store from './redux/store';
 
 import './assets/styles.scss';
 
+// TODO: Move props destructuring for func comp. to param
+
 // TODO: Props check
 
-// TODO: Classnames passthrough
+// TODO: Optimise with pure / memoised components
+
+// TODO: Use lazy + suspense to split unshared components
 
 // TODO: Jest specs
 

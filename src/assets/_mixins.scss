@@ -1,3 +1,6 @@
+$card-background: white;
+$card-content: #202124;
+
 @mixin card {
   background: $card-background;
   border-radius: 0.125rem;

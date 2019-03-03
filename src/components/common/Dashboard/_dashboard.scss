@@ -1,8 +1,4 @@
 @import '../../../assets/mixins';
-@import './currency';
-
-$card-background: white;
-$card-content: #202124;
 
 .dashboard {
   @include card;
@@ -42,20 +38,20 @@ $card-content: #202124;
 }
 
 .dashboard__sub-section-header {
-  width: 100%;
   align-items: center;
   display: flex;
   justify-content: flex-start;
+  width: 100%;
 }
 
 .dashboard__sub-section-label {
-  font-size: 0.6em;
+  font-size: 0.7em;
   margin-right: 0.25em;
 }
 
 .dashboard__sub-section-glyph {
-  min-width: 0.6em;
-  min-height: 0.6em;
+  min-height: 0.7em;
+  min-width: 0.7em;
 }
 
 .dashboard__sub-section-currency {
@@ -70,10 +66,4 @@ $card-content: #202124;
   .dashboard {
     max-width: 400px;
   }
-}
-
-@media only screen and (max-width: 767px) {
-}
-
-@media only screen and (max-width: 767px) and (orientation: portrait) {
 }

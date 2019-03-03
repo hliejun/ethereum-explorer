@@ -1,13 +1,13 @@
 @import '../../../assets/mixins';
 
-$side-bar-background: white; // black
-$side-bar-labels: #202124; // white
-$side-bar-content: rgba(#202124, 0.75); // #5f6368
 $side-bar-background-hover: rgba(black, 0.1);
-$side-bar-content-hover: #202124; // #5f6368
-$side-bar-glyph-tint: #202124; // white
-$side-bar-hover: #202124; // white
+$side-bar-background: white;
 $side-bar-border: rgba(black, 0.12);
+$side-bar-content-hover: #202124;
+$side-bar-content: rgba(#202124, 0.75);
+$side-bar-glyph-tint: #202124;
+$side-bar-hover: #202124;
+$side-bar-labels: #202124;
 
 .app-bar__menu-portal {
   display: none;
@@ -117,8 +117,8 @@ $side-bar-border: rgba(black, 0.12);
 .item__glyph {
   fill: inherit;
   margin-right: 1em;
-  min-width: 1.5em;
   min-height: 1.5em;
+  min-width: 1.5em;
 }
 
 .item__label {

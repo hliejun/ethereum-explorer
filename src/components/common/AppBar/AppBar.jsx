@@ -5,8 +5,8 @@ import { RouterContext } from '../../Router';
 import Modal from '../Modal';
 import SideMenu from './SideMenu';
 
-import Menu from '../../../assets/icons/menu.svg';
 import Back from '../../../assets/icons/back.svg';
+import Menu from '../../../assets/icons/menu.svg';
 
 // TODO: Animate menu in and out (inside SideMenu.jsx using transition events)
 
@@ -17,16 +17,16 @@ class AppBar extends React.Component {
 
   constructor(props) {
   	super(props);
+
+  	this.toggleMenu = this.toggleMenu.bind(this);
+
   	this.state = {
   		showMenu: false
   	};
-  	this.toggleMenu = this.toggleMenu.bind(this);
   }
 
   toggleMenu() {
-  	this.setState(currentState => {
-  		return { showMenu: !currentState.showMenu };
-  	});
+  	this.setState(currentState => ({ showMenu: !currentState.showMenu }));
   }
 
   render() {
@@ -37,9 +37,10 @@ class AppBar extends React.Component {
   	const Glyph = useBackLink ? Back : Menu;
   	const leftButton = (
   		<button
-  			className={`app-bar__button app-bar__button--${
-  				useBackLink ? 'back' : 'menu'
-  			}`}
+  			className={clns('app-bar__button', {
+  				'app-bar__button--back': useBackLink,
+  				'app-bar__button--menu': !useBackLink
+  			})}
   			onClick={useBackLink ? history.goBack : this.toggleMenu}
   			type="button"
   		>

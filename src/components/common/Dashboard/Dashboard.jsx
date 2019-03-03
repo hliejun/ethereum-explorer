@@ -1,73 +1,79 @@
 import React from 'react';
 import clns from 'classnames';
 
-import Currency from './Currency';
+import Currency from '../Currency';
 
 import Balance from '../../../assets/icons/balance.svg';
 import Receive from '../../../assets/icons/receive.svg';
 import Send from '../../../assets/icons/send.svg';
 
-const Section = props => {
-	const { amount, classLabel, code, label, className } = props;
-	return (
-		<div
-			className={clns(
-				'dashboard__section',
-				`dashboard__section--${classLabel}`,
-				className
-			)}
-		>
-			<span className="dashboard__section-label">{label}</span>
-			<Currency
-				amount={amount}
-				className="dashboard__section-currency"
-				code={code}
-			/>
-		</div>
-	);
-};
+// TODO: Add error boundary and async loaders
 
-const SubSection = props => {
-	const { amount, classLabel, code, icon: Icon, label, className } = props;
-	return (
-		<div
-			className={clns(
-				'dashboard__sub-section',
-				`dashboard__sub-section--${classLabel}`,
-				className
-			)}
-		>
-			<div className="dashboard__sub-section-header">
-				<span className="dashboard__sub-section-label">{label}</span>
-				<Icon className="dashboard__sub-section-glyph" />
-			</div>
-			<Currency
-				amount={amount}
-				className="dashboard__sub-section-currency"
-				code={code}
-			/>
-		</div>
-	);
-};
+const Section = ({ amount, classLabel, code, label, className }) => (
+	<div
+		className={clns(
+			'dashboard__section',
+			`dashboard__section--${classLabel}`,
+			className
+		)}
+	>
+		<span className="dashboard__section-label">{label}</span>
+		<Currency
+			amount={amount}
+			className="dashboard__section-currency"
+			code={code}
+		/>
+	</div>
+);
 
-const Dashboard = props => {
-	const { mainItem, subItems, className } = props;
-	return (
-		<div className={clns('dashboard', className)}>
-			<Section {...mainItem} />
-			<div className="dashboard__sub-sections">
-				{subItems.map(item => (
-					<SubSection {...item} />
-				))}
-			</div>
+const SubSection = ({
+	amount,
+	classLabel,
+	code,
+	icon: Icon,
+	label,
+	className
+}) => (
+	<div
+		className={clns(
+			'dashboard__sub-section',
+			`dashboard__sub-section--${classLabel}`,
+			className
+		)}
+	>
+		<div className="dashboard__sub-section-header">
+			<span className="dashboard__sub-section-label monotype">{label}</span>
+			<Icon className="dashboard__sub-section-glyph" />
 		</div>
-	);
-};
+		<Currency
+			amount={amount}
+			className="dashboard__sub-section-currency"
+			code={code}
+		/>
+	</div>
+);
 
-const PortfolioDashboard = props => {
-	const { balance, code, receivedEth, sentEth, totalEth, className } = props;
+const Dashboard = ({ mainItem, subItems, className }) => (
+	<div className={clns('dashboard', className)}>
+		<Section {...mainItem} />
+		<div className="dashboard__sub-sections">
+			{subItems.map(item => (
+				<SubSection {...item} />
+			))}
+		</div>
+	</div>
+);
+
+const PortfolioDashboard = ({
+	balance,
+	code,
+	receivedEth,
+	sentEth,
+	totalEth,
+	className
+}) => {
 	const mainItem = {
-		amount: balance,
+		amount: `$${balance}`,
 		classLabel: 'balance',
 		code,
 		label: 'Balance'

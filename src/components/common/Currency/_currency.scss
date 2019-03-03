@@ -2,8 +2,9 @@
 
 .currency {
   @include ellipsize-content('.currency__amount');
-  display: flex;
   align-items: flex-start;
+  display: flex;
+  overflow: hidden;
 }
 
 .currency__code {
