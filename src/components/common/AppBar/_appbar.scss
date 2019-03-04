@@ -16,6 +16,7 @@ $app-bar-content: #202124;
   top: 0;
   width: 100%;
   z-index: 10;
+  overflow: hidden;
 }
 
 .app-bar--normal {
@@ -27,7 +28,6 @@ $app-bar-content: #202124;
 }
 
 .app-bar__options {
-  height: inherit;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -38,7 +38,6 @@ $app-bar-content: #202124;
   border: 0;
   cursor: pointer;
   font-family: inherit;
-  height: inherit;
   line-height: 0;
   text-align: center;
 }

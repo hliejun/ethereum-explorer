@@ -45,6 +45,7 @@ import Sort from '../../../assets/icons/sort.svg';
 // fetchTransactions
 
 const bufferSize = 2;
+// const pageItems = 10;
 
 class Portfolio extends React.Component {
 	constructor(props) {
@@ -129,9 +130,9 @@ class Portfolio extends React.Component {
 					key={bufferSize}
 					pageBufferSize={bufferSize}
 					pageMap={stubbedPagination}
-					topOffset={100}
-					unit="px"
-					unitBufferHeight={140}
+					topOffset={6.25}
+					unit="rem"
+					unitBufferHeight={8.5}
 				/>
 				{/* Table (Desktop) */}
 			</div>

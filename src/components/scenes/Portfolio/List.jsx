@@ -14,10 +14,24 @@ class List extends React.Component {
 		this.bufferShiftPrev = this.bufferShiftPrev.bind(this);
 		this.bufferShiftNext = this.bufferShiftNext.bind(this);
 		this.resetBuffer = this.resetBuffer.bind(this);
+		this.updateDimensions = this.updateDimensions.bind(this);
 
 		this.state = {
-			displayBuffer: enumerate(props.pageBufferSize)
+			displayBuffer: enumerate(props.pageBufferSize),
+			dimensions: {
+				height: 0,
+				width: 0
+			}
 		};
+	}
+
+	componentDidMount() {
+		this.updateDimensions();
+		window.addEventListener('resize', this.updateDimensions);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.updateDimensions);
 	}
 
 	getListItems() {
@@ -33,6 +47,15 @@ class List extends React.Component {
 		});
 
 		return result;
+	}
+
+	updateDimensions() {
+		this.setState({
+			dimensions: {
+				width: window.innerWidth,
+				height: window.innerHeight
+			}
+		});
 	}
 
 	bufferShiftPrev() {
@@ -70,7 +93,7 @@ class List extends React.Component {
 			unitBufferHeight,
 			className
 		} = this.props;
-		const { displayBuffer } = this.state;
+		const { displayBuffer, dimensions } = this.state;
 
 		const listObjects = this.getListItems();
 		const pageSize = pageMap[1].length;
@@ -84,12 +107,24 @@ class List extends React.Component {
 		const nextItemsCount = (pagesCount - lastBufferPageIndex) * pageSize;
 		const bottomPadding = unitBufferHeight * nextItemsCount;
 
+		const fontSize = dimensions.width >= 768 ? 16 : 14;
+		let waypointTopOffset = -topPadding + topOffset;
+		waypointTopOffset =
+      unit === 'rem' || unit === 'em'
+      	? waypointTopOffset * fontSize
+      	: waypointTopOffset;
+		let waypointBottomOffset = -bottomPadding + bottomOffset;
+		waypointBottomOffset =
+      unit === 'rem' || unit === 'em'
+      	? waypointBottomOffset * fontSize
+      	: waypointBottomOffset;
+
 		return (
 			<div className={clns('list', className)}>
 				<Waypoint
-					key={`top-${topPadding}`}
+					key={`top-${topPadding}-${bottomPadding}`}
 					onEnter={this.bufferShiftPrev}
-					topOffset={`${-topPadding + topOffset}${unit}`}
+					topOffset={`${waypointTopOffset}px`}
 				/>
 				<div className="list__content">
 					<div
@@ -105,8 +140,8 @@ class List extends React.Component {
 					/>
 				</div>
 				<Waypoint
-					bottomOffset={`${-bottomPadding + bottomOffset}${unit}`}
-					key={`bottom-${topPadding}`}
+					bottomOffset={`${waypointBottomOffset}px`}
+					key={`bottom-${topPadding}-${bottomPadding}`}
 					onEnter={this.bufferShiftNext}
 				/>
 			</div>

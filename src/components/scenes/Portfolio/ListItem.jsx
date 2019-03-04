@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Day from 'dayjs';
 import clns from 'classnames';
 
@@ -46,16 +47,30 @@ const AddressSection = ({ address, type, className }) => {
 	);
 };
 
-const TransactionListItem = ({
+const TransactionListItem = withRouter(
+	({ history, id, ...passthroughProps }) => (
+		<ListItem
+			{...passthroughProps}
+			onClick={() => history.push(`/app/transaction/${id}`)}
+		/>
+	)
+);
+
+const ListItem = ({
 	address,
 	cashAmount,
 	code,
 	ethAmount,
+	onClick,
 	timestamp,
 	type,
 	className
 }) => (
-	<div className={clns('transaction-list-item', className)}>
+	<button
+		className={clns('transaction-list-item', className)}
+		onClick={onClick}
+		type="button"
+	>
 		<div className="transaction-list-item__header">
 			<Overline className="transaction-list-item__overline" type={type} />
 			<Meta className="transaction-list-item__meta" timestamp={timestamp} />
@@ -76,7 +91,7 @@ const TransactionListItem = ({
 		<div className="transaction-list-item__description">
 			<AddressSection type={type} address={address} />
 		</div>
-	</div>
+	</button>
 );
 
 export default TransactionListItem;

@@ -2,7 +2,7 @@
 
 const stubbedContent = {
 	address: '0x11fas523fty34f6325vsdf',
-	cashAmount: '6414155125178987.23',
+	cashAmount: '6414155125.23',
 	code: 'SGD',
 	ethAmount: '0',
 	timestamp: '2019-03-03T10:32:09+00:00',

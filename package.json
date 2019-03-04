@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --mode development",
     "dist": "webpack --mode production",
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --mode development --host 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "hliejun",

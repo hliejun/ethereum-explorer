@@ -11,8 +11,13 @@ $list-item-hint: #5f6368;
   @include card;
   @include elevation(1);
   background-color: $list-item-background;
+  border: 0;
   cursor: pointer;
+  display: block;
+  margin: 1em 0;
+  text-align: left;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 100%;
 }
 
 .transaction-list-item:hover {

@@ -25,6 +25,7 @@ $side-bar-labels: #202124;
 
 .side-menu {
   @include elevation(3);
+  -webkit-overflow-scrolling: touch;
   background-color: $side-bar-background;
   border-right: 1px solid $side-bar-border;
   font-size: 1em;
