@@ -2,6 +2,8 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import clns from 'classnames';
 
+import stopScrollPropagation from '../stopScrollPropagation';
+
 import About from '../../../assets/icons/about.svg';
 import Home from '../../../assets/icons/home.svg';
 import Logout from '../../../assets/icons/exit.svg';
@@ -47,8 +49,8 @@ const LinkedMenuItem = withRouter(({ history, link, ...passthroughProps }) => (
 	<MenuItem {...passthroughProps} onClick={() => history.push(link)} />
 ));
 
-const SideMenu = ({ className }) => (
-	<div className={clns('side-menu', className)}>
+const SideMenu = React.forwardRef(({ className }, ref) => (
+	<div className={clns('side-menu', className)} ref={ref}>
 		<MenuHeader icon={Tx} link="/app" title="TX ETHEREUM EXPLORER" />
 		<div className="side-menu__sections">
 			<MenuSection label={null}>
@@ -101,6 +103,6 @@ const SideMenu = ({ className }) => (
 			</MenuSection>
 		</div>
 	</div>
-);
+));
 
-export default SideMenu;
+export default stopScrollPropagation(SideMenu);

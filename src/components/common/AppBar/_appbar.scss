@@ -5,13 +5,16 @@ $app-bar-background: white;
 $app-bar-content: #202124;
 
 .app-bar {
-  @include elevation(2);
   align-items: center;
   background-color: $app-bar-background;
   display: flex;
   left: 0;
   padding: 1em 0 1em;
-  position: fixed;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  position: sticky;
   right: 0;
   top: 0;
   width: 100%;
@@ -39,6 +42,7 @@ $app-bar-content: #202124;
   cursor: pointer;
   font-family: inherit;
   line-height: 0;
+  overflow: hidden;
   text-align: center;
 }
 
@@ -76,7 +80,17 @@ $app-bar-content: #202124;
   font-weight: 400;
 }
 
+@media only screen and (max-width: 1023px) {
+  .app-bar {
+    @include elevation(2);
+  }
+}
+
 @media only screen and (min-width: 768px) {
+  .app-bar {
+    margin: -1em -1em 1em -1em;
+    width: calc(100% + 2em);
+  }
   .app-bar__button {
     padding: 1.85em;
   }

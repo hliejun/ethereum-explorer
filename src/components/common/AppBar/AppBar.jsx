@@ -10,8 +10,6 @@ import Menu from '../../../assets/icons/menu.svg';
 
 // TODO: Animate menu in and out (inside SideMenu.jsx using transition events)
 
-// TODO: Freeze scroll on main page (float show menu state to parent)
-
 class AppBar extends React.Component {
   static contextType = RouterContext;
 

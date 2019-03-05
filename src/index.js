@@ -7,15 +7,13 @@ import store from './redux/store';
 
 import './assets/styles.scss';
 
-// TODO: Fix scrolling underlying body on modal open (on mobile)
-
 // TODO: Null checks and immutables
 
 // TODO: Move props destructuring for func comp. to param
 
 // TODO: Props check
 
-// TODO: Optimise with pure / memoised components
+// TODO: Optimise with pure / memoised components + check for active side effects and see if they can be removed or throttled
 
 // TODO: Use lazy + suspense to split unshared components
 

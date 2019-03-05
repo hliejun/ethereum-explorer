@@ -1,5 +1,6 @@
 import React from 'react';
 import { Waypoint } from 'react-waypoint';
+import throttle from 'lodash.throttle';
 import clns from 'classnames';
 
 import { RouterContext } from '../../Router';
@@ -22,8 +23,6 @@ import {
 
 import Filter from '../../../assets/icons/filter.svg';
 import Sort from '../../../assets/icons/sort.svg';
-
-// TODO: Fix mobile jutter on replace div (keep scroll state using snapshot)
 
 // TODO: Add sort and filter form modals
 
@@ -62,6 +61,7 @@ class Portfolio extends React.Component {
   	this.toggleBalance = this.toggleBalance.bind(this);
   	this.updatePage = this.updatePage.bind(this);
   	this.updateDimensions = this.updateDimensions.bind(this);
+  	this.throttledUpdateDimensions = throttle(this.updateDimensions, 600);
 
   	this.state = {
   		title: 'Portfolio',
@@ -87,14 +87,15 @@ class Portfolio extends React.Component {
   	setTitle(title);
   	setSubtitle(subtitle);
   	setOptions(options);
-  	this.updateDimensions();
-  	window.addEventListener('resize', this.updateDimensions);
+  	this.throttledUpdateDimensions();
+  	window.addEventListener('resize', this.throttledUpdateDimensions);
   }
 
   componentWillUnmount() {
   	const { reset } = this.props;
   	reset();
-  	window.removeEventListener('resize', this.updateDimensions);
+  	this.throttledUpdateDimensions.flush();
+  	window.removeEventListener('resize', this.throttledUpdateDimensions);
   }
 
   toggleFilterModal() {
@@ -132,7 +133,6 @@ class Portfolio extends React.Component {
   }
 
   updateDimensions() {
-  	// TODO: Throttle this...
   	this.setState({
   		dimensions: {
   			width: window.innerWidth,
@@ -142,7 +142,6 @@ class Portfolio extends React.Component {
   }
 
   updatePage(page) {
-  	// Validate page?
   	this.setState({
   		currentTablePage: page
   	});

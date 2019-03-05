@@ -1,5 +1,6 @@
 import React from 'react';
 import { Waypoint } from 'react-waypoint';
+import throttle from 'lodash.throttle';
 import clns from 'classnames';
 
 // TODO: Add error boundary and async loaders
@@ -15,6 +16,7 @@ class List extends React.Component {
 		this.bufferShiftNext = this.bufferShiftNext.bind(this);
 		this.resetBuffer = this.resetBuffer.bind(this);
 		this.updateDimensions = this.updateDimensions.bind(this);
+		this.throttledUpdateDimensions = throttle(this.updateDimensions, 600);
 
 		this.state = {
 			displayBuffer: enumerate(props.pageBufferSize),
@@ -26,12 +28,13 @@ class List extends React.Component {
 	}
 
 	componentDidMount() {
-		this.updateDimensions();
-		window.addEventListener('resize', this.updateDimensions);
+		this.throttledUpdateDimensions();
+		window.addEventListener('resize', this.throttledUpdateDimensions, false);
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('resize', this.updateDimensions);
+		this.throttledUpdateDimensions.flush();
+		window.removeEventListener('resize', this.throttledUpdateDimensions, false);
 	}
 
 	getListItems() {
@@ -50,7 +53,6 @@ class List extends React.Component {
 	}
 
 	updateDimensions() {
-		// TODO: Throttle this...
 		this.setState({
 			dimensions: {
 				width: window.innerWidth,
