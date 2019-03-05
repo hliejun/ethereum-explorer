@@ -2,9 +2,17 @@ import React from 'react';
 import { Waypoint } from 'react-waypoint';
 import clns from 'classnames';
 
+import { RouterContext } from '../../Router';
 import { PortfolioDashboard } from '../../common/Dashboard';
-import List from './List';
-import TransactionListItem from './ListItem';
+
+import List from '../../common/List/List';
+import TransactionListItem from './TransactionListItem';
+
+import Table from '../../common/Table/Table';
+import {
+	getTransactionViewModel,
+	getTransactionFields
+} from './TransactionTableModel';
 
 import {
 	stubbedPagination,
@@ -15,20 +23,14 @@ import {
 import Filter from '../../../assets/icons/filter.svg';
 import Sort from '../../../assets/icons/sort.svg';
 
-// TODO: Add Table
-
-// TODO: Local pagination (List and Table)
+// TODO: Fix mobile jutter on replace div (keep scroll state using snapshot)
 
 // TODO: Add sort and filter form modals
 
-// TODO: Add sort, filter state
+// TODO: Add filter state
 // filters: {
 // 	receiving: true,
 // 	sending: true
-// },
-// sort: {
-// 	field: 'DATE',
-// 	order: 'DESC'
 // }
 
 // TODO: Perform local sorting and filtering in action dispatch
@@ -44,100 +46,172 @@ import Sort from '../../../assets/icons/sort.svg';
 // fetchUser
 // fetchTransactions
 
+// TODO: Abstract constants
+
 const bufferSize = 2;
-// const pageItems = 10;
 
 class Portfolio extends React.Component {
-	constructor(props) {
-		super(props);
+  static contextType = RouterContext;
 
-		this.toggleFilterModal = this.toggleFilterModal.bind(this);
-		this.toggleSortModal = this.toggleSortModal.bind(this);
-		this.toggleBalance = this.toggleBalance.bind(this);
+  constructor(props) {
+  	super(props);
 
-		this.state = {
-			title: 'Portfolio',
-			subtitle: null,
-			options: [
-				{ key: 'filter', Icon: Filter, handler: this.toggleFilterModal },
-				{ key: 'sort', Icon: Sort, handler: this.toggleSortModal }
-			],
-			showFilterModal: false,
-			showSortModal: false
-		};
-	}
+  	this.toggleFilterModal = this.toggleFilterModal.bind(this);
+  	this.toggleSortModal = this.toggleSortModal.bind(this);
+  	this.toggleSort = this.toggleSort.bind(this);
+  	this.toggleBalance = this.toggleBalance.bind(this);
+  	this.updatePage = this.updatePage.bind(this);
+  	this.updateDimensions = this.updateDimensions.bind(this);
 
-	componentDidMount() {
-		const { setTitle, setSubtitle, setOptions } = this.props;
-		const { title, subtitle, options } = this.state;
-		setTitle(title);
-		setSubtitle(subtitle);
-		setOptions(options);
-	}
+  	this.state = {
+  		title: 'Portfolio',
+  		subtitle: null,
+  		options: [
+  			{ key: 'filter', Icon: Filter, handler: this.toggleFilterModal },
+  			{ key: 'sort', Icon: Sort, handler: this.toggleSortModal }
+  		],
+  		dimensions: {
+  			width: window.innerWidth,
+  			height: window.innerHeight
+  		},
+  		showFilterModal: false,
+  		showSortModal: false,
+  		sort: { fieldName: 'date', order: 'DESC' },
+  		currentTablePage: 1
+  	};
+  }
 
-	componentWillUnmount() {
-		const { reset } = this.props;
-		reset();
-	}
+  componentDidMount() {
+  	const { setTitle, setSubtitle, setOptions } = this.props;
+  	const { title, subtitle, options } = this.state;
+  	setTitle(title);
+  	setSubtitle(subtitle);
+  	setOptions(options);
+  	this.updateDimensions();
+  	window.addEventListener('resize', this.updateDimensions);
+  }
 
-	toggleFilterModal() {
-		this.setState(state => ({
-			showFilterModal: !state.showFilterModal
-		}));
-	}
+  componentWillUnmount() {
+  	const { reset } = this.props;
+  	reset();
+  	window.removeEventListener('resize', this.updateDimensions);
+  }
 
-	toggleSortModal() {
-		this.setState(state => ({
-			showSortModal: !state.showSortModal
-		}));
-	}
+  toggleFilterModal() {
+  	this.setState(state => ({
+  		showFilterModal: !state.showFilterModal
+  	}));
+  }
 
-	toggleBalance(waypoint) {
-		const { setSubtitle } = this.props;
-		const { balance } = stubbedSummary;
-		const balanceDisplay =
+  toggleSortModal() {
+  	this.setState(state => ({
+  		showSortModal: !state.showSortModal
+  	}));
+  }
+
+  toggleSort(fieldName) {
+  	this.setState(state => ({
+  		sort: {
+  			fieldName,
+  			order:
+          state.sort.fieldName !== fieldName || state.sort.order !== 'ASC'
+          	? 'ASC'
+          	: 'DESC'
+  		}
+  	}));
+  }
+
+  toggleBalance(waypoint) {
+  	const { setSubtitle } = this.props;
+  	const { balance } = stubbedSummary;
+  	const balanceDisplay =
       waypoint.currentPosition === Waypoint.inside
       	? null
       	: `Balance: $${balance}`;
-		setSubtitle(balanceDisplay);
-	}
+  	setSubtitle(balanceDisplay);
+  }
 
-	render() {
-		const { className } = this.props;
-		const { balance, code, receivedEth, sentEth, totalEth } = stubbedSummary;
-		return (
-			<div className={clns('page', 'portfolio', className)}>
-				{/* ---TOP SIDE--- */}
-				{/* Pull to Refresh */}
-				<Waypoint onPositionChange={this.toggleBalance} />
-				{/* ---LEFT SIDE--- */}
-				<PortfolioDashboard
-					balance={balance}
-					className="portfolio__dashboard"
-					code={code}
-					receivedEth={receivedEth}
-					sentEth={sentEth}
-					totalEth={totalEth}
-				/>
-				{/* Combined Form (Desktop) */}
-				{/* ---RIGHT SIDE--- */}
-				<span className="portfolio__section-label">Transaction History</span>
-				<List
-					bottomOffset={0}
-					className="portfolio__transaction-list"
-					dataMap={stubbedTransactions}
-					itemRenderer={TransactionListItem}
-					key={bufferSize}
-					pageBufferSize={bufferSize}
-					pageMap={stubbedPagination}
-					topOffset={6.25}
-					unit="rem"
-					unitBufferHeight={8.5}
-				/>
-				{/* Table (Desktop) */}
-			</div>
-		);
-	}
+  updateDimensions() {
+  	// TODO: Throttle this...
+  	this.setState({
+  		dimensions: {
+  			width: window.innerWidth,
+  			height: window.innerHeight
+  		}
+  	});
+  }
+
+  updatePage(page) {
+  	// Validate page?
+  	this.setState({
+  		currentTablePage: page
+  	});
+  }
+
+  render() {
+  	const { history } = this.context;
+  	const { className } = this.props;
+  	const { currentTablePage, dimensions, sort } = this.state;
+  	const { balance, code, receivedEth, sentEth, totalEth } = stubbedSummary;
+  	const isMobile = dimensions.width < 768;
+  	return (
+  		<div className={clns('page', 'portfolio', className)}>
+  			{/* ---TOP SIDE--- */}
+  			{/* Pull to Refresh */}
+  			<div className="portfolio__body">
+  				<div className="portfolio__section portfolio__section--left">
+  					<Waypoint onPositionChange={this.toggleBalance} />
+  					<PortfolioDashboard
+  						balance={balance}
+  						className="portfolio__dashboard"
+  						code={code}
+  						receivedEth={receivedEth}
+  						sentEth={sentEth}
+  						totalEth={totalEth}
+  					/>
+  					{/* Combined Form (Desktop) */}
+  				</div>
+  				<div className="portfolio__section portfolio__section--right">
+  					<span className="portfolio__section-label">
+              Transaction History
+  					</span>
+  					{isMobile ? (
+  						<List
+  							bottomOffset={0}
+  							className="portfolio__transaction-list"
+  							dataMap={stubbedTransactions}
+  							itemRenderer={TransactionListItem}
+  							key={bufferSize}
+  							pageBufferSize={bufferSize}
+  							pageMap={stubbedPagination}
+  							topOffset={6.25}
+  							unit="rem"
+  							unitBufferHeight={8.5}
+  						/>
+  					) : (
+  						<Table
+  							className="portfolio__transaction-table"
+  							currentPage={currentTablePage}
+  							fields={getTransactionFields(code)}
+  							isLoading={false} // KIV: need to put in state / store
+  							lastPage={Math.max(...Object.keys(stubbedPagination))}
+  							onPageChange={this.updatePage}
+  							onRefresh={() => {}} // KIV: need to dispatch fetch
+  							onSelectRow={id => history.push(`/app/transaction/${id}`)}
+  							onSort={this.toggleSort}
+  							pageItems={stubbedPagination[currentTablePage].map(id => ({
+  								id,
+  								...stubbedTransactions[id]
+  							}))}
+  							parser={getTransactionViewModel}
+  							sort={sort}
+  						/>
+  					)}
+  				</div>
+  			</div>
+  		</div>
+  	);
+  }
 }
 
 export default Portfolio;

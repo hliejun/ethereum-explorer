@@ -1,9 +1,39 @@
+.portfolio__section--right {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
 .portfolio__transaction-list {
   margin: 0 1em;
+}
+
+.portfolio__transaction-table {
+  display: block;
+  height: calc(100% - 3rem);
 }
 
 .portfolio__section-label {
   display: block;
   font-weight: 500;
   margin: 1.5em 1em 1em;
+}
+
+@media only screen and (min-width: 1440px) and (orientation: landscape) {
+  .portfolio__section--right {
+    margin-left: 2em;
+  }
+}
+
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+  .portfolio__body {
+    display: flex;
+  }
+  .portfolio__section--right {
+    height: calc(100vh - 10rem);
+    min-width: 30rem;
+  }
+  .portfolio__section-label {
+    font-size: 1.2em;
+    margin: 1em;
+  }
 }

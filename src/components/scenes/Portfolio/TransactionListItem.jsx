@@ -8,7 +8,7 @@ import Currency from '../../common/Currency';
 import Receive from '../../../assets/icons/receive.svg';
 import Send from '../../../assets/icons/send.svg';
 
-import './_listitem.scss';
+import './_transactionlistitem.scss';
 
 const Overline = ({ type, className }) => {
 	const isOutgoing = type === 'outgoing';

@@ -50,6 +50,7 @@ class List extends React.Component {
 	}
 
 	updateDimensions() {
+		// TODO: Throttle this...
 		this.setState({
 			dimensions: {
 				width: window.innerWidth,

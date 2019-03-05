@@ -7,6 +7,10 @@ import store from './redux/store';
 
 import './assets/styles.scss';
 
+// TODO: Fix scrolling underlying body on modal open (on mobile)
+
+// TODO: Null checks and immutables
+
 // TODO: Move props destructuring for func comp. to param
 
 // TODO: Props check

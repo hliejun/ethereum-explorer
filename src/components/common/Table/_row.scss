@@ -1,0 +1,50 @@
+@import '../../../assets/mixins';
+
+$table-row-background-hover: rgba(black, 0.1);
+$table-row-background: white;
+$table-row-border: rgba(black, 0.12);
+$table-row-content-hover: #202124;
+$table-row-content: rgba(#202124, 0.75);
+
+.table-row {
+  background-color: transparent;
+  border-bottom: 1px solid $table-row-border;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  color: $table-row-content;
+  cursor: pointer;
+  display: flex;
+  fill: $table-row-content;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.table-row:last-child {
+  border-bottom: 0;
+}
+
+.table-row:hover {
+  background-color: $table-row-background-hover;
+  color: $table-row-content-hover;
+  fill: $table-row-content-hover;
+}
+
+.table-row__cell {
+  flex-grow: 1;
+  justify-content: flex-end;
+  padding: 1rem 3rem 1rem 1rem;
+  span {
+    @include ellipsize;
+    text-align: right;
+  }
+}
+
+.table-row__cell:first-child {
+  align-items: flex-start;
+  justify-content: flex-start;
+  span {
+    text-align: left;
+  }
+}

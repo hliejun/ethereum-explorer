@@ -13,10 +13,12 @@ class Modal extends React.Component {
 
 	componentDidMount() {
 		modalRoot.appendChild(this.element);
+		document.body.classList.add('modal-open');
 	}
 
 	componentWillUnmount() {
 		modalRoot.removeChild(this.element);
+		document.body.classList.remove('modal-open');
 	}
 
 	render() {

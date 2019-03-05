@@ -5,6 +5,14 @@
   margin: 0;
 }
 
+body {
+  overflow-x: hidden;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
 button,
 input,
 optgroup,
@@ -33,4 +41,17 @@ button,
 
 .page {
   padding-top: 4em;
+}
+
+@media only screen and (min-width: 1440px) and (orientation: landscape) {
+  body {
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body {
+    padding: 1em;
+  }
 }

@@ -7,9 +7,11 @@ $modal-mask: rgba(black, 0.5);
 
 .modal {
   background-color: $modal-mask;
+  bottom: 0;
   height: 100%;
   left: 0;
   position: fixed;
+  right: 0;
   top: 0;
   width: 100%;
 }
