@@ -1,8 +1,8 @@
 import React from 'react';
 
-function disablePropagation(event) {
+const disablePropagation = event => {
 	event.stopPropagation();
-}
+};
 
 const stopScrollPropagation = WrappedComponent => {
 	class StopScrollPropagation extends React.Component {

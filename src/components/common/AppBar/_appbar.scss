@@ -5,16 +5,12 @@ $app-bar-background: white;
 $app-bar-content: #202124;
 
 .app-bar {
+  @include sticky;
   align-items: center;
   background-color: $app-bar-background;
   display: flex;
   left: 0;
   padding: 1em 0 1em;
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
-  position: sticky;
   right: 0;
   top: 0;
   width: 100%;

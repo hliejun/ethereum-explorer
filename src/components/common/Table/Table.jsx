@@ -5,11 +5,7 @@ import Header from './Header';
 import Row from './Row';
 import Paginator from './Paginator';
 
-import './_table.scss';
-
-// TODO: Consider smoothing scroll for table
-
-// TODO: Add refresh button
+// TODO: Add refresh button, placeholder, loader
 
 // TODO: Add error boundary and async loaders
 
@@ -24,7 +20,6 @@ const Body = ({
 	parser,
 	className
 }) => {
-	// TODO: Selectively return rows / loader / placeholder
 	const viewModels = pageItems.map(parser);
 	const rows = viewModels.map(({ id, ...item }, index) => (
 		<Row

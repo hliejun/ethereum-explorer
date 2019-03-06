@@ -8,32 +8,25 @@ import SideMenu from './SideMenu';
 import Back from '../../../assets/icons/back.svg';
 import Menu from '../../../assets/icons/menu.svg';
 
-// TODO: Animate menu in and out (inside SideMenu.jsx using transition events)
-
 class AppBar extends React.Component {
   static contextType = RouterContext;
 
   constructor(props) {
   	super(props);
-
-  	this.toggleMenu = this.toggleMenu.bind(this);
-
   	this.state = {
   		showMenu: false
   	};
   }
 
-  toggleMenu() {
+  toggleMenu = () => {
   	this.setState(currentState => ({ showMenu: !currentState.showMenu }));
-  }
+  };
 
-  render() {
+  renderLeftButton = () => {
   	const { history } = this.context;
-  	const { useBackLink, title, subtitle, options, className } = this.props;
-  	const { showMenu } = this.state;
-
+  	const { useBackLink } = this.props;
   	const Glyph = useBackLink ? Back : Menu;
-  	const leftButton = (
+  	return (
   		<button
   			className={clns('app-bar__button', {
   				'app-bar__button--back': useBackLink,
@@ -45,24 +38,28 @@ class AppBar extends React.Component {
   			<Glyph className="app-bar__button-glyph" />
   		</button>
   	);
+  };
 
-  	const sideMenuModal = (
-  		<button
-  			className="app-bar__menu-portal"
-  			onClick={this.toggleMenu}
-  			type="button"
-  		>
-  			<Modal>
-  				<div className="app-bar__modal-mask">
-  					<SideMenu className="app-bar__side-menu" />
-  				</div>
-  			</Modal>
-  		</button>
-  	);
+  renderSideMenuModal = () => (
+  	<button
+  		className="app-bar__menu-portal"
+  		onClick={this.toggleMenu}
+  		type="button"
+  	>
+  		<Modal>
+  			<div className="app-bar__modal-mask">
+  				<SideMenu className="app-bar__side-menu" />
+  			</div>
+  		</Modal>
+  	</button>
+  );
 
+  render() {
+  	const { title, subtitle, options, className } = this.props;
+  	const { showMenu } = this.state;
   	return (
   		<div className={clns('app-bar', 'app-bar--normal', className)}>
-  			{leftButton}
+  			{this.renderLeftButton()}
   			<div className="app-bar__title-set">
   				<span className="title-set__title">{title}</span>
   				<span className="title-set__subtitle">{subtitle}</span>
@@ -79,7 +76,7 @@ class AppBar extends React.Component {
   					</button>
   				))}
   			</div>
-  			{showMenu && sideMenuModal}
+  			{showMenu && this.renderSideMenuModal()}
   		</div>
   	);
   }

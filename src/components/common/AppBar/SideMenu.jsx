@@ -16,7 +16,7 @@ import Terms from '../../../assets/icons/terms.svg';
 import Tx from '../../../assets/icons/tx.svg';
 import Web from '../../../assets/icons/link.svg';
 
-import './_sidemenu.scss';
+// TODO: Animate menu in and out (using transition events for mount/unmount)
 
 const MenuHeader = ({ icon: Icon, link, title, className }) => (
 	<div className={clns('side-menu__header', className)}>
@@ -49,7 +49,7 @@ const LinkedMenuItem = withRouter(({ history, link, ...passthroughProps }) => (
 	<MenuItem {...passthroughProps} onClick={() => history.push(link)} />
 ));
 
-const SideMenu = React.forwardRef(({ className }, ref) => (
+const SideMenu = React.forwardRef(({ className, onLogout }, ref) => (
 	<div className={clns('side-menu', className)} ref={ref}>
 		<MenuHeader icon={Tx} link="/app" title="TX ETHEREUM EXPLORER" />
 		<div className="side-menu__sections">
@@ -93,13 +93,7 @@ const SideMenu = React.forwardRef(({ className }, ref) => (
 			</MenuSection>
 			<MenuSection label="APP">
 				<LinkedMenuItem icon={Settings} label="Settings" link="/app/settings" />
-				<MenuItem
-					icon={Logout}
-					label="Log Out"
-					onClick={() => {
-						// TODO: Call dispatch logout action
-					}}
-				/>
+				<MenuItem icon={Logout} label="Log Out" onClick={onLogout} />
 			</MenuSection>
 		</div>
 	</div>

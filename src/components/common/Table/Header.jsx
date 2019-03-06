@@ -4,8 +4,6 @@ import clns from 'classnames';
 import Ascending from '../../../assets/icons/ascending.svg';
 import Sortable from '../../../assets/icons/sortable.svg';
 
-import './_header.scss';
-
 const Header = ({ fields, onSort, sort, className }) => {
 	const { fieldName, order } = sort;
 	const headerCells = fields.map(field => {

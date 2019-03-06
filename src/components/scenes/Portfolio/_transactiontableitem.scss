@@ -1,0 +1,20 @@
+@import '../../../assets/mixins';
+
+.transaction-table-item__amount {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 3em;
+  max-width: 100%;
+}
+
+.transaction-table-item__amount-item {
+  @include ellipsize;
+  width: 100%;
+}
+
+.transaction-table-item__amount-item--ethereum {
+  font-size: 0.85em;
+  font-weight: 300;
+}

@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
-export const RouterContext = React.createContext({});
+const RouterContext = React.createContext({});
 
-const BrowserRouter = ({ children }) => (
-	<Router>
+const Router = ({ children }) => (
+	<BrowserRouter>
 		<Route>
 			{routeProps => (
 				<RouterContext.Provider value={routeProps}>
@@ -12,7 +12,7 @@ const BrowserRouter = ({ children }) => (
 				</RouterContext.Provider>
 			)}
 		</Route>
-	</Router>
+	</BrowserRouter>
 );
 
-export default BrowserRouter;
+export { Router, RouterContext };

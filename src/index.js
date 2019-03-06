@@ -13,7 +13,9 @@ import './assets/styles.scss';
 
 // TODO: Props check
 
-// TODO: Optimise with pure / memoised components + check for active side effects and see if they can be removed or throttled
+// TODO: Optimise with pure / memoised components
+
+// TODO: Check for active side effects to be removed or throttled
 
 // TODO: Use lazy + suspense to split unshared components
 

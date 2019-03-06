@@ -1,10 +1,6 @@
 import React from 'react';
 import Day from 'dayjs';
 
-import './_transactiontableitem.scss';
-
-// TODO: Theme table row cell view for amount
-
 const getTransactionViewModel = ({
 	address,
 	cashAmount,
@@ -28,16 +24,23 @@ const getTransactionViewModel = ({
 			type
 		},
 		view: ({ type: transactionType }) => (
-			<span>{transactionType.toUpperCase()}</span>
+			<span>{transactionType === 'incoming' ? 'Incoming' : 'Outgoing'}</span>
 		)
 	},
 	amount: {
 		model: {
 			cashAmount,
-			ethAmount // KIV: use later
+			ethAmount
 		},
 		view: ({ cashAmount: cash, ethAmount: ethereum }) => (
-			<span>{`$${cash} (${ethereum}ETH)`}</span>
+			<div className="transaction-table-item__amount">
+				<span className="transaction-table-item__amount-item">
+					{`$${cash}`}
+				</span>
+				<span className="transaction-table-item__amount-item transaction-table-item__amount-item--ethereum monotype">
+					{`(${ethereum}ETH)`}
+				</span>
+			</div>
 		)
 	},
 	address: {
@@ -54,7 +57,7 @@ const getTransactionFields = code => [
 		label: 'Date',
 		description: 'The date (DD/MM/YY) and time of a transaction.',
 		isSortable: true,
-		minWidth: '12rem',
+		minWidth: '15rem',
 		width: '20%'
 	},
 	{
@@ -74,7 +77,7 @@ const getTransactionFields = code => [
       'The credit/debit transacted in both currency and ethereum unit.',
 		isSortable: true,
 		minWidth: '0',
-		width: '40%',
+		width: '30%',
 		shrinkIndex: 0.1
 	},
 	{
@@ -84,7 +87,7 @@ const getTransactionFields = code => [
       'The other party\'s ethereum address associated with a transaction.',
 		isSortable: false,
 		minWidth: '0',
-		width: '25%',
+		width: '35%',
 		shrinkIndex: 1
 	}
 ];

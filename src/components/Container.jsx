@@ -14,21 +14,28 @@ const attachOptions = Page => options => props => (
 	<Page {...options} {...props} />
 );
 
+const initialState = {
+	useBackLink: false,
+	pageTitle: 'Tx Ethereum Explorer',
+	pageSubtitle: null,
+	pageOptions: []
+};
+
 const Container = ({ match }) => {
-	const [backLink, setBackLink] = useState(false);
-	const [pageTitle, setPageTitle] = useState('Tx');
-	const [pageSubtitle, setPageSubtitle] = useState(null);
-	const [pageOptions, setPageOptions] = useState([]);
+	const [useBackLink, setUseBackLink] = useState(initialState.useBackLink);
+	const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
+	const [pageSubtitle, setPageSubtitle] = useState(initialState.pageSubtitle);
+	const [pageOptions, setPageOptions] = useState(initialState.pageOptions);
 
 	const resetAppBar = () => {
-		setBackLink(false);
-		setPageTitle('Tx');
-		setPageSubtitle(null);
-		setPageOptions([]);
+		setUseBackLink(initialState.useBackLink);
+		setPageTitle(initialState.pageTitle);
+		setPageSubtitle(initialState.pageSubtitle);
+		setPageOptions(initialState.pageOptions);
 	};
 
 	const options = {
-		setBackLink,
+		setBackLink: setUseBackLink,
 		setTitle: setPageTitle,
 		setSubtitle: setPageSubtitle,
 		setOptions: setPageOptions,
@@ -38,7 +45,7 @@ const Container = ({ match }) => {
 	return (
 		<div className="container">
 			<AppBar
-				useBackLink={backLink}
+				useBackLink={useBackLink}
 				options={pageOptions}
 				subtitle={pageSubtitle}
 				title={pageTitle}

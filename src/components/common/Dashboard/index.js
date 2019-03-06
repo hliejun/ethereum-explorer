@@ -1,5 +1,5 @@
-import { Dashboard, PortfolioDashboard } from './Dashboard';
+import Dashboard from './Dashboard';
 
 import './_dashboard.scss';
 
-export { Dashboard, PortfolioDashboard };
+export default Dashboard;

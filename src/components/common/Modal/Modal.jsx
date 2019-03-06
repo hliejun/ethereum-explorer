@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 
 const modalRoot = document.getElementById('modal-root');
 
-function disableScroll(event) {
+const disableScroll = event => {
 	event.preventDefault();
-}
+};
 
 class Modal extends React.Component {
 	constructor(props) {

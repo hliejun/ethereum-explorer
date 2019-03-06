@@ -1,68 +1,72 @@
-// TODO: To be removed...
-
-const stubbedContent = {
-	address: '0x11fas523fty34f6325vsdf',
-	cashAmount: '6414155125.23',
+const getStubbedContent = id => ({
+	address: `[${id}] ${Math.random()
+		.toString(36)
+		.substr(2, 16)}-ABCDEFGHIJKLMNOP`,
+	cashAmount: (Math.random() * (100000000000000000.0 - 0.01) + 0.01)
+		.toFixed(2)
+		.toString(),
 	code: 'SGD',
-	ethAmount: '0',
-	timestamp: '2019-03-03T10:32:09+00:00',
-	type: 'incoming'
-};
+	ethAmount: (Math.random() * (1000.0 - 0.01) + 0.01).toFixed(8).toString(),
+	timestamp: new Date(Date.now() - id * 864e5),
+	type: Math.floor(Math.random() * 2) === 0 ? 'incoming' : 'outgoing'
+});
 
-export const stubbedPagination = {
+const stubbedPagination = {
 	1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 	2: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
 	3: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
 	4: [31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 };
 
-export const stubbedSummary = {
+const stubbedSummary = {
 	balance: '1234.56',
 	code: 'SGD',
-	receivedEth: '3123131.3564',
-	sentEth: '31231230.9745',
-	totalEth: '31312310.33142'
+	receivedEth: '27906.1564',
+	sentEth: '29285.6347',
+	totalEth: '320.3642'
 };
 
-export const stubbedTransactions = {
-	1: { ...stubbedContent, ethAmount: '1.111111111' },
-	2: { ...stubbedContent, ethAmount: '2.222222222' },
-	3: { ...stubbedContent, ethAmount: '3.333333333' },
-	4: { ...stubbedContent, ethAmount: '4.444444444' },
-	5: { ...stubbedContent, ethAmount: '5' },
-	6: { ...stubbedContent, ethAmount: '6' },
-	7: { ...stubbedContent, ethAmount: '7' },
-	8: { ...stubbedContent, ethAmount: '8' },
-	9: { ...stubbedContent, ethAmount: '9' },
-	10: { ...stubbedContent, ethAmount: '10' },
-	11: { ...stubbedContent, ethAmount: '11' },
-	12: { ...stubbedContent, ethAmount: '12' },
-	13: { ...stubbedContent, ethAmount: '13' },
-	14: { ...stubbedContent, ethAmount: '14' },
-	15: { ...stubbedContent, ethAmount: '15' },
-	16: { ...stubbedContent, ethAmount: '16' },
-	17: { ...stubbedContent, ethAmount: '17' },
-	18: { ...stubbedContent, ethAmount: '18' },
-	19: { ...stubbedContent, ethAmount: '19' },
-	20: { ...stubbedContent, ethAmount: '20' },
-	21: { ...stubbedContent, ethAmount: '21' },
-	22: { ...stubbedContent, ethAmount: '22' },
-	23: { ...stubbedContent, ethAmount: '23' },
-	24: { ...stubbedContent, ethAmount: '24' },
-	25: { ...stubbedContent, ethAmount: '25' },
-	26: { ...stubbedContent, ethAmount: '26' },
-	27: { ...stubbedContent, ethAmount: '27' },
-	28: { ...stubbedContent, ethAmount: '28' },
-	29: { ...stubbedContent, ethAmount: '29' },
-	30: { ...stubbedContent, ethAmount: '30' },
-	31: { ...stubbedContent, ethAmount: '31' },
-	32: { ...stubbedContent, ethAmount: '32' },
-	33: { ...stubbedContent, ethAmount: '33' },
-	34: { ...stubbedContent, ethAmount: '34' },
-	35: { ...stubbedContent, ethAmount: '35' },
-	36: { ...stubbedContent, ethAmount: '36' },
-	37: { ...stubbedContent, ethAmount: '37' },
-	38: { ...stubbedContent, ethAmount: '38' },
-	39: { ...stubbedContent, ethAmount: '39' },
-	40: { ...stubbedContent, ethAmount: '40' }
+const stubbedTransactions = {
+	1: getStubbedContent(1),
+	2: getStubbedContent(2),
+	3: getStubbedContent(3),
+	4: getStubbedContent(4),
+	5: getStubbedContent(5),
+	6: getStubbedContent(6),
+	7: getStubbedContent(7),
+	8: getStubbedContent(8),
+	9: getStubbedContent(9),
+	10: getStubbedContent(10),
+	11: getStubbedContent(11),
+	12: getStubbedContent(12),
+	13: getStubbedContent(13),
+	14: getStubbedContent(14),
+	15: getStubbedContent(15),
+	16: getStubbedContent(16),
+	17: getStubbedContent(17),
+	18: getStubbedContent(18),
+	19: getStubbedContent(19),
+	20: getStubbedContent(20),
+	21: getStubbedContent(21),
+	22: getStubbedContent(22),
+	23: getStubbedContent(23),
+	24: getStubbedContent(24),
+	25: getStubbedContent(25),
+	26: getStubbedContent(26),
+	27: getStubbedContent(27),
+	28: getStubbedContent(28),
+	29: getStubbedContent(29),
+	30: getStubbedContent(30),
+	31: getStubbedContent(31),
+	32: getStubbedContent(32),
+	33: getStubbedContent(33),
+	34: getStubbedContent(34),
+	35: getStubbedContent(35),
+	36: getStubbedContent(36),
+	37: getStubbedContent(37),
+	38: getStubbedContent(38),
+	39: getStubbedContent(39),
+	40: getStubbedContent(40)
 };
+
+export { stubbedPagination, stubbedSummary, stubbedTransactions };

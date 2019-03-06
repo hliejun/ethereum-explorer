@@ -1,8 +1,6 @@
 import React from 'react';
 import clns from 'classnames';
 
-import './_row.scss';
-
 const Row = ({ fields, item, onClick, className }) => {
 	const rowCells = fields.map(field => {
 		const { name, minWidth, maxWidth, width, shrinkIndex, growIndex } = field;

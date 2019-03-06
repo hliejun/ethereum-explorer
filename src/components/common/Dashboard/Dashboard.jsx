@@ -3,10 +3,6 @@ import clns from 'classnames';
 
 import Currency from '../Currency';
 
-import Balance from '../../../assets/icons/balance.svg';
-import Receive from '../../../assets/icons/receive.svg';
-import Send from '../../../assets/icons/send.svg';
-
 // TODO: Add error boundary and async loaders
 
 const Section = ({ amount, classLabel, code, label, className }) => (
@@ -64,49 +60,4 @@ const Dashboard = ({ mainItem, subItems, className }) => (
 	</div>
 );
 
-const PortfolioDashboard = ({
-	balance,
-	code,
-	receivedEth,
-	sentEth,
-	totalEth,
-	className
-}) => {
-	const mainItem = {
-		amount: `$${balance}`,
-		classLabel: 'balance',
-		code,
-		label: 'Balance'
-	};
-	const subItems = [
-		{
-			amount: receivedEth,
-			classLabel: 'received',
-			code: 'ETH',
-			icon: Receive,
-			key: 'received',
-			label: 'RECEIVED'
-		},
-		{
-			amount: sentEth,
-			classLabel: 'sent',
-			code: 'ETH',
-			icon: Send,
-			key: 'sent',
-			label: 'SENT'
-		},
-		{
-			amount: totalEth,
-			classLabel: 'nett',
-			code: 'ETH',
-			icon: Balance,
-			key: 'nett',
-			label: 'NETT'
-		}
-	];
-	return (
-		<Dashboard className={className} mainItem={mainItem} subItems={subItems} />
-	);
-};
-
-export { Dashboard, PortfolioDashboard };
+export default Dashboard;

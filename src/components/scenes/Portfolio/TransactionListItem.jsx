@@ -8,8 +8,6 @@ import Currency from '../../common/Currency';
 import Receive from '../../../assets/icons/receive.svg';
 import Send from '../../../assets/icons/send.svg';
 
-import './_transactionlistitem.scss';
-
 const Overline = ({ type, className }) => {
 	const isOutgoing = type === 'outgoing';
 	const Icon = isOutgoing ? Send : Receive;
@@ -36,7 +34,6 @@ const Meta = ({ timestamp, className }) => {
 const AddressSection = ({ address, type, className }) => {
 	const isOutgoing = type === 'outgoing';
 	const label = isOutgoing ? 'SENT TO' : 'RECEIVED FROM';
-
 	return (
 		<div className={clns('transaction-list-item__section', className)}>
 			<span className="transaction-list-item__info-label monotype">

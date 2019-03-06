@@ -36,3 +36,11 @@ $card-content: #202124;
     @include ellipsize;
   }
 }
+
+@mixin sticky {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  position: sticky;
+}

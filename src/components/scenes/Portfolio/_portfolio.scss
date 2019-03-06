@@ -3,6 +3,12 @@
   flex-shrink: 1;
 }
 
+.portfolio__section-label {
+  display: block;
+  font-weight: 500;
+  margin: 1.5em 1em 1em;
+}
+
 .portfolio__transaction-list {
   margin: 0 1em;
 }
@@ -10,12 +16,6 @@
 .portfolio__transaction-table {
   display: block;
   height: calc(100% - 3rem);
-}
-
-.portfolio__section-label {
-  display: block;
-  font-weight: 500;
-  margin: 1.5em 1em 1em;
 }
 
 @media only screen and (min-width: 1440px) and (orientation: landscape) {
