@@ -33,11 +33,39 @@ const Meta = ({ className, timestamp }) => {
 	);
 };
 
+const SourceSection = ({ amount, className }) => {
+	const label = 'SOURCE AMOUNT';
+	return (
+		<div
+			className={clns(
+				'transaction-list-item__section',
+				'transaction-list-item__section--source',
+				className
+			)}
+		>
+			<span className="transaction-list-item__info-label monotype">
+				{label}
+			</span>
+			<Currency
+				amount={amount}
+				className="transaction-list-item__ethereum"
+				code="ETH"
+			/>
+		</div>
+	);
+};
+
 const AddressSection = ({ address, className, type }) => {
 	const isOutgoing = type === 'outgoing';
 	const label = isOutgoing ? 'SENT TO' : 'RECEIVED FROM';
 	return (
-		<div className={clns('transaction-list-item__section', className)}>
+		<div
+			className={clns(
+				'transaction-list-item__section',
+				'transaction-list-item__section--address',
+				className
+			)}
+		>
 			<span className="transaction-list-item__info-label monotype">
 				{label}
 			</span>
@@ -71,23 +99,20 @@ const ListItem = ({
 		type="button"
 	>
 		<div className="transaction-list-item__header">
-			<Overline className="transaction-list-item__overline" type={type} />
 			<Meta className="transaction-list-item__meta" timestamp={timestamp} />
+			<Overline className="transaction-list-item__overline" type={type} />
 		</div>
 		<div className="transaction-list-item__currencies">
 			<Currency
-				amount={`$${cashAmount}`}
-				className="transaction-list-item__amount"
+				amount={`${type === 'outgoing' ? '–' : ''}$${cashAmount}`}
+				className={clns('transaction-list-item__amount', {
+					'transaction-list-item__amount--negative': type === 'outgoing'
+				})}
 				code={code}
-			/>
-			<span className="transaction-list-item__separator monotype">=</span>
-			<Currency
-				amount={ethAmount}
-				className="transaction-list-item__ethereum"
-				code="ETH"
 			/>
 		</div>
 		<div className="transaction-list-item__description">
+			<SourceSection amount={ethAmount} />
 			<AddressSection address={address} type={type} />
 		</div>
 	</button>

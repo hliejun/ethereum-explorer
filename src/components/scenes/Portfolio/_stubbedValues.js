@@ -11,7 +11,7 @@ const getStubbedContent = id => ({
 		.substr(2, 16)}-ABCDEFGHIJKLMNOPQRSTUVWXYZ`,
 	cashAmount: getRandomNumber(1000000000.0, 0.01, 2),
 	code: 'SGD',
-	ethAmount: getRandomNumber(1000.0, 0.01, 4),
+	ethAmount: getRandomNumber(1000000.0, 0.01, 4),
 	timestamp: new Date(Date.now() - id * 864e5),
 	type: Math.floor(Math.random() * 2) === 0 ? 'incoming' : 'outgoing'
 });

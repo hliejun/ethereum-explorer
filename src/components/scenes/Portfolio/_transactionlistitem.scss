@@ -6,6 +6,7 @@ $list-item-content-hover: #202124;
 $list-item-content: #202124;
 $list-item-hint-hover: #202124;
 $list-item-hint: #5f6368;
+$list-item-negative: #e57373;
 
 .transaction-list-item {
   @include card;
@@ -41,8 +42,8 @@ $list-item-hint: #5f6368;
   align-items: center;
   display: flex;
   flex-shrink: 1;
-  justify-content: flex-start;
-  margin-right: 1em;
+  justify-content: flex-end;
+  margin-left: 1em;
   .overline__glyph {
     min-height: 0.85em;
     min-width: 0.85em;
@@ -61,7 +62,7 @@ $list-item-hint: #5f6368;
   align-items: center;
   display: flex;
   font-size: 1.2em;
-  justify-content: flex-start;
+  justify-content: flex-end;
   overflow: hidden;
 }
 
@@ -71,34 +72,51 @@ $list-item-hint: #5f6368;
   max-width: 100%;
 }
 
-.transaction-list-item__separator {
-  @include ellipsize;
-  color: $list-item-hint;
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 0;
-  margin: 0 0.5em;
+.transaction-list-item__amount--negative {
+  color: $list-item-negative;
 }
 
 .transaction-list-item__ethereum {
   color: $list-item-content;
-  flex-shrink: 1;
-  min-width: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .transaction-list-item__section {
   display: flex;
   flex-direction: column;
   margin-top: 0.5em;
+  overflow: hidden;
+}
+
+.transaction-list-item__section--source {
+  flex-shrink: 0;
+  min-width: 5em;
+}
+
+.transaction-list-item__section--address {
+  flex-shrink: 1;
+  margin-left: 2em;
+  min-width: 0;
 }
 
 .transaction-list-item__info-label {
   color: $list-item-hint;
   font-size: 0.6em;
+  white-space: nowrap;
+}
+
+.transaction-list-item__description {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .transaction-list-item__address {
   @include ellipsize;
   color: $list-item-content;
+  flex-grow: 0;
+  flex-shrink: 1;
   font-size: 0.85rem;
 }
