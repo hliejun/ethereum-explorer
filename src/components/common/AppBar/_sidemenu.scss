@@ -9,20 +9,6 @@ $side-bar-glyph-tint: #202124;
 $side-bar-hover: #202124;
 $side-bar-labels: #202124;
 
-.app-bar__menu-portal {
-  display: none;
-  max-height: 1;
-  max-width: 1;
-}
-
-.app-bar__menu-mask {
-  align-items: flex-start;
-  display: flex;
-  height: inherit;
-  justify-content: flex-start;
-  width: inherit;
-}
-
 .side-menu {
   @include elevation(3);
   -webkit-overflow-scrolling: touch;
@@ -95,6 +81,7 @@ $side-bar-labels: #202124;
 
 .side-menu__item {
   @include ellipsize-content('span');
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   align-items: center;
   background-color: transparent;
   border-radius: 0.25em;
@@ -106,10 +93,11 @@ $side-bar-labels: #202124;
   font-size: 1em;
   height: 3em;
   text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: 100%;
 }
 
-.side-menu__item:hover {
+.no-touch .side-menu__item:hover {
   background-color: $side-bar-background-hover;
   color: $side-bar-content-hover;
   fill: $side-bar-content-hover;

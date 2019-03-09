@@ -1,38 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clns from 'classnames';
 
-const FormContext = React.createContext({
-	messages: {},
-	onBlur: null,
-	onChange: null,
-	values: {}
-});
+import { FormContext } from './Form';
 
-const Form = ({
+const ControlledForm = ({
 	children,
 	className,
 	defaultValues,
 	forwardedRef,
 	id,
+	isSubmitting,
+	messages,
 	onChange: handleChange,
+	onMessages: handleMessages,
 	onReset: handleReset,
 	onSubmit: handleSubmit,
 	validate,
+	values,
 	...passthroughProps
 }) => {
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [messages, setMessages] = useState({});
-	const [values, setValues] = useState(defaultValues);
-
 	const onChange = fieldName => nextValue => {
 		const updatedValues = {
 			...values,
 			[fieldName]: nextValue
 		};
-		setValues(updatedValues);
-		if (handleChange) {
-			handleChange(updatedValues, fieldName);
-		}
+		handleChange(updatedValues, fieldName);
 	};
 
 	const onBlur = fieldName => () => {
@@ -44,14 +36,13 @@ const Form = ({
 			...messages,
 			...nextMessages
 		};
-		setMessages(updatedMessages);
+		if (handleMessages) {
+			handleMessages(updatedMessages);
+		}
 	};
 
 	const onReset = event => {
 		event.preventDefault();
-		setMessages({});
-		setIsSubmitting(false);
-		setValues(defaultValues);
 		if (handleReset) {
 			handleReset(defaultValues);
 		}
@@ -64,7 +55,7 @@ const Form = ({
 			key => currentMessages[key] == null && delete currentMessages[key]
 		);
 		if (Object.keys(currentMessages).length === 0 && handleSubmit) {
-			handleSubmit(values, { setIsSubmitting, setMessages });
+			handleSubmit(values);
 		}
 	};
 
@@ -91,4 +82,4 @@ const Form = ({
 	);
 };
 
-export { Form, FormContext };
+export default ControlledForm;

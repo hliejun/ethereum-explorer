@@ -7,20 +7,6 @@ import store from './redux/store';
 
 import './assets/styles.scss';
 
-// TODO: Null checks and immutables
-
-// TODO: Move props destructuring for func comp. to param
-
-// TODO: Props check
-
-// TODO: Optimise with pure / memoised components
-
-// TODO: Check for active side effects to be removed or throttled
-
-// TODO: Use lazy + suspense to split unshared components
-
-// TODO: Jest specs
-
 WebFont.load({
 	google: {
 		families: [
@@ -30,6 +16,15 @@ WebFont.load({
 		]
 	}
 });
+
+const isTouchEnabled =
+  'ontouchstart' in window ||
+  navigator.maxTouchPoints > 0 ||
+  navigator.msMaxTouchPoints > 0;
+
+if (!isTouchEnabled) {
+	document.documentElement.classList.add('no-touch');
+}
 
 const rootNode = document.getElementById('app-root');
 

@@ -1,3 +1,7 @@
+@import '../../../assets/mixins';
+
+$modal-content: #202124;
+
 .portfolio__section--right {
   flex-grow: 1;
   flex-shrink: 1;
@@ -18,9 +22,75 @@
   height: calc(100% - 3rem);
 }
 
+.portfolio__modal-portal {
+  display: none;
+}
+
+.portfolio__modal-container {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.portfolio__modal {
+  @include card;
+  @include elevation(3);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  left: 50%;
+  margin: auto;
+  max-height: 80%;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 80%;
+}
+
+.portfolio__modal-header {
+  @include ellipsize-content('.portfolio__modal-title');
+  color: $modal-content;
+  display: flex;
+  flex-direction: column;
+  padding: 2em 2em 0.25em 2em;
+}
+
+.portfolio__modal-title {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.portfolio__modal-subtitle {
+  flex-shrink: 1;
+  font-size: 1rem;
+  margin-top: 0.25em;
+  min-height: 0;
+}
+
+.portfolio__modal-form {
+  height: 100%;
+  padding: 1em 2em;
+  width: 100%;
+}
+
+.portfolio__combined-form {
+  @include card;
+  @include elevation(1);
+}
+
 @media only screen and (min-width: 1440px) and (orientation: landscape) {
   .portfolio__section--right {
     margin-left: 2em;
+  }
+}
+
+@media only screen and (min-width: 1440px) and (orientation: landscape) {
+  .portfolio__modal {
+    min-width: 22.5vw;
+  }
+  .portfolio__section--left {
+    max-width: 22.5vw;
   }
 }
 
@@ -28,12 +98,22 @@
   .portfolio__body {
     display: flex;
   }
+  .portfolio__modal,
+  .portfolio__section--left {
+    max-width: 400px;
+  }
   .portfolio__section--right {
-    height: calc(100vh - 10rem);
+    height: calc(100vh - 8rem);
     min-width: 30rem;
   }
   .portfolio__section-label {
     font-size: 1.2em;
     margin: 1em;
+  }
+}
+
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .portfolio__modal {
+    width: 90%;
   }
 }

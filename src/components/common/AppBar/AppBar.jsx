@@ -1,85 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import clns from 'classnames';
 
-import { RouterContext } from '../../Router';
 import Modal from '../Modal';
 import SideMenu from './SideMenu';
 
 import Back from '../../../assets/icons/back.svg';
 import Menu from '../../../assets/icons/menu.svg';
 
-class AppBar extends React.Component {
-  static contextType = RouterContext;
+import './_appbar.scss';
 
-  constructor(props) {
-  	super(props);
-  	this.state = {
-  		showMenu: false
-  	};
-  }
+const LeftButton = ({ goBack, toggleMenu, useBackLink }) => {
+	const Glyph = useBackLink ? Back : Menu;
+	return (
+		<button
+			className={clns('app-bar__button', {
+				'app-bar__button--back': useBackLink,
+				'app-bar__button--menu': !useBackLink
+			})}
+			onClick={useBackLink ? goBack : toggleMenu}
+			type="button"
+		>
+			<Glyph className="app-bar__button-glyph" />
+		</button>
+	);
+};
 
-  toggleMenu = () => {
-  	this.setState(currentState => ({ showMenu: !currentState.showMenu }));
-  };
+const SideMenuModal = ({ toggleMenu }) => (
+	<button className="app-bar__menu-portal" onClick={toggleMenu} type="button">
+		<Modal>
+			<SideMenu className="app-bar__side-menu" />
+		</Modal>
+	</button>
+);
 
-  renderLeftButton = () => {
-  	const { history } = this.context;
-  	const { useBackLink } = this.props;
-  	const Glyph = useBackLink ? Back : Menu;
-  	return (
-  		<button
-  			className={clns('app-bar__button', {
-  				'app-bar__button--back': useBackLink,
-  				'app-bar__button--menu': !useBackLink
-  			})}
-  			onClick={useBackLink ? history.goBack : this.toggleMenu}
-  			type="button"
-  		>
-  			<Glyph className="app-bar__button-glyph" />
-  		</button>
-  	);
-  };
+const HeaderText = ({ subtitle, title }) => (
+	<div className="app-bar__title-set">
+		<span className="title-set__title">{title}</span>
+		<span className="title-set__subtitle">{subtitle}</span>
+	</div>
+);
 
-  renderSideMenuModal = () => (
-  	<button
-  		className="app-bar__menu-portal"
-  		onClick={this.toggleMenu}
-  		type="button"
-  	>
-  		<Modal>
-  			<div className="app-bar__modal-mask">
-  				<SideMenu className="app-bar__side-menu" />
-  			</div>
-  		</Modal>
-  	</button>
-  );
+const PageOptions = ({ options }) => (
+	<div className="app-bar__options">
+		{options.map(option => (
+			<button
+				className="app-bar__button app-bar__button--option"
+				key={option.key}
+				onClick={option.handler}
+				type="button"
+			>
+				<option.Icon className="app-bar__button-glyph" />
+			</button>
+		))}
+	</div>
+);
 
-  render() {
-  	const { title, subtitle, options, className } = this.props;
-  	const { showMenu } = this.state;
-  	return (
-  		<div className={clns('app-bar', 'app-bar--normal', className)}>
-  			{this.renderLeftButton()}
-  			<div className="app-bar__title-set">
-  				<span className="title-set__title">{title}</span>
-  				<span className="title-set__subtitle">{subtitle}</span>
-  			</div>
-  			<div className="app-bar__options">
-  				{options.map(option => (
-  					<button
-  						className="app-bar__button app-bar__button--option"
-  						key={option.key}
-  						onClick={option.handler}
-  						type="button"
-  					>
-  						<option.Icon className="app-bar__button-glyph" />
-  					</button>
-  				))}
-  			</div>
-  			{showMenu && this.renderSideMenuModal()}
-  		</div>
-  	);
-  }
-}
+const AppBar = withRouter(
+	({ className, history, options, subtitle, title, useBackLink }) => {
+		const [showMenu, setShowMenu] = useState(false);
+		const toggleMenu = () => setShowMenu(!showMenu);
+		return (
+			<div className={clns('app-bar', 'app-bar--normal', className)}>
+				<LeftButton
+					goBack={history.goBack}
+					toggleMenu={toggleMenu}
+					useBackLink={useBackLink}
+				/>
+				<HeaderText title={title} subtitle={subtitle} />
+				<PageOptions options={options} />
+				{showMenu && <SideMenuModal toggleMenu={toggleMenu} />}
+			</div>
+		);
+	}
+);
 
 export default AppBar;

@@ -8,11 +8,11 @@ import Send from '../../../assets/icons/send.svg';
 
 const TransactionDashboard = ({
 	balance,
+	className,
 	code,
 	receivedEth,
 	sentEth,
-	totalEth,
-	className
+	totalEth
 }) => {
 	const mainItem = {
 		amount: `$${balance}`,

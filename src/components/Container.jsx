@@ -15,10 +15,10 @@ const attachOptions = Page => options => props => (
 );
 
 const initialState = {
-	useBackLink: false,
-	pageTitle: 'Tx Ethereum Explorer',
+	pageOptions: [],
 	pageSubtitle: null,
-	pageOptions: []
+	pageTitle: 'Tx Ethereum Explorer',
+	useBackLink: false
 };
 
 const Container = ({ match }) => {
@@ -35,20 +35,20 @@ const Container = ({ match }) => {
 	};
 
 	const options = {
+		reset: resetAppBar,
 		setBackLink: setUseBackLink,
-		setTitle: setPageTitle,
-		setSubtitle: setPageSubtitle,
 		setOptions: setPageOptions,
-		reset: resetAppBar
+		setSubtitle: setPageSubtitle,
+		setTitle: setPageTitle
 	};
 
 	return (
 		<div className="container">
 			<AppBar
-				useBackLink={useBackLink}
 				options={pageOptions}
 				subtitle={pageSubtitle}
 				title={pageTitle}
+				useBackLink={useBackLink}
 			/>
 			<Switch>
 				<Route

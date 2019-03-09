@@ -10,12 +10,12 @@ $app-bar-content: #202124;
   background-color: $app-bar-background;
   display: flex;
   left: 0;
+  overflow: hidden;
   padding: 1em 0 1em;
   right: 0;
   top: 0;
   width: 100%;
   z-index: 10;
-  overflow: hidden;
 }
 
 .app-bar--normal {
@@ -32,6 +32,7 @@ $app-bar-content: #202124;
 }
 
 .app-bar__button {
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   align-items: center;
   background-color: transparent;
   border: 0;
@@ -40,9 +41,10 @@ $app-bar-content: #202124;
   line-height: 0;
   overflow: hidden;
   text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.app-bar__button:hover {
+.no-touch .app-bar__button:hover {
   background-color: $app-bar-background-hover;
 }
 
@@ -76,7 +78,13 @@ $app-bar-content: #202124;
   font-weight: 400;
 }
 
-@media only screen and (max-width: 1023px) {
+.app-bar__menu-portal {
+  display: none;
+  max-height: 1;
+  max-width: 1;
+}
+
+@media only screen and (max-width: 1439px) {
   .app-bar {
     @include elevation(2);
   }

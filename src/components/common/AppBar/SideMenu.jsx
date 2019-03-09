@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import clns from 'classnames';
 
-import stopScrollPropagation from '../stopScrollPropagation';
+import { stopScrollPropagation } from '../eventHandling';
 
 import About from '../../../assets/icons/about.svg';
 import Home from '../../../assets/icons/home.svg';
@@ -16,9 +16,9 @@ import Terms from '../../../assets/icons/terms.svg';
 import Tx from '../../../assets/icons/tx.svg';
 import Web from '../../../assets/icons/link.svg';
 
-// TODO: Animate menu in and out (using transition events for mount/unmount)
+import './_sidemenu.scss';
 
-const MenuHeader = ({ icon: Icon, link, title, className }) => (
+const MenuHeader = ({ className, icon: Icon, link, title }) => (
 	<div className={clns('side-menu__header', className)}>
 		<Link to={link}>
 			<Icon className="header__glyph" />
@@ -27,14 +27,14 @@ const MenuHeader = ({ icon: Icon, link, title, className }) => (
 	</div>
 );
 
-const MenuSection = ({ label, children, className }) => (
+const MenuSection = ({ children, className, label }) => (
 	<div className={clns('side-menu__section', className)}>
 		{label != null && <span className="side-menu__section-label">{label}</span>}
 		<div className="section__items">{children}</div>
 	</div>
 );
 
-const MenuItem = ({ icon: Icon, label, onClick, className }) => (
+const MenuItem = ({ className, icon: Icon, label, onClick }) => (
 	<button
 		className={clns('side-menu__item', className)}
 		onClick={onClick}
@@ -49,11 +49,18 @@ const LinkedMenuItem = withRouter(({ history, link, ...passthroughProps }) => (
 	<MenuItem {...passthroughProps} onClick={() => history.push(link)} />
 ));
 
+const newTab = url => () => window.open(url, '_blank');
+
 const SideMenu = React.forwardRef(({ className, onLogout }, ref) => (
-	<div className={clns('side-menu', className)} ref={ref}>
+	<div
+		className={clns('side-menu', className)}
+		onClick={event => event.stopPropagation()}
+		ref={ref}
+		role="presentation"
+	>
 		<MenuHeader icon={Tx} link="/app" title="TX ETHEREUM EXPLORER" />
 		<div className="side-menu__sections">
-			<MenuSection label={null}>
+			<MenuSection>
 				<LinkedMenuItem icon={Home} label="Home" link="/app" />
 				<LinkedMenuItem
 					icon={Portfolio}
@@ -63,32 +70,28 @@ const SideMenu = React.forwardRef(({ className, onLogout }, ref) => (
 				<LinkedMenuItem icon={Profile} label="Profile" link="/app/profile" />
 			</MenuSection>
 			<MenuSection label="MEDIA">
-				<MenuItem
-					icon={About}
-					label="About"
-					onClick={() => window.open('/landing', '_blank')}
-				/>
+				<MenuItem icon={About} label="About" onClick={newTab('/landing')} />
 				<MenuItem
 					icon={Repository}
 					label="Repository"
-					onClick={() => window.open('https://github.com/hliejun', '_blank')}
+					onClick={newTab('https://github.com/hliejun')}
 				/>
 				<MenuItem
 					icon={Web}
 					label="@hliejun"
-					onClick={() => window.open('https://hliejun.github.io', '_blank')}
+					onClick={newTab('https://hliejun.github.io')}
 				/>
 			</MenuSection>
 			<MenuSection label="LEGAL">
 				<MenuItem
 					icon={Privacy}
 					label="Privacy"
-					onClick={() => window.open('https://www.google.com', '_blank')}
+					onClick={newTab('https://www.google.com')}
 				/>
 				<MenuItem
 					icon={Terms}
 					label="Terms of Service"
-					onClick={() => window.open('https://www.google.com', '_blank')}
+					onClick={newTab('https://www.google.com')}
 				/>
 			</MenuSection>
 			<MenuSection label="APP">

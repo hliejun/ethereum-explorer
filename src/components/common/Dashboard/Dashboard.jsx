@@ -3,9 +3,9 @@ import clns from 'classnames';
 
 import Currency from '../Currency';
 
-// TODO: Add error boundary and async loaders
+import './_dashboard.scss';
 
-const Section = ({ amount, classLabel, code, label, className }) => (
+const Section = ({ amount, classLabel, className, code, label }) => (
 	<div
 		className={clns(
 			'dashboard__section',
@@ -25,10 +25,10 @@ const Section = ({ amount, classLabel, code, label, className }) => (
 const SubSection = ({
 	amount,
 	classLabel,
+	className,
 	code,
 	icon: Icon,
-	label,
-	className
+	label
 }) => (
 	<div
 		className={clns(
@@ -49,7 +49,7 @@ const SubSection = ({
 	</div>
 );
 
-const Dashboard = ({ mainItem, subItems, className }) => (
+const Dashboard = ({ className, mainItem, subItems }) => (
 	<div className={clns('dashboard', className)}>
 		<Section {...mainItem} />
 		<div className="dashboard__sub-sections">

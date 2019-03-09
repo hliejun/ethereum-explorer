@@ -1,0 +1,207 @@
+$field-background: white;
+$field-border: rgba(black, 0.12);
+$field-content: #202124;
+$field-hover-tint: #e0f2f1;
+$field-label: rgba(black, 0.26);
+$field-selected-tint: #4db6ac;
+$field-unselected-tint: #eee;
+
+.form {
+  fieldset {
+    border: 1px solid $field-border;
+    margin-bottom: 1em;
+  }
+  legend {
+    color: $field-label;
+    font-size: 0.75em;
+    text-transform: capitalize;
+  }
+}
+
+.form__field-label {
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  align-items: center;
+  display: inline-flex;
+  justify-content: flex-start;
+  margin: 0.25em 1.5em 0.25em 0;
+  text-transform: capitalize;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: fit-content;
+}
+
+.form__field-label:not(.form__field-label--checkbox):not(.form__field-label--radio) {
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0.25em 0;
+  .form__field {
+    margin: 0.5em 0;
+  }
+}
+
+.form__field {
+  margin-right: 0.25em;
+}
+
+/* Select Type */
+
+.form__field-label--select {
+  color: $field-label;
+  min-width: 10em;
+  position: relative;
+}
+
+.form__field-label--select span {
+  font-size: 0.75em;
+}
+
+// Credit: https://codepen.io/pudgereyem/pen/PqBxQx
+
+.form__field-label--select:after {
+  border-color: $field-border transparent transparent transparent;
+  border-style: solid;
+  border-width: 0.25em;
+  bottom: 1.25em;
+  content: '';
+  height: 0;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0.5em;
+  width: 0;
+}
+
+.form__field--select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border-color: $field-border;
+  border-radius: 0;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  color: $field-content;
+  cursor: pointer;
+  padding: 0.25em 0;
+  width: 100%;
+}
+
+/* Checkbox Type */
+
+// Credit: https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+
+.form__field-label--checkbox {
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-size: 1em;
+  padding-left: 1.75em;
+  position: relative;
+  user-select: none;
+}
+
+.form__field--checkbox {
+  cursor: pointer;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  width: 0;
+}
+
+.form__field-themed-check {
+  background-color: $field-unselected-tint;
+  border-radius: 0.1em;
+  border: 1px solid $field-border;
+  height: 1.1em;
+  left: 0.15em;
+  position: absolute;
+  top: 0.15em;
+  width: 1.1em;
+}
+
+.no-touch .form__field-label:hover .form__field-themed-check {
+  background-color: $field-hover-tint;
+}
+
+.form__field-label--checkbox input:checked ~ .form__field-themed-check {
+  background-color: $field-selected-tint;
+}
+
+.form__field-themed-check:after {
+  content: '';
+  display: none;
+  position: absolute;
+}
+
+.form__field-label--checkbox input:checked ~ .form__field-themed-check:after {
+  display: block;
+}
+
+.form__field-label--checkbox .form__field-themed-check:after {
+  -webkit-transform: rotate(45deg);
+  border-color: $field-background;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  height: 0.6em;
+  left: 0.3em;
+  top: 0;
+  transform: rotate(45deg);
+  width: 0.3em;
+}
+
+/* Radio Type */
+
+.form__field-label--radio {
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-size: 1em;
+  padding-left: 1.75em;
+  position: relative;
+  user-select: none;
+}
+
+.form__field--radio {
+  cursor: pointer;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  width: 0;
+}
+
+.form__field-themed-dot {
+  background-color: $field-unselected-tint;
+  border-radius: 50%;
+  border: 1px solid $field-border;
+  height: 1.1em;
+  left: 0.15em;
+  position: absolute;
+  top: 0.15em;
+  width: 1.1em;
+}
+
+.no-touch .form__field-label:hover .form__field-themed-dot {
+  background-color: $field-hover-tint;
+}
+
+.form__field-label--radio input:checked ~ .form__field-themed-dot {
+  border: 1px solid $field-selected-tint;
+}
+
+.form__field-themed-dot:after {
+  content: '';
+  display: none;
+  position: absolute;
+}
+
+.form__field-label--radio input:checked ~ .form__field-themed-dot:after {
+  display: block;
+}
+
+.form__field-label--radio .form__field-themed-dot:after {
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  background-color: $field-selected-tint;
+  border-radius: 50%;
+  height: 0.75em;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 0.75em;
+}

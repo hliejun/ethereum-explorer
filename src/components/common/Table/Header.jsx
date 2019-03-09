@@ -4,11 +4,14 @@ import clns from 'classnames';
 import Ascending from '../../../assets/icons/ascending.svg';
 import Sortable from '../../../assets/icons/sortable.svg';
 
-const Header = ({ fields, onSort, sort, className }) => {
+import './_header.scss';
+
+const Header = ({ className, fields, onSort, sort }) => {
 	const { fieldName, order } = sort;
+	const glyphClass = 'table-header__glyph';
 	const headerCells = fields.map(field => {
 		const { description, icon: Icon, isSortable, label, name, unit } = field;
-		const { maxWidth, minWidth, width, shrinkIndex, growIndex } = field;
+		const { growIndex, maxWidth, minWidth, shrinkIndex, width } = field;
 
 		let SortIcon = Sortable;
 		let isRotated = false;
@@ -16,7 +19,7 @@ const Header = ({ fields, onSort, sort, className }) => {
 			SortIcon = null;
 		} else if (fieldName === name) {
 			SortIcon = Ascending;
-			isRotated = order === 'DESC';
+			isRotated = order === 'descending';
 		}
 
 		const style = {
@@ -37,21 +40,17 @@ const Header = ({ fields, onSort, sort, className }) => {
 				style={style}
 				type="button"
 			>
-				{Icon && <Icon className="table-header__glyph" />}
+				{Icon && <Icon className={glyphClass} />}
 				<span className="table-header__label">
 					{label}
 					{unit && ` (${unit})`}
 				</span>
 				{SortIcon && (
 					<SortIcon
-						className={clns(
-							'table-header__glyph',
-							'table-header__glyph--sort',
-							{
-								'table-header__glyph--rotated': isRotated,
-								'table-header__glyph--passive': fieldName !== name
-							}
-						)}
+						className={clns(glyphClass, `${glyphClass}--sort`, {
+							[`${glyphClass}--rotated`]: isRotated,
+							[`${glyphClass}--passive`]: fieldName !== name
+						})}
 					/>
 				)}
 				<span className="table-header__tooltip">{description}</span>

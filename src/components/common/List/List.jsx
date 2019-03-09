@@ -2,9 +2,14 @@ import React from 'react';
 import { Waypoint } from 'react-waypoint';
 import clns from 'classnames';
 
-// TODO: Add error boundary and async loaders
-
 const enumerate = size => [...Array(size + 1).keys()].slice(1);
+
+const getWaypointOffset = (unit, fontSize) => (offset, padding) => {
+	const unitOffset = offset - padding;
+	const waypointOffset =
+    unit === 'rem' || unit === 'em' ? unitOffset * fontSize : unitOffset;
+	return waypointOffset;
+};
 
 class List extends React.Component {
 	constructor(props) {
@@ -16,16 +21,16 @@ class List extends React.Component {
 
   getListItems = () => {
   	const result = [];
-  	const { pageMap, dataMap } = this.props;
+  	const { dataMap, pageMap } = this.props;
   	const { displayBuffer } = this.state;
-
   	displayBuffer.forEach(index => {
-  		const pageContent = pageMap[index];
-  		pageContent.forEach(id => {
-  			result.push({ ...dataMap[id], id });
-  		});
+  		const pageContent = pageMap[index - 1];
+  		if (pageContent != null) {
+  			pageContent.forEach(id => {
+  				result.push({ ...dataMap[id], id });
+  			});
+  		}
   	});
-
   	return result;
   };
 
@@ -57,38 +62,30 @@ class List extends React.Component {
   render() {
   	const {
   		bottomOffset,
+  		className,
   		fontSize,
-  		itemRenderer: ListItem,
   		pageMap,
+  		pageSize,
+  		render: ListItem,
   		topOffset,
   		unit,
-  		unitBufferHeight,
-  		className
+  		unitBufferHeight
   	} = this.props;
   	const { displayBuffer } = this.state;
 
+  	const pagesCount = Object.keys(pageMap).length;
   	const listObjects = this.getListItems();
-  	const pageSize = pageMap[1].length;
 
-  	const prevBufferPageIndex = displayBuffer[0] - 1;
-  	const prevItemsCount = prevBufferPageIndex * pageSize;
+  	const prevItemsCount = (displayBuffer[0] - 1) * pageSize;
   	const topPadding = unitBufferHeight * prevItemsCount;
 
-  	const pagesCount = Object.keys(pageMap).length;
   	const lastBufferPageIndex = displayBuffer[displayBuffer.length - 1];
   	const nextItemsCount = (pagesCount - lastBufferPageIndex) * pageSize;
   	const bottomPadding = unitBufferHeight * nextItemsCount;
 
-  	let waypointTopOffset = -topPadding + topOffset;
-  	waypointTopOffset =
-      unit === 'rem' || unit === 'em'
-      	? waypointTopOffset * fontSize
-      	: waypointTopOffset;
-  	let waypointBottomOffset = -bottomPadding + bottomOffset;
-  	waypointBottomOffset =
-      unit === 'rem' || unit === 'em'
-      	? waypointBottomOffset * fontSize
-      	: waypointBottomOffset;
+  	const calculateOffset = getWaypointOffset(unit, fontSize);
+  	const waypointTopOffset = calculateOffset(topOffset, topPadding);
+  	const waypointBottomOffset = calculateOffset(bottomOffset, bottomPadding);
 
   	return (
   		<div className={clns('list', className)}>

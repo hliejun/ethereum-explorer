@@ -1,7 +1,9 @@
 import React from 'react';
 import Day from 'dayjs';
 
-const getTransactionViewModel = ({
+import './_transactiontableitem.scss';
+
+const getTableViewModel = ({
 	address,
 	cashAmount,
 	ethAmount,
@@ -51,45 +53,45 @@ const getTransactionViewModel = ({
 	}
 });
 
-const getTransactionFields = code => [
+const getTableFields = code => [
 	{
-		name: 'date',
-		label: 'Date',
 		description: 'The date (DD/MM/YY) and time of a transaction.',
 		isSortable: true,
+		label: 'Date',
 		minWidth: '15rem',
+		name: 'date',
 		width: '20%'
 	},
 	{
-		name: 'type',
-		label: 'Type',
 		description:
       'Whether a transaction is incoming (receiving) or outgoing (sending).',
 		isSortable: false,
+		label: 'Type',
 		minWidth: '10rem',
+		name: 'type',
 		width: '15%'
 	},
 	{
-		name: 'amount',
-		label: 'Amount',
-		unit: code,
 		description:
       'The credit/debit transacted in both currency and ethereum unit.',
 		isSortable: true,
+		label: 'Amount',
 		minWidth: '0',
-		width: '30%',
-		shrinkIndex: 0.1
+		name: 'amount',
+		shrinkIndex: 0.1,
+		unit: code,
+		width: '30%'
 	},
 	{
-		name: 'address',
-		label: 'Address',
 		description:
       'The other party\'s ethereum address associated with a transaction.',
 		isSortable: false,
+		label: 'Address',
 		minWidth: '0',
-		width: '35%',
-		shrinkIndex: 1
+		name: 'address',
+		shrinkIndex: 1,
+		width: '35%'
 	}
 ];
 
-export { getTransactionViewModel, getTransactionFields };
+export { getTableFields, getTableViewModel };

@@ -15,6 +15,7 @@ $table-tooltip-content: white;
 
 .table-header__cell {
   @include ellipsize-content('.table-header__label');
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   align-items: center;
   background-color: transparent;
   border: 0;
@@ -28,6 +29,7 @@ $table-tooltip-content: white;
   justify-content: flex-end;
   padding: 1rem 3rem 1rem 1rem;
   position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .table-header__cell:first-child {
@@ -38,7 +40,7 @@ $table-tooltip-content: white;
   }
 }
 
-.table-header__cell:hover {
+.no-touch .table-header__cell:hover {
   color: $table-header-content-hover;
   fill: $table-header-content-hover;
   .table-header__glyph--passive {
@@ -50,7 +52,7 @@ $table-tooltip-content: white;
   }
 }
 
-.table-header__cell:first-child:hover {
+.no-touch .table-header__cell:first-child:hover {
   .table-header__tooltip {
     left: 0;
   }

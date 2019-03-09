@@ -8,7 +8,9 @@ import Currency from '../../common/Currency';
 import Receive from '../../../assets/icons/receive.svg';
 import Send from '../../../assets/icons/send.svg';
 
-const Overline = ({ type, className }) => {
+import './_transactionlistitem.scss';
+
+const Overline = ({ className, type }) => {
 	const isOutgoing = type === 'outgoing';
 	const Icon = isOutgoing ? Send : Receive;
 	const label = isOutgoing ? 'OUTGOING' : 'INCOMING';
@@ -20,7 +22,7 @@ const Overline = ({ type, className }) => {
 	);
 };
 
-const Meta = ({ timestamp, className }) => {
+const Meta = ({ className, timestamp }) => {
 	const date = Day(timestamp);
 	const isSameYear = Day().isSame(date, 'year');
 	const dateFormat = isSameYear ? 'D/M h:mmA' : 'D/M/YY h:mmA';
@@ -31,7 +33,7 @@ const Meta = ({ timestamp, className }) => {
 	);
 };
 
-const AddressSection = ({ address, type, className }) => {
+const AddressSection = ({ address, className, type }) => {
 	const isOutgoing = type === 'outgoing';
 	const label = isOutgoing ? 'SENT TO' : 'RECEIVED FROM';
 	return (
@@ -56,12 +58,12 @@ const TransactionListItem = withRouter(
 const ListItem = ({
 	address,
 	cashAmount,
+	className,
 	code,
 	ethAmount,
 	onClick,
 	timestamp,
-	type,
-	className
+	type
 }) => (
 	<button
 		className={clns('transaction-list-item', className)}
@@ -78,7 +80,7 @@ const ListItem = ({
 				className="transaction-list-item__amount"
 				code={code}
 			/>
-			<span className="transaction-list-item__separator monotype">/</span>
+			<span className="transaction-list-item__separator monotype">=</span>
 			<Currency
 				amount={ethAmount}
 				className="transaction-list-item__ethereum"
@@ -86,7 +88,7 @@ const ListItem = ({
 			/>
 		</div>
 		<div className="transaction-list-item__description">
-			<AddressSection type={type} address={address} />
+			<AddressSection address={address} type={type} />
 		</div>
 	</button>
 );

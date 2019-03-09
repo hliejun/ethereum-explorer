@@ -29,10 +29,28 @@
     "import/imports-first": ["error", "absolute-first"],
     "import/newline-after-import": "error",
     "indent": ["error", "tab"],
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "components": ["label", "select"],
+        "required": {
+          "every": ["nesting", "id"]
+        },
+        "allowChildren": true
+      }
+    ],
     "linebreak-style": ["error", "unix"],
     "no-underscore-dangle": 0,
     "quotes": ["error", "single"],
     "react-hooks/rules-of-hooks": "error",
+    "react/button-has-type": [
+      "error",
+      {
+        "button": true,
+        "reset": true,
+        "submit": true
+      }
+    ],
     "react/jsx-filename-extension": [
       1,
       {

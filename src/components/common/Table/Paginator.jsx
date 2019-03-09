@@ -6,7 +6,9 @@ import Last from '../../../assets/icons/last.svg';
 import Next from '../../../assets/icons/next.svg';
 import Prev from '../../../assets/icons/prev.svg';
 
-const Paginator = ({ currentPage, lastPage, onPageChange, className }) => {
+import './_paginator.scss';
+
+const Paginator = ({ className, currentPage, lastPage, onPageChange }) => {
 	const manualPageInput = React.createRef();
 	const onManualPageChange = event => {
 		const manualPage = parseInt(manualPageInput.current.value, 10);

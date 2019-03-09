@@ -4,31 +4,32 @@ import throttle from 'lodash.throttle';
 import clns from 'classnames';
 
 import { RouterContext } from '../../Router';
-import TransactionDashboard from './TransactionDashboard';
 
 import {
-	stubbedPagination,
+	bufferSize,
+	pageSize,
+	stubbedIds,
 	stubbedSummary,
 	stubbedTransactions
 } from './_stubbedValues';
-import {
-	getTransactionViewModel,
-	getTransactionFields
-} from './TransactionTableModel';
+import { filter, paginate, sort } from './helper';
+
 import List from '../../common/List';
+import Modal from '../../common/Modal';
 import Table from '../../common/Table';
+
+import { getTableViewModel, getTableFields } from './TransactionTableModel';
+import CombinedForm from './CombinedForm';
+import FilterForm from './FilterForm';
+import PortfolioModal from './PortfolioModal';
+import SortForm from './SortForm';
+import TransactionDashboard from './TransactionDashboard';
 import TransactionListItem from './TransactionListItem';
 
 import Filter from '../../../assets/icons/filter.svg';
 import Sort from '../../../assets/icons/sort.svg';
 
-// TODO: Add sort and filter form modals
-
-// TODO: Add filter state ({ filters: receiving: true, sending: false })
-
-// TODO: Perform local sorting and filtering in action dispatch
-
-const bufferSize = 2;
+import './_portfolio.scss';
 
 const stubbedDashboard = (
 	<TransactionDashboard
@@ -41,6 +42,24 @@ const stubbedDashboard = (
 	/>
 );
 
+const defaultFilterData = {
+	ethereum: true,
+	filter: 'type',
+	incoming: true,
+	outgoing: true,
+	xcoin: true
+};
+
+const defaultSortData = {
+	order: 'descending',
+	sort: 'date'
+};
+
+const defaultFormData = {
+	...defaultFilterData,
+	...defaultSortData
+};
+
 class Portfolio extends React.Component {
   static contextType = RouterContext;
 
@@ -48,23 +67,24 @@ class Portfolio extends React.Component {
   	super(props);
   	this.throttledUpdateDimensions = throttle(this.updateDimensions, 600);
   	this.state = {
-  		title: 'Portfolio',
-  		subtitle: null,
+  		currentTablePage: 1,
+  		formData: { ...defaultFormData },
+  		isMobile: false,
+  		isSubmitting: false,
   		options: [
   			{ key: 'filter', Icon: Filter, handler: this.toggleFilterModal },
   			{ key: 'sort', Icon: Sort, handler: this.toggleSortModal }
   		],
-  		isMobile: false,
   		showFilterModal: false,
   		showSortModal: false,
-  		sort: { fieldName: 'date', order: 'DESC' },
-  		currentTablePage: 1
+  		subtitle: null,
+  		title: 'Portfolio'
   	};
   }
 
   componentDidMount() {
-  	const { setTitle, setSubtitle, setOptions } = this.props;
-  	const { title, subtitle, options } = this.state;
+  	const { setOptions, setSubtitle, setTitle } = this.props;
+  	const { options, subtitle, title } = this.state;
   	setTitle(title);
   	setSubtitle(subtitle);
   	setOptions(options);
@@ -79,37 +99,99 @@ class Portfolio extends React.Component {
   	window.removeEventListener('resize', this.throttledUpdateDimensions);
   }
 
-  /* Actions */
+  /* State Modifiers */
 
   toggleFilterModal = () => {
-  	this.setState(state => ({
-  		showFilterModal: !state.showFilterModal
+  	this.setState(({ showFilterModal, showSortModal }) => ({
+  		showFilterModal: !showFilterModal,
+  		showSortModal: showFilterModal && showSortModal
   	}));
   };
 
   toggleSortModal = () => {
-  	this.setState(state => ({
-  		showSortModal: !state.showSortModal
+  	this.setState(({ showFilterModal, showSortModal }) => ({
+  		showFilterModal: showSortModal && showFilterModal,
+  		showSortModal: !showSortModal
   	}));
   };
 
-  toggleSort = (fieldName, order) => {
-  	this.setState(state => ({
-  		sort: {
-  			fieldName,
+  setFormData = values => {
+  	this.setState({
+  		formData: values,
+  		currentTablePage: 1
+  	});
+  };
+
+  setSort = (fieldName, order) => {
+  	this.setState(({ formData }) => ({
+  		currentTablePage: 1,
+  		formData: {
+  			...formData,
+  			sort: fieldName,
   			order:
           order ||
-          (state.sort.fieldName !== fieldName || state.sort.order !== 'ASC'
-          	? 'ASC'
-          	: 'DESC')
+          (formData.sort === fieldName && formData.order === 'ascending'
+          	? 'descending'
+          	: 'ascending')
   		}
   	}));
+  };
+
+  resetFilter = () => {
+  	this.setState(({ formData }) => ({
+  		formData: {
+  			...formData,
+  			...defaultFilterData
+  		}
+  	}));
+  };
+
+  resetSort = () => {
+  	this.setState(({ formData }) => ({
+  		formData: {
+  			...formData,
+  			...defaultSortData
+  		}
+  	}));
+  };
+
+  resetCombined = () => {
+  	this.setState({
+  		formData: {
+  			...defaultFormData
+  		}
+  	});
   };
 
   updatePage = page => {
   	this.setState({
   		currentTablePage: page
   	});
+  };
+
+  /* Selector */
+
+  getItems = () => {
+  	const { formData } = this.state;
+  	const {
+  		filter: filterField,
+  		order: sortOrder,
+  		sort: sortField,
+  		...filters
+  	} = formData;
+  	const filteredIds = filter(
+  		stubbedIds,
+  		stubbedTransactions,
+  		filterField,
+  		filters
+  	);
+  	const sortedIds = sort(
+  		filteredIds,
+  		stubbedTransactions,
+  		sortField,
+  		sortOrder
+  	);
+  	return paginate(sortedIds, pageSize);
   };
 
   /* Position / Dimension Listeners */
@@ -137,17 +219,25 @@ class Portfolio extends React.Component {
   /* Rendering */
 
   renderStubbedList = () => {
-  	const { isMobile } = this.state;
+  	const { formData, isMobile } = this.state;
+  	const {
+  		filter: filterField,
+  		incoming,
+  		order,
+  		outgoing,
+  		sort: sortField
+  	} = formData;
   	return (
   		<List
   			bottomOffset={0}
   			className="portfolio__transaction-list"
   			dataMap={stubbedTransactions}
   			fontSize={isMobile ? 14 : 16}
-  			itemRenderer={TransactionListItem}
-  			key={bufferSize}
+  			key={`${sortField}-${order}-${filterField}-${incoming}-${outgoing}`}
   			pageBufferSize={bufferSize}
-  			pageMap={stubbedPagination}
+  			pageMap={this.getItems()}
+  			pageSize={pageSize}
+  			render={TransactionListItem}
   			topOffset={6.25}
   			unit="rem"
   			unitBufferHeight={8.5}
@@ -157,42 +247,136 @@ class Portfolio extends React.Component {
 
   renderStubbedTable = () => {
   	const { history } = this.context;
-  	const { currentTablePage, sort } = this.state;
+  	const { currentTablePage, formData } = this.state;
   	const { code } = stubbedSummary;
+  	const paginatedItems = this.getItems();
+  	const pageItemIds = paginatedItems[currentTablePage - 1];
   	return (
   		<Table
+  			// isLoading={false} // KIV: need to put in state / store
+  			// onRefresh={() => {}} // KIV: need to dispatch fetch
   			className="portfolio__transaction-table"
   			currentPage={currentTablePage}
-  			fields={getTransactionFields(code)}
-  			isLoading={false} // KIV: need to put in state / store
-  			lastPage={Math.max(...Object.keys(stubbedPagination))}
+  			fields={getTableFields(code)}
+  			lastPage={Math.max(1, paginatedItems.length)}
   			onPageChange={this.updatePage}
-  			onRefresh={() => {}} // KIV: need to dispatch fetch
   			onSelectRow={id => history.push(`/app/transaction/${id}`)}
-  			onSort={this.toggleSort}
-  			pageItems={stubbedPagination[currentTablePage].map(id => ({
-  				id,
-  				...stubbedTransactions[id]
-  			}))}
-  			parser={getTransactionViewModel}
-  			sort={sort}
+  			onSort={this.setSort}
+  			pageItems={
+  				pageItemIds == null
+  					? []
+  					: pageItemIds.map(id => ({
+  						id,
+  						...stubbedTransactions[id]
+  					}))
+  			}
+  			parser={getTableViewModel}
+  			sort={{ fieldName: formData.sort, order: formData.order }}
   		/>
+  	);
+  };
+
+  renderFilterModal = () => {
+  	const { formData, isSubmitting } = this.state;
+  	return (
+  		<button
+  			className="portfolio__modal-portal portfolio__modal-portal--filter"
+  			onClick={this.toggleFilterModal}
+  			type="button"
+  		>
+  			<Modal>
+  				<PortfolioModal>
+  					<div className="portfolio__modal-header">
+  						<span className="portfolio__modal-title">
+                Filter Transactions
+  						</span>
+  						<span className="portfolio__modal-subtitle">
+                Select a field category and its relevant tags to selectively
+                display transaction results.
+  						</span>
+  					</div>
+  					<FilterForm
+  						className="portfolio__modal-form"
+  						defaultValues={defaultFilterData}
+  						isSubmitting={isSubmitting}
+  						onChange={this.setFormData}
+  						onReset={this.resetFilter}
+  						onSubmit={values => {
+  							this.setFormData(values);
+  							this.toggleFilterModal();
+  						}}
+  						values={formData}
+  					/>
+  				</PortfolioModal>
+  			</Modal>
+  		</button>
+  	);
+  };
+
+  renderSortModal = () => {
+  	const { formData, isSubmitting } = this.state;
+  	return (
+  		<button
+  			className="portfolio__modal-portal portfolio__modal-portal--sort"
+  			onClick={this.toggleSortModal}
+  			type="button"
+  		>
+  			<Modal>
+  				<PortfolioModal>
+  					<div className="portfolio__modal-header">
+  						<span className="portfolio__modal-title">Sort Transactions</span>
+  						<span className="portfolio__modal-subtitle">
+                Select a sortable field category and sort order to reorder the
+                transaction results.
+  						</span>
+  					</div>
+  					<SortForm
+  						className="portfolio__modal-form"
+  						defaultValues={defaultSortData}
+  						isSubmitting={isSubmitting}
+  						onChange={this.setFormData}
+  						onReset={this.resetSort}
+  						onSubmit={values => {
+  							this.setFormData(values);
+  							this.toggleSortModal();
+  						}}
+  						values={formData}
+  					/>
+  				</PortfolioModal>
+  			</Modal>
+  		</button>
   	);
   };
 
   render() {
   	const { className } = this.props;
-  	const { isMobile } = this.state;
+  	const {
+  		formData,
+  		isMobile,
+  		isSubmitting,
+  		showFilterModal,
+  		showSortModal
+  	} = this.state;
   	const transactionsSectionTitle = 'Transaction History';
   	return (
   		<div className={clns('page', 'portfolio', className)}>
-  			{/* ---TOP SIDE--- */}
-  			{/* Pull to Refresh */}
   			<div className="portfolio__body">
   				<div className="portfolio__section portfolio__section--left">
   					<Waypoint onPositionChange={this.toggleBalance} />
   					{stubbedDashboard}
-  					{/* Combined Form (Desktop) */}
+  					{!isMobile && (
+  						<React.Fragment>
+  							<span className="portfolio__section-label">View Options</span>
+  							<CombinedForm
+  								className="portfolio__combined-form"
+  								defaultValues={defaultFormData}
+  								isSubmitting={isSubmitting}
+  								onChange={this.setFormData}
+  								onReset={this.resetCombined}
+  								values={formData}
+  							/>
+  						</React.Fragment>
+  					)}
   				</div>
   				<div className="portfolio__section portfolio__section--right">
   					<span className="portfolio__section-label">
@@ -201,6 +385,8 @@ class Portfolio extends React.Component {
   					{isMobile ? this.renderStubbedList() : this.renderStubbedTable()}
   				</div>
   			</div>
+  			{showFilterModal && this.renderFilterModal()}
+  			{showSortModal && this.renderSortModal()}
   		</div>
   	);
   }
@@ -216,7 +402,5 @@ class Portfolio extends React.Component {
 // fetchBalance
 // fetchUser
 // fetchTransactions
-
-// TODO: Abstract constants
 
 export default Portfolio;

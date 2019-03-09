@@ -2,23 +2,19 @@ import React from 'react';
 import clns from 'classnames';
 
 import Header from './Header';
-import Row from './Row';
 import Paginator from './Paginator';
+import Row from './Row';
 
-// TODO: Add refresh button, placeholder, loader
-
-// TODO: Add error boundary and async loaders
-
-// TODO: Optimize by page number (if same don't invoke onPageChange)
+import './_table.scss';
 
 const Body = ({
-	fields,
 	// isLoading, // KIV: For loader animation
 	// onRefresh, // KIV: For placeholder reload
+	className,
+	fields,
 	onSelectRow,
 	pageItems,
-	parser,
-	className
+	parser
 }) => {
 	const viewModels = pageItems.map(parser);
 	const rows = viewModels.map(({ id, ...item }, index) => (
@@ -29,23 +25,22 @@ const Body = ({
 			onClick={() => onSelectRow(id, index)}
 		/>
 	));
-
 	return <div className={clns('table-body', className)}>{rows}</div>;
 };
 
 const Table = ({
+	className,
+	currentPage,
 	fields,
 	isLoading,
 	lastPage,
-	currentPage,
 	onPageChange,
 	onRefresh,
 	onSelectRow,
 	onSort,
 	pageItems,
 	parser,
-	sort,
-	className
+	sort
 }) => (
 	<div className={clns('table', className)}>
 		<div className="table__frame">

@@ -27,22 +27,24 @@ $table-paginator-content: rgba(#202124, 0.5);
 }
 
 .table-paginator__current-page {
-  border-bottom: 1px solid $table-paginator-border;
-  border-left: 0;
+  border-color: $table-paginator-border;
   border-radius: 0;
-  border-right: 0;
-  border-top: 0;
+  border-style: solid;
+  border-width: 0 0 1px 0;
   margin-right: 0.25em;
   text-align: center;
   width: 4em;
 }
 
 .table-paginator__button {
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   background-color: transparent;
   border: 0;
+  cursor: pointer;
   line-height: 0;
   margin: 0 0.25em;
   overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .table-paginator__glyph {
@@ -52,7 +54,7 @@ $table-paginator-content: rgba(#202124, 0.5);
   min-width: 1.5em;
 }
 
-.table-paginator__button:hover:not(:disabled) {
+.no-touch .table-paginator__button:hover:not(:disabled) {
   .table-paginator__glyph {
     color: $table-paginator-content-hover;
     fill: $table-paginator-content-hover;

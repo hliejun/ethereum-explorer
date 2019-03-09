@@ -1,10 +1,12 @@
 import React from 'react';
 import clns from 'classnames';
 
-const Row = ({ fields, item, onClick, className }) => {
+import './_row.scss';
+
+const Row = ({ className, fields, item, onClick }) => {
 	const rowCells = fields.map(field => {
 		const { name, minWidth, maxWidth, width, shrinkIndex, growIndex } = field;
-		const { view: View, model } = item[name];
+		const { model, view: View } = item[name];
 		const style = {
 			display: 'flex',
 			flexGrow: growIndex,
