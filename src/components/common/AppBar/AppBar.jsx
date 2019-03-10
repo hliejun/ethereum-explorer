@@ -29,7 +29,7 @@ const LeftButton = ({ goBack, toggleMenu, useBackLink }) => {
 const SideMenuModal = ({ toggleMenu }) => (
 	<button className="app-bar__menu-portal" onClick={toggleMenu} type="button">
 		<Modal>
-			<SideMenu className="app-bar__side-menu" />
+			<SideMenu className="app-bar__side-menu" handleClose={toggleMenu} />
 		</Modal>
 	</button>
 );

@@ -10,8 +10,8 @@ import './assets/styles.scss';
 WebFont.load({
 	google: {
 		families: [
-			'Roboto:300,400,500,700',
-			'Roboto Mono:300,400,500,700',
+			'Roboto:300,400,500:latin',
+			'Roboto Mono:300,400,500:latin',
 			'sans-serif'
 		]
 	}

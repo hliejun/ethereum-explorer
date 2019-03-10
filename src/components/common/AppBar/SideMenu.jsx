@@ -18,8 +18,12 @@ import Web from '../../../assets/icons/link.svg';
 
 import './_sidemenu.scss';
 
-const MenuHeader = ({ className, icon: Icon, link, title }) => (
-	<div className={clns('side-menu__header', className)}>
+const MenuHeader = ({ className, icon: Icon, link, onClick, title }) => (
+	<div
+		className={clns('side-menu__header', className)}
+		onClick={onClick}
+		role="presentation"
+	>
 		<Link to={link}>
 			<Icon className="header__glyph" />
 			<span className="header__title monotype">{title}</span>
@@ -45,61 +49,106 @@ const MenuItem = ({ className, icon: Icon, label, onClick }) => (
 	</button>
 );
 
-const LinkedMenuItem = withRouter(({ history, link, ...passthroughProps }) => (
-	<MenuItem {...passthroughProps} onClick={() => history.push(link)} />
-));
+const LinkedMenuItem = withRouter(
+	({ history, link, onClick, ...passthroughProps }) => (
+		<MenuItem
+			{...passthroughProps}
+			onClick={() => {
+				history.push(link);
+				onClick();
+			}}
+		/>
+	)
+);
 
-const newTab = url => () => window.open(url, '_blank');
-
-const SideMenu = React.forwardRef(({ className, onLogout }, ref) => (
-	<div
-		className={clns('side-menu', className)}
-		onClick={event => event.stopPropagation()}
-		ref={ref}
-		role="presentation"
-	>
-		<MenuHeader icon={Tx} link="/app" title="TX ETHEREUM EXPLORER" />
-		<div className="side-menu__sections">
-			<MenuSection>
-				<LinkedMenuItem icon={Home} label="Home" link="/app" />
-				<LinkedMenuItem
-					icon={Portfolio}
-					label="Portfolio"
-					link="/app/portfolio"
+const SideMenu = React.forwardRef(
+	({ className, onLogout, handleClose }, ref) => {
+		const close = () => {
+			handleClose();
+		};
+		const newTab = url => () => {
+			window.open(url, '_blank');
+			close();
+		};
+		return (
+			<div
+				className={clns('side-menu', className)}
+				onClick={event => event.stopPropagation()}
+				ref={ref}
+				role="presentation"
+			>
+				<MenuHeader
+					icon={Tx}
+					link="/app"
+					onClick={close}
+					title="TX ETHEREUM EXPLORER"
 				/>
-				<LinkedMenuItem icon={Profile} label="Profile" link="/app/profile" />
-			</MenuSection>
-			<MenuSection label="MEDIA">
-				<MenuItem icon={About} label="About" onClick={newTab('/landing')} />
-				<MenuItem
-					icon={Repository}
-					label="Repository"
-					onClick={newTab('https://github.com/hliejun')}
-				/>
-				<MenuItem
-					icon={Web}
-					label="@hliejun"
-					onClick={newTab('https://hliejun.github.io')}
-				/>
-			</MenuSection>
-			<MenuSection label="LEGAL">
-				<MenuItem
-					icon={Privacy}
-					label="Privacy"
-					onClick={newTab('https://www.google.com')}
-				/>
-				<MenuItem
-					icon={Terms}
-					label="Terms of Service"
-					onClick={newTab('https://www.google.com')}
-				/>
-			</MenuSection>
-			<MenuSection label="APP">
-				<LinkedMenuItem icon={Settings} label="Settings" link="/app/settings" />
-				<MenuItem icon={Logout} label="Log Out" onClick={onLogout} />
-			</MenuSection>
-		</div>
-	</div>
-));
+				<div className="side-menu__sections">
+					<MenuSection>
+						<LinkedMenuItem
+							icon={Home}
+							label="Home"
+							link="/app"
+							onClick={close}
+						/>
+						<LinkedMenuItem
+							icon={Portfolio}
+							label="Portfolio"
+							link="/app/portfolio"
+							onClick={close}
+						/>
+						<LinkedMenuItem
+							icon={Profile}
+							label="Profile"
+							link="/app/profile"
+							onClick={close}
+						/>
+					</MenuSection>
+					<MenuSection label="MEDIA">
+						<MenuItem icon={About} label="About" onClick={newTab('/landing')} />
+						<MenuItem
+							icon={Repository}
+							label="Repository"
+							onClick={newTab('https://github.com/hliejun')}
+						/>
+						<MenuItem
+							icon={Web}
+							label="@hliejun"
+							onClick={newTab('https://hliejun.github.io')}
+						/>
+					</MenuSection>
+					<MenuSection label="LEGAL">
+						<MenuItem
+							icon={Privacy}
+							label="Privacy"
+							onClick={newTab('https://www.google.com')}
+						/>
+						<MenuItem
+							icon={Terms}
+							label="Terms of Service"
+							onClick={newTab('https://www.google.com')}
+						/>
+					</MenuSection>
+					<MenuSection label="APP">
+						<LinkedMenuItem
+							icon={Settings}
+							label="Settings"
+							link="/app/settings"
+							onClick={close}
+						/>
+						<MenuItem
+							icon={Logout}
+							label="Log Out"
+							onClick={() => {
+								close();
+								onLogout();
+							}}
+						/>
+					</MenuSection>
+				</div>
+			</div>
+		);
+	}
+);
 
 export default stopScrollPropagation(SideMenu);

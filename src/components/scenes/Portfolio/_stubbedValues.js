@@ -1,6 +1,6 @@
-const bufferSize = 2;
-const itemCount = 45;
-const pageSize = 10;
+const itemCount = 1000;
+const pageSize = Math.max(10, itemCount / 50);
+const bufferSize = 5;
 
 const getRandomNumber = (max, min, precision) =>
 	(Math.random() * (max - min) + min).toFixed(precision).toString();

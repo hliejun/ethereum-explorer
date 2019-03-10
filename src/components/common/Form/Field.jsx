@@ -28,7 +28,7 @@ const Input = ({ className, label, name, type, value }) => {
 			<React.Fragment>
 				<input
 					{...inputProps}
-					checked={values[name]}
+					checked={String(values[name]) === 'true'}
 					id={id}
 					onChange={event => onChange(name)(event.target.checked)}
 				/>

@@ -68,7 +68,7 @@ const Container = ({ match }) => {
 				/>
 				<Route
 					exact
-					path={`${match.url}/portfolio/:filter?/:sort?`}
+					path={`${match.url}/portfolio`}
 					render={attachOptions(Portfolio)(options)}
 				/>
 				<Route

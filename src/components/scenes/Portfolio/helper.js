@@ -1,15 +1,19 @@
-const filter = (transactionIds, transactions, fieldName, filters) => {
+export const filter = (transactionIds, transactions, fieldName, filters) => {
 	const result = [];
 	transactionIds.forEach(id => {
 		const data = transactions[id];
-		if (data != null && data[fieldName] != null && filters[data[fieldName]]) {
+		if (
+			data != null &&
+      data[fieldName] != null &&
+      String(filters[data[fieldName]]) === 'true'
+		) {
 			result.push(id);
 		}
 	});
 	return result;
 };
 
-const sort = (transactionIds, transactions, fieldName, order) => {
+export const sort = (transactionIds, transactions, fieldName, order) => {
 	const result = [...transactionIds];
 	const isAscending = order === 'ascending';
 
@@ -38,7 +42,7 @@ const sort = (transactionIds, transactions, fieldName, order) => {
 	return result.sort(comparator);
 };
 
-const paginate = (transactionIds, size) => {
+export const paginate = (transactionIds, size) => {
 	const result = [];
 	let index;
 	for (index = 0; index < transactionIds.length; index += size) {
@@ -48,4 +52,31 @@ const paginate = (transactionIds, size) => {
 	return result;
 };
 
-export { filter, paginate, sort };
+export const trim = (data, validation) => {
+	const result = {};
+	Object.keys(data).forEach(key => {
+		const value = String(data[key]);
+		const definition = validation[key];
+		if (definition == null || definition.default === value) {
+			return;
+		}
+		if (value.match(definition.regex)) {
+			result[key] = value;
+		}
+	});
+	return result;
+};
+
+export const untrim = (data, validation) => {
+	const result = {};
+	Object.keys(validation).forEach(key => {
+		const definition = validation[key];
+		const value = String(data[key]);
+		if (value != null && value.match(definition.regex)) {
+			result[key] = value;
+		} else {
+			result[key] = definition.default;
+		}
+	});
+	return result;
+};
