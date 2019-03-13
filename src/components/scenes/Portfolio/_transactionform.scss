@@ -1,57 +1,46 @@
-$form-active-tint-light: #b2dfdb;
-$form-active-tint: #26a69a;
-$form-background: white;
-$form-border: rgba(black, 0.12);
-$form-content: #202124;
-$form-hover-tint-light: #e0f2f1;
-$form-hover-tint: #80cbc4;
-$form-label: rgba(black, 0.26);
-$form-selected-tint: #4db6ac;
-$form-unselected-tint: #eee;
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
 
 .transaction-form__content {
+  @include flex-wrap;
+  @include use-flex;
   color: $form-content;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .transaction-form__section {
-  flex-grow: 1;
+  @include flex-grow;
   padding: 0 0.5em;
 }
 
 .transaction-form__actions {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  @include align-items;
+  @include flex-wrap;
+  @include justify-content(flex-end);
+  @include use-flex;
   width: 100%;
 }
 
 .transaction-form__button {
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  -webkit-user-select: none;
-  background-color: transparent;
+  @include default-transition;
+  @include no-select;
+  @include setup-button;
   border-radius: 0.25em;
   border: 1px solid $form-border;
-  color: $form-selected-tint;
-  cursor: pointer;
+  color: $form-selected;
   font-size: 0.9em;
   font-weight: 500;
   margin: 0.5em;
   padding: 0.6em 0.8em;
   text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  user-select: none;
 }
 
 .no-touch .transaction-form__button:not(.transaction-form__button--main):hover {
-  background-color: $form-hover-tint-light;
+  background-color: $form-hover-light;
 }
 
 .transaction-form__button:not(.transaction-form__button--main):active {
-  background-color: $form-active-tint-light;
-  color: $form-active-tint;
+  background-color: $form-active-light;
+  color: $form-active;
 }
 
 .transaction-form__button--main:last-child {
@@ -59,44 +48,34 @@ $form-unselected-tint: #eee;
 }
 
 .transaction-form__button--main {
-  background-color: $form-selected-tint;
+  background-color: $form-selected;
   border: 1px solid $form-border;
-  color: $form-background;
+  color: $form-button-label;
 }
 
 .no-touch .transaction-form__button--main:hover {
-  background-color: $form-hover-tint;
+  background-color: $form-hover;
 }
 
 .transaction-form__button--main:active {
-  background-color: $form-active-tint;
+  background-color: $form-active;
 }
 
 .transaction-filter-form__filter-option label {
   text-transform: capitalize;
 }
 
+// Mobile Landscape
 @media only screen and (max-width: 767px) and (orientation: landscape) {
   .transaction-form {
-    display: flex;
-    flex-wrap: wrap;
+    @include flex-wrap;
+    @include use-flex;
   }
-
-  .transaction-form .form__field-label--select {
-    flex-grow: 0;
-    margin-bottom: 0 !important;
-    margin-left: 0 !important;
-    margin-right: 2em !important;
-    margin-top: 0 !important;
+  .transaction-form .field--select {
+    @include flex-grow(0);
+    margin: 0 2em 0 0 !important;
   }
-
-  .transaction-form .fieldset {
-    flex-grow: 1;
-  }
-}
-
-@media only screen and (max-width: 767px) and (orientation: portrait) {
-  .side-menu {
-    width: 75vw;
+  .transaction-form fieldset {
+    @include flex-grow;
   }
 }

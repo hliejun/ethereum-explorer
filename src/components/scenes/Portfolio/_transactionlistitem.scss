@@ -1,122 +1,113 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
-
-$list-item-background-hover: rgba(black, 0.05);
-$list-item-background: white;
-$list-item-content-hover: #202124;
-$list-item-content: #202124;
-$list-item-hint-hover: #202124;
-$list-item-hint: #5f6368;
-$list-item-negative: #e57373;
 
 .transaction-list-item {
   @include card;
+  @include default-transition;
   @include elevation(1);
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  background-color: $list-item-background;
-  border: 0;
-  cursor: pointer;
+  @include setup-button($transaction-list-background);
   display: block;
   margin: 1em 0;
   text-align: left;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: 100%;
 }
 
 .no-touch .transaction-list-item:hover {
   @include elevation(2);
-  background-color: $list-item-background-hover;
+  background-color: $transaction-list-background-hover;
 }
 
 .transaction-list-item__header {
-  align-items: flex-start;
-  color: $list-item-hint;
-  display: flex;
-  fill: $list-item-hint;
+  @include align-items(flex-start);
+  @include use-flex;
+  @include justify-content(space-between);
   font-size: 0.85em;
-  justify-content: space-between;
   margin-bottom: 0.5em;
 }
 
 .transaction-list-item__overline {
+  @include align-items;
   @include ellipsize-content('span');
-  align-items: center;
-  display: flex;
-  flex-shrink: 1;
-  justify-content: flex-end;
+  @include flex-shrink(1);
+  @include justify-content(flex-end);
+  @include use-flex;
+  color: $transaction-list-hint;
   margin-left: 1em;
+
   .overline__glyph {
-    min-height: 0.85em;
-    min-width: 0.85em;
+    @include square(0.85em);
+    fill: $transaction-list-hint;
   }
+
   .overline__label {
     margin-left: 0.25em;
   }
 }
 
 .transaction-list-item__meta {
-  flex-shrink: 0;
+  @include flex-shrink;
+  color: $transaction-list-hint;
   white-space: nowrap;
 }
 
 .transaction-list-item__currencies {
-  align-items: center;
-  display: flex;
+  @include align-items;
+  @include justify-content(flex-end);
+  @include use-flex;
   font-size: 1.2em;
-  justify-content: flex-end;
   overflow: hidden;
 }
 
 .transaction-list-item__amount {
-  color: $list-item-content;
-  flex-shrink: 0;
+  @include flex-shrink;
+  color: $transaction-list-content;
   max-width: 100%;
 }
 
 .transaction-list-item__amount--negative {
-  color: $list-item-negative;
+  color: $transaction-list-negative;
 }
 
 .transaction-list-item__ethereum {
-  color: $list-item-content;
-  flex-grow: 1;
-  flex-shrink: 0;
+  @include flex-grow;
+  @include flex-shrink;
+  color: $transaction-list-content;
 }
 
 .transaction-list-item__section {
-  display: flex;
-  flex-direction: column;
+  @include flex-direction;
+  @include use-flex;
   margin-top: 0.5em;
   overflow: hidden;
 }
 
 .transaction-list-item__section--source {
-  flex-shrink: 0;
+  @include flex-shrink;
   min-width: 5em;
 }
 
 .transaction-list-item__section--address {
-  flex-shrink: 1;
+  @include ellipsize-content('.transaction-list-item__address');
+  @include flex-shrink(1);
   margin-left: 2em;
-  min-width: 0;
 }
 
 .transaction-list-item__info-label {
-  color: $list-item-hint;
+  color: $transaction-list-hint;
   font-size: 0.6em;
   white-space: nowrap;
 }
 
 .transaction-list-item__description {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+  @include align-items;
+  @include justify-content(space-between);
+  @include use-flex;
   overflow: hidden;
 }
 
 .transaction-list-item__address {
-  @include ellipsize;
-  color: $list-item-content;
-  flex-grow: 0;
-  flex-shrink: 1;
+  @include flex-grow(0);
+  @include flex-shrink(1);
+  color: $transaction-list-content;
   font-size: 0.85rem;
 }

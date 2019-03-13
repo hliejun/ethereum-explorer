@@ -1,0 +1,93 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+/* Section */
+
+.data-section {
+  @include card;
+  @include elevation(1);
+  @include flex-direction;
+  @include use-flex;
+  max-height: 999999px; // prevent font boost on Android
+}
+
+.data-section__glyph {
+  @include flex-shrink;
+  @include square(1.5em);
+}
+
+.data-section__title {
+  @include align-items;
+  @include use-flex;
+  font-weight: 500;
+  margin-bottom: 1em;
+  white-space: nowrap;
+}
+
+.data-section__title-label {
+  @include ellipsize;
+  font-size: 1.2em;
+  margin-left: 0.5em;
+}
+
+.data-section__content {
+  @include flex-grow;
+}
+
+.data-section__footer {
+  color: $section-hint;
+  font-size: 0.85em;
+  font-style: italic;
+  margin-left: auto;
+  margin-top: 1em;
+  text-align: right;
+  width: fit-content;
+}
+
+/* Sub-Section */
+
+.data-subsection {
+  @include align-items(flex-start);
+  @include flex-direction;
+  @include flex-wrap;
+  @include justify-content(flex-start);
+  @include use-flex;
+  padding: 0.7em 0;
+}
+
+.data-subsection__header {
+  @include align-items(flex-start);
+  @include flex-shrink;
+  @include use-flex;
+  color: $sub-section-content;
+  fill: $sub-section-content;
+  margin-top: 0.5em;
+}
+
+.data-subsection__glyph {
+  @include flex-shrink;
+  @include square(2em);
+  margin-top: 0.25em;
+}
+
+.data-subsection__title {
+  font-weight: 500;
+}
+
+.data-subsection__text {
+  @include flex-direction;
+  @include use-flex;
+  margin-left: 0.5em;
+}
+
+.data-subsection__description {
+  color: $sub-section-hint;
+  font-size: 0.85em;
+}
+
+.data-subsection__content {
+  @include flex-shrink(1);
+  margin-left: 2.5em;
+  margin-top: 0.25em;
+  word-break: break-all;
+}

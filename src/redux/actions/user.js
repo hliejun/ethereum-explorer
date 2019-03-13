@@ -289,7 +289,7 @@ const clear = () => {
 	};
 };
 
-export default {
+export {
 	clear,
 	getUser,
 	setAvatar,

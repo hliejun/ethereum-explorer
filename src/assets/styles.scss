@@ -1,7 +1,8 @@
+@import './mixins';
 @import './typo';
 
 * {
-  box-sizing: border-box;
+  @include border-box;
   margin: 0;
 }
 
@@ -36,16 +37,18 @@ button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
-  -webkit-appearance: button;
+  @include appearance(button);
 }
 
+// Desktop Landscape
 @media only screen and (min-width: 1440px) and (orientation: landscape) {
   body {
-    padding-left: 5vw !important;
-    padding-right: 5vw !important;
+    padding-left: 10vw !important;
+    padding-right: 10vw !important;
   }
 }
 
+// Desktop / Tablet
 @media only screen and (min-width: 768px) {
   body {
     padding: 1em;

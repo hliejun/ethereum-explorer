@@ -190,4 +190,4 @@ const deactivateAccount = ({ token }) => {
 };
 */
 
-export default { checkUsername, clearUsernameStatus, extend, login, logout };
+export { checkUsername, clearUsernameStatus, extend, login, logout };

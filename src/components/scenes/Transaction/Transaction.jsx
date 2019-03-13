@@ -1,99 +1,109 @@
-// import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import clns from 'classnames';
 
-// pending icon
-// success icon
-// failed icon
+import { stubbedConversionRates, stubbedTransaction } from './_stubbedValues';
+import { countriesToDisplay, countryIcons } from './_constants';
+import { copyData, formatTransaction } from './_helper';
 
-// amount icon
-// country currency icons x 6
+import Currency from '../../common/Currency';
+import Jumbotron from '../../common/Jumbotron';
 
-// source icon
-// date icon
-// address icon
+import BlockSection from './BlockSection';
+import GasSection from './GasSection';
+import SourceSection from './SourceSection';
 
-// gas icon
-// price icon
-// usage icon
-// cumulative icon
-
-// block icon
-// confirmation icon
-// hash icon
-// height icon
-// position/nonce icon
+import Copy from '../../../assets/icons/copy.svg';
 
 import './_transaction.scss';
 
-// copy icon
-// const Copy = null;
+const LocalValues = ({ countries, rates, value }) =>
+	countries.map(countryName => {
+		const country = rates[countryName];
+		const Icon = countryIcons[countryName];
+		return country == null ? null : (
+			<div
+				className={clns(
+					'transaction__local-amount',
+					`transaction__local-amount--${countryName}`
+				)}
+				key={country.code}
+			>
+				{Icon && <Icon className="transaction__glyph" />}
+				<Currency
+					amount={`$${parseFloat(country.rate) * value}`}
+					className="transaction__local-currency"
+					code={country.code}
+				/>
+			</div>
+		);
+	});
 
-// const dataStub = {
-// 	address: '',
-// 	block: {
-// 		id: '',
-// 		confirmations: '',
-// 		height: '',
-// 		nonce: ''
-// 	},
-// 	gas: {
-// 		value: '',
-// 		price: '',
-// 		used: '',
-// 		cumulativeUsed: ''
-// 	},
-// 	id: '',
-// 	status: '',
-// 	timestamp: '',
-// 	type: '',
-// 	value: '' // needs to be converted using exchange rate
-// };
+const Transaction = ({
+	className,
+	// match,
+	reset,
+	setBackLink: updateBacklink,
+	setOptions: updateOptions,
+	setSubtitle: updateSubtitle,
+	setTitle: updateTitle
+}) => {
+	const handleCopy = copyData(formatTransaction(stubbedTransaction));
+	const options = [{ key: 'copy', Icon: Copy, handler: handleCopy }];
+	const title = 'Transaction Details';
+	// const subtitle = `ID: ${match.params.id}`;
 
-// const HeadLine = ({ transactionId, status, className }) => {
-// 	return null;
-// };
+	const { block, gas, id, source, status, value } = stubbedTransaction;
+	const subtitle = `ID: ${id}`;
 
-// const Jumbotron = ({ children, className, subtitle, title }) => {
-// 	return null;
-// };
+	const [showId /* , setShowId */] = useState(true);
 
-// const Section = ({ children, className, footer, image, title }) => {
-// 	return null;
-// };
+	useEffect(() => {
+		updateSubtitle(showId ? subtitle : null);
+		updateBacklink(true);
+		updateOptions(options);
+		updateTitle(title);
+		return () => {
+			reset();
+		};
+	}, [showId]);
 
-// const SubSection = ({ children, className, description, icon, title }) => {
-// 	return null;
-// };
+	// TODO: Get transaction data by url id param (don't fire if same id)
 
-// const ItemRow = ({ className, icon, label, value }) => {
-// 	return null;
-// };
+	// TODO: Convert value to local amounts (all countries) using conversion rates from store
 
-const Transaction = (/* { match } */) => {
-	// const copyTransactionData = () => {
-	// 	return null;
-	// };
-
-	// const defaultState = {
-	// 	options: [{ key: 'copy', Icon: Copy, handler: copyTransactionData }],
-	// 	subtitle: match.params.id, // default to null, only use waypoint trigger
-	// 	title: 'Transaction Details' // no change static...
-	// };
-
-	// const [title, setTitle] = useState(defaultState.title);
-	// const [subtitle, setSubtitle] = useState(defaultState.subtitle);
-	// const [options, setOptions] = useState(defaultState.options);
-
-	// Get transaction data from store by url id param (don't fetch if same id)
-
-	// Setup copy option in app bar (don't update if same options state)
-
-	// Setup waypoint for transaction id in appbar
-
-	// Header: amount section + id/status section (with waypoint)
-
-	// Body: source section + gas section + block section
-
-	return null;
+	return (
+		<div className={clns('page', 'transaction', className)}>
+			<div className="transaction__header">
+				<Jumbotron
+					className="transaction__values"
+					subtitle="Transacted Ether"
+					title={<Currency amount={value} code="ETH" />}
+				>
+					<LocalValues
+						countries={countriesToDisplay}
+						rates={stubbedConversionRates}
+						value={value}
+					/>
+				</Jumbotron>
+			</div>
+			<div className="transaction__body">
+				<SourceSection
+					className="transaction__section transaction__section--source"
+					id={id}
+					status={status}
+					{...source}
+				/>
+				<BlockSection
+					className="transaction__section transaction__section--block"
+					{...block}
+				/>
+				<GasSection
+					className="transaction__section transaction__section--gas"
+					{...gas}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default Transaction;

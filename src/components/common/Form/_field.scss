@@ -1,79 +1,65 @@
-$field-background: white;
-$field-border: rgba(black, 0.12);
-$field-content: #202124;
-$field-hover-tint: #e0f2f1;
-$field-label: rgba(black, 0.26);
-$field-selected-tint: #4db6ac;
-$field-unselected-tint: #eee;
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
 
-.form {
-  fieldset {
-    border: 1px solid $field-border;
-    margin-bottom: 1em;
-  }
-  legend {
-    color: $field-label;
-    font-size: 0.75em;
-    text-transform: capitalize;
-  }
-}
+/* Input Type */
 
-.form__field-label {
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  align-items: center;
-  display: inline-flex;
-  justify-content: flex-start;
+.field {
+  @include align-items;
+  @include default-transition;
+  @include inline-flex;
+  @include justify-content(flex-start);
   margin: 0.25em 1.5em 0.25em 0;
-  text-transform: capitalize;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: fit-content;
 }
 
-.form__field-label:not(.form__field-label--checkbox):not(.form__field-label--radio) {
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
+.field:not(.field--checkbox):not(.field--radio) {
+  @include align-items(flex-start);
+  @include flex-direction;
+  @include justify-content;
   margin: 0.25em 0;
-  .form__field {
+
+  .field__input {
     margin: 0.5em 0;
   }
 }
 
-.form__field {
+.field__label {
+  text-transform: capitalize;
+}
+
+.field__input {
   margin-right: 0.25em;
 }
 
 /* Select Type */
 
-.form__field-label--select {
-  color: $field-label;
+.field--select {
   min-width: 10em;
   position: relative;
 }
 
-.form__field-label--select span {
+.field__label--select {
+  color: $field-label;
   font-size: 0.75em;
 }
 
 // Credit: https://codepen.io/pudgereyem/pen/PqBxQx
 
-.form__field-label--select:after {
+.field--select:after {
+  @include pointer-events(none);
+  @include square(0);
   border-color: $field-border transparent transparent transparent;
   border-style: solid;
   border-width: 0.25em;
-  bottom: 1.25em;
+  bottom: 1em;
   content: '';
-  height: 0;
   padding: 0;
-  pointer-events: none;
   position: absolute;
   right: 0.5em;
-  width: 0;
 }
 
-.form__field--select {
-  -webkit-appearance: none;
-  appearance: none;
+.field__input--select {
+  @include appearance(none);
   background-color: transparent;
   border-color: $field-border;
   border-radius: 0;
@@ -89,119 +75,115 @@ $field-unselected-tint: #eee;
 
 // Credit: https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 
-.form__field-label--checkbox {
-  -webkit-user-select: none;
+.field--checkbox {
+  @include no-select;
   cursor: pointer;
-  font-size: 1em;
   padding-left: 1.75em;
   position: relative;
-  user-select: none;
 }
 
-.form__field--checkbox {
+.field__input--checkbox {
+  @include hidden;
   cursor: pointer;
-  height: 0;
-  opacity: 0;
   position: absolute;
-  width: 0;
 }
 
-.form__field-themed-check {
-  background-color: $field-unselected-tint;
+.field__input-check {
+  @include square(1.1em);
+  background-color: $field-input-unselected;
   border-radius: 0.1em;
   border: 1px solid $field-border;
-  height: 1.1em;
   left: 0.15em;
   position: absolute;
   top: 0.15em;
-  width: 1.1em;
 }
 
-.no-touch .form__field-label:hover .form__field-themed-check {
-  background-color: $field-hover-tint;
+.field__input-check:focus {
+  outline: auto 5px -webkit-focus-ring-color;
 }
 
-.form__field-label--checkbox input:checked ~ .form__field-themed-check {
-  background-color: $field-selected-tint;
+.no-touch .field:hover .field__input-check {
+  background-color: $field-input-hover;
 }
 
-.form__field-themed-check:after {
+.field--checkbox input:checked ~ .field__input-check {
+  background-color: $field-input-selected;
+}
+
+.field__input-check:after {
   content: '';
   display: none;
   position: absolute;
 }
 
-.form__field-label--checkbox input:checked ~ .form__field-themed-check:after {
+.field--checkbox input:checked ~ .field__input-check:after {
   display: block;
 }
 
-.form__field-label--checkbox .form__field-themed-check:after {
-  -webkit-transform: rotate(45deg);
-  border-color: $field-background;
+.field--checkbox .field__input-check:after {
+  @include transform(rotate(45deg));
+  border-color: $field-input-mark;
   border-style: solid;
   border-width: 0 2px 2px 0;
   height: 0.6em;
   left: 0.3em;
   top: 0;
-  transform: rotate(45deg);
   width: 0.3em;
 }
 
 /* Radio Type */
 
-.form__field-label--radio {
-  -webkit-user-select: none;
+.field--radio {
+  @include centralize-content('.field__input-dot:after');
+  @include no-select;
   cursor: pointer;
-  font-size: 1em;
   padding-left: 1.75em;
   position: relative;
-  user-select: none;
 }
 
-.form__field--radio {
+.field__input--radio {
+  @include hidden;
   cursor: pointer;
-  height: 0;
-  opacity: 0;
   position: absolute;
-  width: 0;
 }
 
-.form__field-themed-dot {
-  background-color: $field-unselected-tint;
+.field__input-dot {
+  @include square(1.1em);
+  background-color: $field-input-unselected;
   border-radius: 50%;
   border: 1px solid $field-border;
-  height: 1.1em;
   left: 0.15em;
   position: absolute;
   top: 0.15em;
-  width: 1.1em;
 }
 
-.no-touch .form__field-label:hover .form__field-themed-dot {
-  background-color: $field-hover-tint;
+.no-touch .field:hover .field__input-dot {
+  background-color: $field-input-hover;
 }
 
-.form__field-label--radio input:checked ~ .form__field-themed-dot {
-  border: 1px solid $field-selected-tint;
+.field--radio input:checked ~ .field__input-dot {
+  border: 1px solid $field-input-selected;
 }
 
-.form__field-themed-dot:after {
+.field__input-dot:after {
   content: '';
   display: none;
   position: absolute;
 }
 
-.form__field-label--radio input:checked ~ .form__field-themed-dot:after {
+.field--radio input:checked ~ .field__input-dot:after {
   display: block;
 }
 
-.form__field-label--radio .form__field-themed-dot:after {
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  background-color: $field-selected-tint;
+.field--radio .field__input-dot:after {
+  @include square(0.75em);
+  background-color: $field-input-selected;
   border-radius: 50%;
-  height: 0.75em;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  width: 0.75em;
+}
+
+// Mobile Landscape
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .field--select:after {
+    bottom: 33%;
+  }
 }

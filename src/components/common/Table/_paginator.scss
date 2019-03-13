@@ -1,28 +1,25 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-$table-paginator-border: rgba(black, 0.12);
-$table-paginator-content-hover: #202124;
-$table-paginator-content: rgba(#202124, 0.5);
-
 .table-paginator {
+  @include align-items;
   @include card;
   @include elevation(1);
-  align-items: center;
+  @include justify-content(flex-end);
+  @include use-flex;
   border-radius: 0 0 0.125rem 0.125rem;
   color: $table-paginator-content;
-  display: flex;
   font-size: 0.85em;
   font-weight: 500;
-  justify-content: flex-end;
-  margin: 0 0 1em 0;
+  margin: 0 0 1em;
   padding: 1em;
   width: 100%;
 }
 
 .table-paginator__manual-paging {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+  @include align-items;
+  @include justify-content(space-between);
+  @include use-flex;
   margin-right: 1em;
 }
 
@@ -30,39 +27,33 @@ $table-paginator-content: rgba(#202124, 0.5);
   border-color: $table-paginator-border;
   border-radius: 0;
   border-style: solid;
-  border-width: 0 0 1px 0;
+  border-width: 0 0 1px;
   margin-right: 0.25em;
   text-align: center;
   width: 4em;
 }
 
 .table-paginator__button {
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
+  @include default-transition;
+  @include setup-button;
   line-height: 0;
   margin: 0 0.25em;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .table-paginator__glyph {
+  @include square(1.5em);
   color: $table-paginator-content;
   fill: $table-paginator-content;
-  min-height: 1.5em;
-  min-width: 1.5em;
 }
 
-.no-touch .table-paginator__button:hover:not(:disabled) {
+.no-touch
+  .table-paginator__button:hover:not(:disabled)
   .table-paginator__glyph {
-    color: $table-paginator-content-hover;
-    fill: $table-paginator-content-hover;
-  }
+  color: $table-paginator-content-hover;
+  fill: $table-paginator-content-hover;
 }
 
-.table-paginator__button:disabled {
-  .table-paginator__glyph {
-    opacity: 0.3;
-  }
+.table-paginator__button:disabled .table-paginator__glyph {
+  opacity: 0.3;
 }

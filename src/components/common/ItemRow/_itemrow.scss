@@ -1,0 +1,56 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+.item-row {
+  overflow: hidden;
+  padding: 0.6em 0;
+}
+
+.item-row__info {
+  @include use-flex;
+  @include align-items;
+  color: $item-row-content;
+  fill: $item-row-content;
+}
+
+.item-row__glyph {
+  @include flex-shrink;
+  @include square(1.25em);
+}
+
+.item-row__label {
+  font-weight: 500;
+  margin-left: 0.25em;
+  white-space: nowrap;
+}
+
+.item-row__separator {
+  @include flex-grow;
+  @include flex-shrink(1);
+  border: 0;
+  margin: 0 1em 0.5em;
+  overflow: hidden;
+}
+
+.item-row__separator:after {
+  content: '.....................................................................................................................................................................................................................................';
+  font-weight: 500;
+  letter-spacing: 0.25em;
+}
+
+.item-row__description {
+  @include align-items(flex-start);
+  @include use-flex;
+}
+
+.item-row__glyph--description {
+  @include square(1em);
+  fill: $item-row-hint;
+  margin-top: 0.15em;
+}
+
+.item-row__description-text {
+  color: $item-row-hint;
+  font-size: 0.85em;
+  margin-left: 0.25em;
+}

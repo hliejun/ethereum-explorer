@@ -141,7 +141,7 @@ const reloadTransactions = ({ token, address, filter, sortBy, sortOrder }) => {
 	};
 };
 
-export default {
+export {
 	clearBalance,
 	clearTransactions,
 	getBalance,

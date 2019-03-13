@@ -50,4 +50,4 @@ const clearConnectivityStatus = () => {
 	};
 };
 
-export default { checkConnectivity, clearConnectivityStatus };
+export { checkConnectivity, clearConnectivityStatus };

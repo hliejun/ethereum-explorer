@@ -1,40 +1,31 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-$table-header-background-hover: rgba(black, 0.1);
-$table-header-background: white;
-$table-header-border: rgba(black, 0.12);
-$table-header-content-hover: #202124;
-$table-header-content: rgba(#202124, 0.75);
-$table-tooltip-background: #707070;
-$table-tooltip-content: white;
-
 .table-header {
+  @include use-flex;
   border-bottom: 1px solid $table-header-border;
-  display: flex;
 }
 
 .table-header__cell {
+  @include align-items;
+  @include default-transition;
   @include ellipsize-content('.table-header__label');
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  align-items: center;
-  background-color: transparent;
-  border: 0;
+  @include flex-grow;
+  @include justify-content(flex-end);
+  @include setup-button;
+  @include use-flex;
   color: $table-header-content;
-  cursor: pointer;
-  display: flex;
   fill: $table-header-content;
-  flex-grow: 1;
   font-size: 0.85em;
   font-weight: 500;
-  justify-content: flex-end;
   padding: 1rem 3rem 1rem 1rem;
   position: relative;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .table-header__cell:first-child {
-  align-items: flex-start;
-  justify-content: flex-start;
+  @include align-items(flex-start);
+  @include justify-content(flex-start);
+
   .table-header__label {
     text-align: left;
   }
@@ -43,19 +34,19 @@ $table-tooltip-content: white;
 .no-touch .table-header__cell:hover {
   color: $table-header-content-hover;
   fill: $table-header-content-hover;
+
   .table-header__glyph--passive {
     opacity: 1;
   }
+
   .table-header__tooltip {
     display: block;
     visibility: visible;
   }
 }
 
-.no-touch .table-header__cell:first-child:hover {
-  .table-header__tooltip {
-    left: 0;
-  }
+.no-touch .table-header__cell:first-child:hover .table-header__tooltip {
+  left: 0;
 }
 
 .table-header__cell:disabled {
@@ -63,8 +54,7 @@ $table-tooltip-content: white;
 }
 
 .table-header__glyph {
-  min-height: 1em;
-  min-width: 1em;
+  @include square(1em);
 }
 
 .table-header__glyph--passive {
@@ -72,7 +62,7 @@ $table-tooltip-content: white;
 }
 
 .table-header__glyph--rotated {
-  transform: rotate(180deg);
+  @include transform(rotate(180deg));
 }
 
 .table-header__label {
@@ -80,6 +70,7 @@ $table-tooltip-content: white;
 }
 
 .table-header__tooltip {
+  @include elevation(1);
   background-color: $table-tooltip-background;
   border-radius: 0.25em;
   bottom: 4.5em;
@@ -91,5 +82,4 @@ $table-tooltip-content: white;
   text-align: left;
   visibility: hidden;
   width: max-content;
-  z-index: 1;
 }

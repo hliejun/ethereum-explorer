@@ -1,13 +1,13 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-$modal-content: #202124;
-
 .portfolio__section--right {
-  flex-grow: 1;
-  flex-shrink: 1;
+  @include flex-grow;
+  @include flex-shrink(1);
 }
 
 .portfolio__section-label {
+  color: $portfolio-section-label;
   display: block;
   font-weight: 500;
   margin: 1.5em 1em 1em;
@@ -19,59 +19,54 @@ $modal-content: #202124;
 
 .portfolio__transaction-table {
   display: block;
-  height: calc(100% - 3rem);
+  height: calc(100% - 3em);
 }
 
 .portfolio__modal-portal {
-  display: none;
+  @include hidden;
 }
 
 .portfolio__modal-container {
+  @include flush-top;
   bottom: 0;
-  left: 0;
   position: fixed;
-  right: 0;
-  top: 0;
 }
 
 .portfolio__modal {
   @include card;
+  @include centralize;
   @include elevation(3);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  left: 50%;
   margin: auto;
   max-height: 80%;
   padding: 0;
   position: absolute;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
   width: 80%;
 }
 
 .portfolio__modal-header {
   @include ellipsize-content('.portfolio__modal-title');
-  color: $modal-content;
-  display: flex;
-  flex-direction: column;
-  padding: 2em 2em 0.25em 2em;
+  @include flex-direction;
+  @include use-flex;
+  padding: 2em 2em 0.25em;
 }
 
 .portfolio__modal-title {
+  color: $portfolio-modal-content;
   font-size: 1.2em;
   font-weight: 500;
 }
 
 .portfolio__modal-subtitle {
-  flex-shrink: 1;
-  font-size: 1rem;
+  @include flex-shrink(1);
+  color: $portfolio-modal-content;
   margin-top: 0.25em;
   min-height: 0;
 }
 
 .portfolio__modal-form {
-  height: 100%;
+  @include square(100%);
+  color: $portfolio-modal-content;
   padding: 1em 2em;
-  width: 100%;
 }
 
 .portfolio__combined-form {
@@ -79,12 +74,7 @@ $modal-content: #202124;
   @include elevation(1);
 }
 
-@media only screen and (min-width: 1440px) and (orientation: landscape) {
-  .portfolio__section--right {
-    margin-left: 2em;
-  }
-}
-
+// Desktop Landscape
 @media only screen and (min-width: 1440px) and (orientation: landscape) {
   .portfolio__modal {
     min-width: 22.5vw;
@@ -92,8 +82,12 @@ $modal-content: #202124;
   .portfolio__section--left {
     max-width: 22.5vw;
   }
+  .portfolio__section--right {
+    margin-left: 2em;
+  }
 }
 
+// Desktop / Tablet Landscape
 @media only screen and (min-width: 768px) and (orientation: landscape) {
   .portfolio__body {
     display: flex;
@@ -103,7 +97,7 @@ $modal-content: #202124;
     max-width: 400px;
   }
   .portfolio__section--right {
-    height: calc(100vh - 8rem);
+    height: calc(100vh - 8em);
     min-width: 30rem;
   }
   .portfolio__section-label {
@@ -112,6 +106,7 @@ $modal-content: #202124;
   }
 }
 
+// Mobile Landscape
 @media only screen and (max-width: 767px) and (orientation: landscape) {
   .portfolio__modal {
     width: 90%;

@@ -1,68 +1,61 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-$app-bar-background-hover: rgba(black, 0.1);
-$app-bar-background: white;
-$app-bar-content: #202124;
-
 .app-bar {
+  @include align-items;
+  @include elevation(2);
+  @include flush-top;
   @include sticky;
-  align-items: center;
+  @include use-flex;
   background-color: $app-bar-background;
-  display: flex;
-  left: 0;
-  overflow: hidden;
-  padding: 1em 0 1em;
-  right: 0;
-  top: 0;
   width: 100%;
-  z-index: 10;
 }
 
 .app-bar--normal {
   height: 4em;
 }
 
-.app-bar--expanded {
-  height: 8em;
-}
-
 .app-bar__options {
-  overflow: hidden;
+  @include align-items;
+  @include justify-content(flex-end);
+  @include use-flex;
+  height: inherit;
+  min-width: fit-content;
   white-space: nowrap;
 }
 
 .app-bar__button {
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  align-items: center;
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
-  font-family: inherit;
+  @include align-items;
+  @include centralize-content('.app-bar__button-glyph');
+  @include default-transition;
+  @include flex-shrink(1);
+  @include setup-button;
+  height: 100%;
   line-height: 0;
   overflow: hidden;
   text-align: center;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 4em;
 }
 
 .no-touch .app-bar__button:hover {
-  background-color: $app-bar-background-hover;
+  background-color: $app-bar-button-hover;
 }
 
 .app-bar__button--option {
+  @include flex-shrink(2);
   display: inline-block;
 }
 
 .app-bar__button-glyph {
+  @include square(1.5em);
   fill: $app-bar-content;
-  min-height: 1.75em;
-  min-width: 1.75em;
 }
 
 .app-bar__title-set {
   @include ellipsize-content('span');
+  @include flex-grow;
   color: $app-bar-content;
   display: inline-block;
-  flex-grow: 1;
   padding: 0 1.5em 0 1em;
 }
 
@@ -74,49 +67,38 @@ $app-bar-content: #202124;
 
 .title-set__subtitle {
   display: block;
-  font-size: 1em;
   font-weight: 400;
 }
 
-.app-bar__menu-portal {
-  display: none;
-  max-height: 1;
-  max-width: 1;
-}
-
-@media only screen and (max-width: 1439px) {
+// Desktop
+@media only screen and (min-width: 1440px) {
   .app-bar {
-    @include elevation(2);
+    @include flat;
+    border-bottom: 1px solid $app-bar-border;
   }
 }
 
+// Desktop / Tablet
 @media only screen and (min-width: 768px) {
   .app-bar {
-    margin: -1em -1em 1em -1em;
+    margin: -1em -1em 1em;
     width: calc(100% + 2em);
   }
   .app-bar__button {
     padding: 1.85em;
   }
-  .app-bar__options {
-    min-width: 7.6em;
-  }
 }
 
+// Mobile
 @media only screen and (max-width: 767px) {
   .app-bar__button {
-    padding: 1.5em 1.5em;
-  }
-  .app-bar__options {
-    min-width: 7em;
+    padding: 1.5em;
   }
 }
 
+// Mobile Portrait
 @media only screen and (max-width: 767px) and (orientation: portrait) {
   .app-bar__button {
     padding: 1.5em 1em;
-  }
-  .app-bar__options {
-    min-width: 6em;
   }
 }

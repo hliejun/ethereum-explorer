@@ -27,11 +27,15 @@ const LeftButton = ({ goBack, toggleMenu, useBackLink }) => {
 };
 
 const SideMenuModal = ({ toggleMenu }) => (
-	<button className="app-bar__menu-portal" onClick={toggleMenu} type="button">
+	<div
+		className="app-bar__menu-portal"
+		onClick={toggleMenu}
+		role="presentation"
+	>
 		<Modal>
 			<SideMenu className="app-bar__side-menu" handleClose={toggleMenu} />
 		</Modal>
-	</button>
+	</div>
 );
 
 const HeaderText = ({ subtitle, title }) => (

@@ -1,17 +1,15 @@
-$modal-mask: rgba(black, 0.5);
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
 
 #modal-root {
+  @include elevation(5);
   position: relative;
-  z-index: 15;
 }
 
 .modal {
-  background-color: $modal-mask;
+  @include flush-top;
+  @include square(100%);
+  background-color: $modal-mask-background;
   bottom: 0;
-  height: 100%;
-  left: 0;
   position: fixed;
-  right: 0;
-  top: 0;
-  width: 100%;
 }

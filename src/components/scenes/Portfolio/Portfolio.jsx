@@ -269,10 +269,10 @@ class Portfolio extends React.Component {
   	);
   };
 
-  renderFormModal = (title, subtitle, form) => (
+  renderFormModal = (title, subtitle, form, handleDismiss) => (
   	<button
   		className="portfolio__modal-portal"
-  		onClick={this.toggleFilterModal}
+  		onClick={handleDismiss}
   		type="button"
   	>
   		<Modal>
@@ -366,13 +366,15 @@ class Portfolio extends React.Component {
           this.renderFormModal(
           	'Filter Transactions',
           	'Select a field category and its relevant tags to selectively display transaction results.',
-          	this.renderFilterForm(formData, isSubmitting)
+          	this.renderFilterForm(formData, isSubmitting),
+          	this.toggleFilterModal
           )}
   			{showSortModal &&
           this.renderFormModal(
           	'Sort Transactions',
           	'Select a sortable field category and sort order to reorder the transaction results.',
-          	this.renderSortForm(formData, isSubmitting)
+          	this.renderSortForm(formData, isSubmitting),
+          	this.toggleSortModal
           )}
   		</div>
   	);

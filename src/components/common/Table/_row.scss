@@ -1,24 +1,17 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-$table-row-background-hover: rgba(black, 0.1);
-$table-row-background: white;
-$table-row-border: rgba(black, 0.12);
-$table-row-content-hover: #202124;
-$table-row-content: rgba(#202124, 0.75);
-
 .table-row {
-  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  background-color: transparent;
+  @include default-transition;
+  @include setup-button;
+  @include use-flex;
   border-color: $table-row-border;
   border-style: solid;
-  border-width: 0 0 1px 0;
+  border-width: 0 0 1px;
   color: $table-row-content;
-  cursor: pointer;
-  display: flex;
   fill: $table-row-content;
   margin: 0;
   padding: 0;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   width: 100%;
 }
 
@@ -33,9 +26,10 @@ $table-row-content: rgba(#202124, 0.75);
 }
 
 .table-row__cell {
-  flex-grow: 1;
-  justify-content: flex-end;
+  @include flex-grow;
+  @include justify-content(flex-end);
   padding: 1rem 3rem 1rem 1rem;
+
   span {
     @include ellipsize;
     text-align: right;
@@ -43,8 +37,9 @@ $table-row-content: rgba(#202124, 0.75);
 }
 
 .table-row__cell:first-child {
-  align-items: flex-start;
-  justify-content: flex-start;
+  @include align-items(flex-start);
+  @include justify-content(flex-start);
+
   span {
     text-align: left;
   }

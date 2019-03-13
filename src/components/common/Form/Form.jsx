@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import clns from 'classnames';
 
+import './_form.scss';
+
 const FormContext = React.createContext({
 	messages: {},
 	onBlur: null,

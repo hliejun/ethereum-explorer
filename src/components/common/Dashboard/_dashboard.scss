@@ -6,10 +6,10 @@
 }
 
 .dashboard__section {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  @include align-items;
+  @include flex-wrap;
+  @include justify-content(space-between);
+  @include use-flex;
   padding: 0.5em 0;
   width: 100%;
 }
@@ -25,22 +25,22 @@
 }
 
 .dashboard__sub-sections {
-  display: flex;
-  flex-wrap: wrap;
+  @include flex-wrap;
+  @include use-flex;
 }
 
 .dashboard__sub-section {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  @include flex-direction;
+  @include flex-grow;
+  @include use-flex;
   margin-top: 0.25em;
   max-width: 100%;
 }
 
 .dashboard__sub-section-header {
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
+  @include align-items;
+  @include justify-content(flex-start);
+  @include use-flex;
   width: 100%;
 }
 
@@ -50,12 +50,11 @@
 }
 
 .dashboard__sub-section-glyph {
-  min-height: 0.7em;
-  min-width: 0.7em;
+  @include square(0.7em);
 }
 
 .dashboard__sub-section-currency {
-  align-self: center;
+  @include align-self;
   font-size: 1.2em;
   margin-top: 0.25em;
   max-width: 100%;

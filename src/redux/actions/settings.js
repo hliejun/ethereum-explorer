@@ -37,4 +37,4 @@ const reset = () => {
 	};
 };
 
-export default { reset, setCurrency, toggleNightMode };
+export { reset, setCurrency, toggleNightMode };

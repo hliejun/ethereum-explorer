@@ -1,0 +1,64 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+.transaction__body {
+  @include flex-wrap;
+  @include use-flex;
+}
+
+.transaction__local-amount {
+  @include align-items;
+  @include justify-content;
+  @include use-flex;
+  font-size: 1.2em;
+  padding: 0.75em;
+  width: 16.6%;
+}
+
+.transaction__section {
+  @include flex-basis(30%);
+  @include flex-grow;
+  @include flex-shrink(1);
+  color: $transaction-content;
+  fill: $transaction-content;
+  min-width: 30%;
+}
+
+.transaction .source__sub-section--status,
+.transaction .source__sub-section--type {
+  .source__sub-section-value {
+    text-transform: capitalize;
+  }
+}
+
+.transaction .source__sub-section-glyph {
+  @include square(1.1em);
+  fill: $transaction-content;
+}
+
+.transaction .source__sub-section-status {
+  @include align-items(flex-start);
+  @include use-flex;
+}
+
+.transaction .source__sub-section-status-text {
+  margin-left: 0.25em;
+}
+
+// Mobile
+@media only screen and (max-width: 767px) {
+  .transaction__section {
+    @include flex-basis(100%);
+  }
+  .transaction__local-amount {
+    width: 33.3%;
+  }
+}
+
+// Small Mobile
+@media only screen and (max-width: 479px) {
+  .transaction__local-amount {
+    padding: 0.5em;
+    width: 50%;
+  }
+}

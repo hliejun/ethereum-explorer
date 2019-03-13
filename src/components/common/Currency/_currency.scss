@@ -1,17 +1,13 @@
 @import '../../../assets/mixins';
 
 .currency {
+  @include align-items(flex-start);
   @include ellipsize-content('.currency__amount');
-  align-items: flex-start;
-  display: flex;
+  @include use-flex;
   overflow: hidden;
 }
 
 .currency__code {
   font-size: 0.5em;
   margin-right: 0.25em;
-}
-
-.currency__amount {
-  font-size: 1em;
 }

@@ -1,3 +1,4 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
 
 .table {
@@ -9,21 +10,12 @@
   @include elevation(1);
   border-radius: 0.125rem 0.125rem 0 0;
   height: inherit;
-  margin: 1em 0 0 0;
+  margin: 1em 0 0;
   padding: 0;
 }
 
-// Credit: https://stackoverflow.com/questions/44793453/how-do-i-add-a-top-and-bottom-shadow-while-scrolling-but-only-when-needed
 .table-body {
-  -webkit-overflow-scrolling: auto;
-  background: linear-gradient(white 30%, rgba(white, 0)),
-    linear-gradient(rgba(white, 0), white 70%) 0 100%,
-    linear-gradient(rgba(black, 0.1), rgba(black, 0)) 100% 0,
-    linear-gradient(rgba(black, 0), rgba(black, 0.1)) 0 100%;
-  background-attachment: local, local, scroll, scroll;
-  background-color: white;
-  background-repeat: no-repeat;
-  background-size: 100% 40px, 100% 40px, 100% 20px, 100% 20px;
+  @include shadowed-background($table-background, $table-shadow);
   height: inherit;
   max-height: fit-content;
   overflow-x: hidden;

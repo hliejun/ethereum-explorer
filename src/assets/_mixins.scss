@@ -1,5 +1,6 @@
-$card-background: white;
-$card-content: #202124;
+@import './colors';
+
+/* Material Design */
 
 @mixin card {
   background: $card-background;
@@ -9,19 +10,259 @@ $card-content: #202124;
   position: relative;
 }
 
-// https://gist.github.com/paulmelnikow/7fcfbe4f68e5df7fe326
+// Credit: https://gist.github.com/paulmelnikow/7fcfbe4f68e5df7fe326
 @mixin elevation($level) {
   @if $level == 1 {
     box-shadow: 0 1px 3px rgba(black, 0.12), 0 1px 2px rgba(black, 0.24);
+    z-index: 5;
   } @else if $level == 2 {
     box-shadow: 0 3px 6px rgba(black, 0.16), 0 3px 6px rgba(black, 0.23);
+    z-index: 10;
   } @else if $level == 3 {
     box-shadow: 0 10px 20px rgba(black, 0.19), 0 6px 6px rgba(black, 0.23);
+    z-index: 15;
   } @else if $level == 4 {
     box-shadow: 0 14px 28px rgba(black, 0.25), 0 10px 10px rgba(black, 0.22);
+    z-index: 20;
   } @else if $level == 5 {
     box-shadow: 0 19px 38px rgba(black, 0.3), 0 15px 12px rgba(black, 0.22);
+    z-index: 25;
   }
+}
+
+// Appearances
+
+@mixin appearance($value) {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+@mixin border-box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin box-shadow($value...) {
+  -webkit-box-shadow: $value;
+  -moz-box-shadow: $value;
+  box-shadow: $value;
+}
+
+@mixin flat {
+  @include box-shadow(none);
+}
+
+@mixin hidden {
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+}
+
+@mixin setup-button($background: transparent) {
+  background-color: $background;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+// Credit: https://stackoverflow.com/questions/44793453/how-do-i-add-a-top-and-bottom-shadow-while-scrolling-but-only-when-needed
+@mixin shadowed-background($background, $shadow) {
+  @include overscroll(auto);
+  background: linear-gradient($background 30%, rgba($background, 0)),
+    linear-gradient(rgba($background, 0), $background 70%) 0 100%,
+    linear-gradient(rgba($shadow, 0.1), rgba($shadow, 0)) 100% 0,
+    linear-gradient(rgba($shadow, 0), rgba($shadow, 0.1)) 0 100%;
+  background-attachment: local, local, scroll, scroll;
+  background-color: $background;
+  background-repeat: no-repeat;
+  background-size: 100% 2em, 100% 2em, 100% 1em, 100% 1em;
+}
+
+// Interactions
+
+@mixin overscroll($value: touch) {
+  -webkit-overflow-scrolling: $value;
+}
+
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@mixin pointer-events($value) {
+  -webkit-pointer-events: $value;
+  -moz-pointer-events: $value;
+  pointer-events: $value;
+}
+
+// Animations / Transitions
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  transition: $transition;
+}
+
+@mixin default-transition {
+  @include transition(all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1));
+}
+
+// Positioning / Dimensions
+
+@mixin flush-top {
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+@mixin square($size) {
+  height: $size;
+  min-height: $size;
+  min-width: $size;
+  width: $size;
+}
+
+@mixin sticky {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: sticky;
+}
+
+@mixin transform($value...) {
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  transform: $value;
+}
+
+@mixin centralize {
+  @include transform(translateX(-50%) translateY(-50%));
+  left: 50%;
+  position: absolute;
+  top: 50%;
+}
+
+@mixin centralize-content($selectors) {
+  position: relative;
+  #{$selectors} {
+    @include centralize;
+  }
+}
+
+// Flexbox
+
+@mixin align-items($value: center) {
+  @if $value == flex-start {
+    -webkit-box-align: start;
+    -moz-box-align: start;
+  } @else if $value == flex-end {
+    -webkit-box-align: end;
+    -moz-box-align: end;
+  } @else {
+    -webkit-box-align: $value;
+    -moz-box-align: $value;
+  }
+  -webkit-align-items: $value;
+  align-items: $value;
+}
+
+@mixin align-self($value: center) {
+  -webkit-align-self: $value;
+  align-self: $value;
+}
+
+@mixin flex-basis($value: auto) {
+  -webkit-flex-basis: $value;
+  flex-basis: $value;
+}
+
+@mixin flex-direction($value: column) {
+  @if $value == row-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    -moz-box-orient: horizontal;
+  } @else if $value == column {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: normal;
+    -moz-box-orient: vertical;
+  } @else if $value == column-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: vertical;
+    -moz-box-direction: reverse;
+    -moz-box-orient: vertical;
+  } @else {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-box-direction: normal;
+    -moz-box-orient: horizontal;
+  }
+  -webkit-flex-direction: $value;
+  flex-direction: $value;
+}
+
+@mixin flex-grow($value: 1) {
+  -webkit-box-flex: $value;
+  -moz-box-flex: $value;
+  -webkit-flex-grow: $value;
+  flex-grow: $value;
+}
+
+@mixin flex-shrink($value: 0) {
+  -webkit-flex-shrink: $value;
+  -moz-flex-shrink: $value;
+  flex-shrink: $value;
+}
+
+@mixin flex-wrap($value: wrap) {
+  -webkit-flex-wrap: $value;
+  flex-wrap: $value;
+}
+
+@mixin inline-flex {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: inline-flex;
+}
+
+@mixin justify-content($value: center) {
+  @if $value == flex-start {
+    -webkit-box-pack: start;
+    -moz-box-pack: start;
+  } @else if $value == flex-end {
+    -webkit-box-pack: end;
+    -moz-box-pack: end;
+  } @else if $value == space-between {
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+  } @else {
+    -webkit-box-pack: $value;
+    -moz-box-pack: $value;
+  }
+  -webkit-justify-content: $value;
+  justify-content: $value;
+}
+
+@mixin use-flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: flex;
+}
+
+// Typography
+
+@mixin boost-readability {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+  text-rendering: optimizeLegibility;
 }
 
 @mixin ellipsize {
@@ -32,15 +273,13 @@ $card-content: #202124;
 
 @mixin ellipsize-content($selectors) {
   min-width: 0;
+
   #{$selectors} {
     @include ellipsize;
   }
 }
 
-@mixin sticky {
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
-  position: sticky;
+@mixin normal-render {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
 }

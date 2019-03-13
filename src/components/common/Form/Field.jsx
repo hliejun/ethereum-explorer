@@ -8,12 +8,7 @@ import './_field.scss';
 const Input = ({ className, label, name, type, value }) => {
 	const { formId, onBlur, onChange, values } = useContext(FormContext);
 	const inputProps = {
-		className: clns(
-			'form__field',
-			'form__field--input',
-			`form__field--${type}`,
-			className
-		),
+		className: clns('field__input', `field__input--${type}`, className),
 		id: name,
 		name,
 		onBlur: onBlur(name),
@@ -32,8 +27,20 @@ const Input = ({ className, label, name, type, value }) => {
 					id={id}
 					onChange={event => onChange(name)(event.target.checked)}
 				/>
-				<span className="form__field-themed-check" />
-				<span>{label}</span>
+				<span
+					aria-checked={String(values[name]) === 'true'}
+					className="field__input-check"
+					onKeyPress={event => {
+						if (event.charCode === 13 || event.charCode === 32) {
+							onChange(name)(String(values[name]) === 'false');
+						}
+					}}
+					role="checkbox"
+					tabIndex="0"
+				/>
+				<span className={clns('field__label', `field__label--${type}`)}>
+					{label}
+				</span>
 			</React.Fragment>
 		);
 		break;
@@ -48,8 +55,20 @@ const Input = ({ className, label, name, type, value }) => {
 					onChange={event => onChange(name)(event.target.value)}
 					value={value}
 				/>
-				<span className="form__field-themed-dot" />
-				<span>{label}</span>
+				<span
+					aria-checked={values[name] === value}
+					className="field__input-dot"
+					onKeyPress={event => {
+						if (event.charCode === 13 || event.charCode === 32) {
+							onChange(name)(value);
+						}
+					}}
+					role="radio"
+					tabIndex="0"
+				/>
+				<span className={clns('field__label', `field__label--${type}`)}>
+					{label}
+				</span>
 			</React.Fragment>
 		);
 		break;
@@ -57,7 +76,9 @@ const Input = ({ className, label, name, type, value }) => {
 		id = `${formId}-input-${name}`;
 		view = (
 			<React.Fragment>
-				<span>{label}</span>
+				<span className={clns('field__label', `field__label--${type}`)}>
+					{label}
+				</span>
 				<input
 					{...inputProps}
 					onChange={event => onChange(name)(event.target.value)}
@@ -67,14 +88,7 @@ const Input = ({ className, label, name, type, value }) => {
 		);
 	}
 	return (
-		<label
-			className={clns(
-				'form__field-label',
-				'form__field-label--input',
-				`form__field-label--${type}`
-			)}
-			htmlFor={id}
-		>
+		<label className={clns('field', `field--${type}`)} htmlFor={id}>
 			{view}
 		</label>
 	);
@@ -83,13 +97,10 @@ const Input = ({ className, label, name, type, value }) => {
 const Select = ({ children, className, label: selectLabel, name, options }) => {
 	const { formId, onBlur, onChange, values } = useContext(FormContext);
 	return (
-		<label
-			className="form__field-label form__field-label--select"
-			htmlFor={name}
-		>
-			<span>{selectLabel}</span>
+		<label className="field field--select" htmlFor={name}>
+			<span className="field__label field__label--select">{selectLabel}</span>
 			<select
-				className={clns('form__field', 'form__field--select', className)}
+				className={clns('field__input', 'field__input--select', className)}
 				id={`${formId}-select-${name}`}
 				name={name}
 				onBlur={onBlur(name)}
@@ -97,7 +108,7 @@ const Select = ({ children, className, label: selectLabel, name, options }) => {
 				value={values[name]}
 			>
 				<option
-					className="form__field--option"
+					className="field__option"
 					disabled
 					hidden
 					key="placeholder"
@@ -106,7 +117,7 @@ const Select = ({ children, className, label: selectLabel, name, options }) => {
           Choose your option
 				</option>
 				{options.map(({ label, value }) => (
-					<option className="form__field--option" key={value} value={value}>
+					<option className="field__option" key={value} value={value}>
 						{label}
 					</option>
 				))}
@@ -121,7 +132,7 @@ const Message = ({ className, name, render }) => {
 	const message = messages[name];
 	const value = values[name];
 	return render({
-		className: clns('form__field--message', className),
+		className: clns('field--message', className),
 		message,
 		value
 	});

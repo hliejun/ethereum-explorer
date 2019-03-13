@@ -1,10 +1,10 @@
 @import '../../../assets/mixins';
 
 .transaction-table-item__amount {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include align-items(flex-end);
+  @include flex-direction;
+  @include justify-content;
+  @include use-flex;
   margin-left: 3em;
   max-width: 100%;
 }
