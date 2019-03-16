@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { stopScroll } from '../../common/eventHandling';
 
@@ -13,5 +14,9 @@ const PortfolioModal = React.forwardRef(({ children }, ref) => (
 		</div>
 	</div>
 ));
+
+PortfolioModal.propTypes = {
+	children: PropTypes.node.isRequired
+};
 
 export default stopScroll(PortfolioModal);

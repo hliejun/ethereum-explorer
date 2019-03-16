@@ -1,3 +1,14 @@
+export const filterCategories = [{ label: 'Type', value: 'type' }];
+
+export const filterTags = {
+	type: ['incoming', 'outgoing']
+};
+
+export const sortCategories = [
+	{ label: 'Date', value: 'date' },
+	{ label: 'Amount', value: 'amount' }
+];
+
 export const formValidation = {
 	filter: { default: 'type', regex: /^(?:type)$/ },
 	incoming: { default: 'true', regex: /^(?:true|false)$/ },

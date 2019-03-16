@@ -1,0 +1,40 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+// Credit: https://codepen.io/ConAntonakos/pen/ryMaOX
+
+.loader__glyph {
+  @include animation(rotate 0.8s linear infinite);
+  @include square(100px);
+  @include transition(opacity 0.3s ease);
+  position: relative;
+
+  .path {
+    @include animation(dash 0.6s ease-in-out infinite);
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    stroke: $loader-stroke;
+  }
+}
+
+@include keyframes(rotate) {
+  100% {
+    @include transform(rotate(360deg));
+  }
+}
+
+@include keyframes(dash) {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}

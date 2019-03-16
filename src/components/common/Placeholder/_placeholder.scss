@@ -1,0 +1,60 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+.placeholder {
+  @include align-items;
+  @include flex-direction;
+  @include flex-grow;
+  @include justify-content;
+  @include use-flex;
+  padding: 2em;
+}
+
+.placeholder__glyph {
+  @include square(5em);
+  margin: 0.5em;
+}
+
+.placeholder__loader {
+  margin: -1em;
+}
+
+// Font color, button hover and active
+
+.placeholder__text {
+  @include align-items;
+  @include flex-direction;
+  @include justify-content(flex-end);
+  @include use-flex;
+  color: $placeholder-content;
+  margin: 0.5em;
+  text-align: center;
+}
+
+.placeholder__title {
+  font-weight: 500;
+}
+
+.placeholder__description {
+  font-size: 0.85em;
+  margin-top: 0.5em;
+}
+
+.placeholder__refresh {
+  @include elevation(1);
+  @include setup-button;
+  background-color: $placeholder-background;
+  color: $placeholder-content;
+  border-radius: 2em;
+  font-weight: 500;
+  margin: 1em;
+  padding: 0.5em 1em;
+}
+
+.no-touch .placeholder__refresh:hover {
+  background-color: $placeholder-background-hover;
+}
+
+.placeholder__refresh:active {
+  background-color: $placeholder-background-active;
+}

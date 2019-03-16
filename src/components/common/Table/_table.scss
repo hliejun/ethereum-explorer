@@ -8,16 +8,26 @@
 .table__frame {
   @include card;
   @include elevation(1);
+  @include flex-direction;
+  @include justify-content(flex-start);
+  @include use-flex;
   border-radius: 0.125rem 0.125rem 0 0;
   height: inherit;
   margin: 1em 0 0;
   padding: 0;
 }
 
+.table-header {
+  @include flex-grow(0);
+}
+
 .table-body {
+  @include flex-direction;
+  @include flex-grow;
+  @include justify-content(flex-start);
   @include shadowed-background($table-background, $table-shadow);
+  @include use-flex;
   height: inherit;
-  max-height: fit-content;
   overflow-x: hidden;
   overflow-y: auto;
 }

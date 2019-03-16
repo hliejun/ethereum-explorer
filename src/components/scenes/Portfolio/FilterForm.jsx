@@ -1,34 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import { ControlledForm, Input, Select } from '../../common/Form';
+import { filterCategories, filterTags } from './_constants';
 import { stopScroll } from '../../common/eventHandling';
 
 import './_transactionform.scss';
 
-const filterModes = [{ label: 'Type', value: 'type' }];
-
-const filters = {
-	type: ['incoming', 'outgoing']
-};
-
-export const filterFields = ({ category, name }) => (
+const FilterFields = ({ category, name }) => (
 	<React.Fragment>
 		<Select
 			className="transaction-filter-form__filter-category"
 			label="Filter By:"
 			name={name}
-			options={filterModes}
+			options={filterCategories}
 		/>
-		{category != null && filters[category] != null && (
+		{category != null && filterTags[category] != null && (
 			<fieldset name={category}>
 				<legend>{`${category} Filter Options: `}</legend>
-				{filters[category].map(filterName => (
+				{filterTags[category].map(tag => (
 					<Input
 						className="transaction-filter-form__filter-option"
-						label={filterName}
-						key={filterName}
-						name={filterName}
+						label={tag}
+						key={tag}
+						name={tag}
 						type="checkbox"
 					/>
 				))}
@@ -36,6 +32,11 @@ export const filterFields = ({ category, name }) => (
 		)}
 	</React.Fragment>
 );
+
+FilterFields.propTypes = {
+	category: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired
+};
 
 const FilterForm = React.forwardRef(
 	({ className, ...passthroughProps }, ref) => (
@@ -54,17 +55,17 @@ const FilterForm = React.forwardRef(
 				const category = values[name];
 				return (
 					<React.Fragment>
-						{filterFields({ name, category })}
+						<FilterFields category={category} name={name} />
 						<div className="transaction-form__actions">
 							<button className="transaction-form__button" type="reset">
-                Reset
+								<span>Reset</span>
 							</button>
 							<button
 								className="transaction-form__button transaction-form__button--main"
 								disabled={isSubmitting}
 								type="submit"
 							>
-                Done
+								<span>Done</span>
 							</button>
 						</div>
 					</React.Fragment>
@@ -74,4 +75,13 @@ const FilterForm = React.forwardRef(
 	)
 );
 
+FilterForm.propTypes = {
+	className: PropTypes.string
+};
+
+FilterForm.defaultProps = {
+	className: null
+};
+
+export { FilterFields };
 export default stopScroll(FilterForm);

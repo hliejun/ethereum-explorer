@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import './_form.scss';
@@ -91,6 +92,25 @@ const Form = ({
 			</FormContext.Provider>
 		</form>
 	);
+};
+
+Form.propTypes = {
+	children: PropTypes.func.isRequired,
+	className: PropTypes.string,
+	defaultValues: PropTypes.objectOf(PropTypes.any).isRequired,
+	id: PropTypes.string.isRequired,
+	onChange: PropTypes.func,
+	onReset: PropTypes.func,
+	onSubmit: PropTypes.func,
+	validate: PropTypes.func
+};
+
+Form.defaultProps = {
+	className: null,
+	onChange: () => {},
+	onReset: () => {},
+	onSubmit: () => {},
+	validate: () => ({})
 };
 
 export { Form, FormContext };

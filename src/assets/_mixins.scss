@@ -102,6 +102,12 @@
 
 // Animations / Transitions
 
+@mixin animation($animation...) {
+  -webkit-animation: $animation;
+  -moz-animation: $animation;
+  animation: $animation;
+}
+
 @mixin transition($transition...) {
   -webkit-transition: $transition;
   -moz-transition: $transition;
@@ -110,6 +116,18 @@
 
 @mixin default-transition {
   @include transition(all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1));
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
 }
 
 // Positioning / Dimensions

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import First from '../../../assets/icons/first.svg';
@@ -65,6 +66,17 @@ const Paginator = ({ className, currentPage, lastPage, onPageChange }) => {
 			</button>
 		</div>
 	);
+};
+
+Paginator.propTypes = {
+	className: PropTypes.string,
+	currentPage: PropTypes.number.isRequired,
+	lastPage: PropTypes.number.isRequired,
+	onPageChange: PropTypes.func.isRequired
+};
+
+Paginator.defaultProps = {
+	className: null
 };
 
 export default Paginator;

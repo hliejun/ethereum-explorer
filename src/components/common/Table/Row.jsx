@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import './_row.scss';
 
 const Row = ({ className, fields, item, onClick }) => {
 	const rowCells = fields.map(field => {
-		const { name, minWidth, maxWidth, width, shrinkIndex, growIndex } = field;
+		const { growIndex, maxWidth, minWidth, name, shrinkIndex, width } = field;
 		const { model, view: View } = item[name];
 		const style = {
 			display: 'flex',
@@ -31,6 +32,34 @@ const Row = ({ className, fields, item, onClick }) => {
 			{rowCells}
 		</button>
 	);
+};
+
+export const fieldTypes = PropTypes.arrayOf(
+	PropTypes.shape({
+		growIndex: PropTypes.number,
+		maxWidth: PropTypes.string,
+		minWidth: PropTypes.string,
+		name: PropTypes.string.isRequired,
+		shrinkIndex: PropTypes.number,
+		width: PropTypes.string
+	})
+);
+
+Row.propTypes = {
+	className: PropTypes.string,
+	fields: fieldTypes.isRequired,
+	item: PropTypes.objectOf(
+		PropTypes.shape({
+			model: PropTypes.object.isRequired,
+			view: PropTypes.elementType.isRequired
+		})
+	).isRequired,
+	onClick: PropTypes.func
+};
+
+Row.defaultProps = {
+	className: null,
+	onClick: () => {}
 };
 
 export default Row;

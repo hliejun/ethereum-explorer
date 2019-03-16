@@ -1,0 +1,67 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+.list__content {
+  @include flex-direction;
+  @include flex-grow;
+  @include use-flex;
+}
+
+.list__loader {
+  @include align-items;
+  @include elevation(2);
+  @include flush-top;
+  @include justify-content;
+  @include pointer-events(none);
+  @include use-flex;
+  bottom: 0;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+}
+
+.list__jump {
+  @include align-self;
+  @include elevation(2);
+  @include setup-button;
+  @include transform(translateX(-50%));
+  background-color: $list-jump-background;
+  border-radius: 2em;
+  bottom: 1.5em;
+  color: $list-jump-content;
+  font-size: 0.85em;
+  font-weight: 500;
+  left: 50%;
+  padding: 0.5em 1em;
+  position: fixed;
+}
+
+.no-touch .list__jump:hover {
+  background-color: $list-jump-background-hover;
+}
+
+.list__jump:active {
+  background-color: $list-jump-background-active;
+}
+
+.list__jump--hidden {
+  @include hidden;
+}
+
+.list__footer {
+  @include align-items;
+  @include flex-direction;
+  @include justify-content;
+  @include use-flex;
+  margin: 1em 1em 4em;
+
+  span {
+    color: $list-footer-content;
+    font-size: 0.75em;
+    text-align: center;
+  }
+}
+
+.list__footer-title {
+  font-weight: 500;
+}

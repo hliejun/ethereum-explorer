@@ -25,38 +25,52 @@
 }
 
 .dashboard__sub-sections {
-  @include flex-wrap;
+  @include flex-direction;
   @include use-flex;
 }
 
 .dashboard__sub-section {
-  @include flex-direction;
+  @include align-items;
   @include flex-grow;
+  @include justify-content(space-between);
   @include use-flex;
   margin-top: 0.25em;
   max-width: 100%;
+  overflow-x: hidden;
 }
 
 .dashboard__sub-section-header {
   @include align-items;
   @include justify-content(flex-start);
   @include use-flex;
-  width: 100%;
+}
+
+.dashboard__sub-section-separator {
+  @include flex-grow;
+  @include flex-shrink(1);
+  border: 0;
+  margin: 0 0.5em 0.5em;
+  overflow: hidden;
+}
+
+.dashboard__sub-section-separator:after {
+  content: '.........................................................................................................................................................................................................................................';
+  font-weight: 500;
+  letter-spacing: 0.25em;
 }
 
 .dashboard__sub-section-label {
-  font-size: 0.7em;
-  margin-right: 0.25em;
+  font-size: 0.85em;
+  margin-left: 0.25em;
 }
 
 .dashboard__sub-section-glyph {
-  @include square(0.7em);
+  @include square(0.85em);
 }
 
 .dashboard__sub-section-currency {
   @include align-self;
-  font-size: 1.2em;
-  margin-top: 0.25em;
-  max-width: 100%;
+  @include flex-shrink;
   padding: 0.25em;
+  text-align: right;
 }

@@ -26,11 +26,15 @@ $form-label: rgba(black, 0.26);
 // Fields
 $field-border: rgba(black, 0.12);
 $field-content: #202124;
-$field-input-hover: #e0f2f1;
+$field-input-hover: #ccc;
 $field-input-mark: white;
 $field-input-selected: #4db6ac;
 $field-input-unselected: #eee;
 $field-label: rgba(black, 0.26);
+$field-toggle-background: #eee;
+$field-toggle-highlight: #4db6ac;
+$field-toggle-hover: #ccc;
+$field-toggle-switch: white;
 
 // Jumbotron
 $jumbotron-content: #202124;
@@ -47,6 +51,13 @@ $sub-section-hint: #5f6368;
 $item-row-content: #202124;
 $item-row-hint: #5f6368;
 
+// List
+$list-jump-background-active: black;
+$list-jump-background-hover: #5f6368;
+$list-jump-background: #202124;
+$list-jump-content: white;
+$list-footer-content: #202124;
+
 // Table
 $table-background: white;
 $table-shadow: black;
@@ -61,7 +72,7 @@ $table-tooltip-background: #707070;
 $table-tooltip-content: white;
 
 // Table Row
-$table-row-background-hover: rgba(black, 0.1);
+$table-row-background-hover: #eee;
 $table-row-border: rgba(black, 0.12);
 $table-row-content-hover: #202124;
 $table-row-content: rgba(#202124, 0.75);
@@ -70,6 +81,15 @@ $table-row-content: rgba(#202124, 0.75);
 $table-paginator-border: rgba(black, 0.12);
 $table-paginator-content-hover: #202124;
 $table-paginator-content: rgba(#202124, 0.5);
+
+// Loader
+$loader-stroke: #4db6ac;
+
+// Placeholder
+$placeholder-background-active: #bdbdbd;
+$placeholder-background-hover: #eee;
+$placeholder-background: white;
+$placeholder-content: #202124;
 
 // Portfolio Page
 $portfolio-modal-content: #202124;

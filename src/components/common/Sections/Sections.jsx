@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import './_sections.scss';
@@ -24,6 +25,20 @@ const SubSection = ({
 	</div>
 );
 
+SubSection.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+	description: PropTypes.string,
+	icon: PropTypes.elementType,
+	title: PropTypes.string.isRequired
+};
+
+SubSection.defaultProps = {
+	className: null,
+	description: null,
+	icon: null
+};
+
 const Section = ({ children, className, footer, icon: Icon, image, title }) => (
 	<div className={clns('data-section', className)}>
 		{image && <div className="data-section__image">{image}</div>}
@@ -37,5 +52,21 @@ const Section = ({ children, className, footer, icon: Icon, image, title }) => (
 		{footer && <div className="data-section__footer">{footer}</div>}
 	</div>
 );
+
+Section.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+	footer: PropTypes.node,
+	icon: PropTypes.elementType,
+	image: PropTypes.elementType,
+	title: PropTypes.string.isRequired
+};
+
+Section.defaultProps = {
+	className: null,
+	footer: null,
+	icon: null,
+	image: null
+};
 
 export { Section, SubSection };

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import { stopScroll } from '../eventHandling';
 
@@ -26,6 +27,10 @@ class Modal extends React.Component {
 		return ReactDOM.createPortal(modal, modalRoot);
 	}
 }
+
+Modal.propTypes = {
+	children: PropTypes.node.isRequired
+};
 
 export default stopScroll(
 	// eslint-disable-next-line react/no-multi-comp

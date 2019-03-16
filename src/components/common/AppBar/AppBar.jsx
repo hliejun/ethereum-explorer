@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import Modal from '../Modal';
@@ -26,6 +27,18 @@ const LeftButton = ({ goBack, toggleMenu, useBackLink }) => {
 	);
 };
 
+LeftButton.propTypes = {
+	goBack: PropTypes.func,
+	toggleMenu: PropTypes.func,
+	useBackLink: PropTypes.bool
+};
+
+LeftButton.defaultProps = {
+	goBack: () => {},
+	toggleMenu: () => {},
+	useBackLink: false
+};
+
 const SideMenuModal = ({ toggleMenu }) => (
 	<div
 		className="app-bar__menu-portal"
@@ -38,27 +51,50 @@ const SideMenuModal = ({ toggleMenu }) => (
 	</div>
 );
 
+SideMenuModal.propTypes = {
+	toggleMenu: PropTypes.func.isRequired
+};
+
 const HeaderText = ({ subtitle, title }) => (
 	<div className="app-bar__title-set">
 		<span className="title-set__title">{title}</span>
-		<span className="title-set__subtitle">{subtitle}</span>
+		{subtitle && <span className="title-set__subtitle">{subtitle}</span>}
 	</div>
 );
 
+HeaderText.propTypes = {
+	title: PropTypes.string.isRequired,
+	subtitle: PropTypes.string
+};
+
+HeaderText.defaultProps = {
+	subtitle: null
+};
+
 const PageOptions = ({ options }) => (
 	<div className="app-bar__options">
-		{options.map(option => (
+		{options.map(({ handler, icon: Icon, key }) => (
 			<button
 				className="app-bar__button app-bar__button--option"
-				key={option.key}
-				onClick={option.handler}
+				key={key}
+				onClick={handler}
 				type="button"
 			>
-				<option.Icon className="app-bar__button-glyph" />
+				<Icon className="app-bar__button-glyph" />
 			</button>
 		))}
 	</div>
 );
+
+PageOptions.propTypes = {
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			handler: PropTypes.func.isRequired,
+			icon: PropTypes.elementType.isRequired,
+			key: PropTypes.string.isRequired
+		})
+	).isRequired
+};
 
 const AppBar = withRouter(
 	({ className, history, options, subtitle, title, useBackLink }) => {
@@ -78,5 +114,24 @@ const AppBar = withRouter(
 		);
 	}
 );
+
+AppBar.propTypes = {
+	className: PropTypes.string,
+	history: PropTypes.shape({
+		goBack: PropTypes.func.isRequired
+	}),
+	options: PageOptions.propTypes.options,
+	subtitle: PropTypes.string,
+	title: PropTypes.string.isRequired,
+	useBackLink: PropTypes.bool.isRequired
+};
+
+AppBar.defaultProps = {
+	className: null,
+	history: {
+		goBack: () => {}
+	},
+	subtitle: null
+};
 
 export default AppBar;

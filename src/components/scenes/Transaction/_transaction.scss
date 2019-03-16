@@ -24,13 +24,6 @@
   min-width: 30%;
 }
 
-.transaction .source__sub-section--status,
-.transaction .source__sub-section--type {
-  .source__sub-section-value {
-    text-transform: capitalize;
-  }
-}
-
 .transaction .source__sub-section-glyph {
   @include square(1.1em);
   fill: $transaction-content;
@@ -43,6 +36,11 @@
 
 .transaction .source__sub-section-status-text {
   margin-left: 0.25em;
+  text-transform: capitalize;
+}
+
+.transaction .source__sub-section-type {
+  text-transform: capitalize;
 }
 
 // Mobile

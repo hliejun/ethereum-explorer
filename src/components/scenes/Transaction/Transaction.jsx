@@ -30,7 +30,7 @@ const LocalValues = ({ countries, rates, value }) =>
 			>
 				{Icon && <Icon className="transaction__glyph" />}
 				<Currency
-					amount={`$${parseFloat(country.rate) * value}`}
+					amount={parseFloat(country.rate) * value}
 					className="transaction__local-currency"
 					code={country.code}
 				/>
@@ -48,7 +48,7 @@ const Transaction = ({
 	setTitle: updateTitle
 }) => {
 	const handleCopy = copyData(formatTransaction(stubbedTransaction));
-	const options = [{ key: 'copy', Icon: Copy, handler: handleCopy }];
+	const options = [{ handler: handleCopy, icon: Copy, key: 'copy' }];
 	const title = 'Transaction Details';
 	// const subtitle = `ID: ${match.params.id}`;
 
@@ -66,6 +66,12 @@ const Transaction = ({
 			reset();
 		};
 	}, [showId]);
+
+	useEffect(() => {
+		if (window) {
+			window.scroll(0, 0);
+		}
+	}, [window]);
 
 	// TODO: Get transaction data by url id param (don't fire if same id)
 

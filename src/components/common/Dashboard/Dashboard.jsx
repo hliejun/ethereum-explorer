@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Currency from '../Currency';
+import Currency, { symbols } from '../Currency';
 
 import './_dashboard.scss';
 
@@ -22,6 +23,18 @@ const Section = ({ amount, classLabel, className, code, label }) => (
 	</div>
 );
 
+Section.propTypes = {
+	amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+	classLabel: PropTypes.string.isRequired,
+	className: PropTypes.string,
+	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	label: PropTypes.string.isRequired
+};
+
+Section.defaultProps = {
+	className: null
+};
+
 const SubSection = ({
 	amount,
 	classLabel,
@@ -38,9 +51,10 @@ const SubSection = ({
 		)}
 	>
 		<div className="dashboard__sub-section-header">
+			{Icon && <Icon className="dashboard__sub-section-glyph" />}
 			<span className="dashboard__sub-section-label monotype">{label}</span>
-			<Icon className="dashboard__sub-section-glyph" />
 		</div>
+		<div className="dashboard__sub-section-separator" />
 		<Currency
 			amount={amount}
 			className="dashboard__sub-section-currency"
@@ -49,15 +63,50 @@ const SubSection = ({
 	</div>
 );
 
-const Dashboard = ({ className, mainItem, subItems }) => (
+SubSection.propTypes = {
+	amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+	classLabel: PropTypes.string.isRequired,
+	className: PropTypes.string,
+	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	icon: PropTypes.elementType,
+	label: PropTypes.string.isRequired
+};
+
+SubSection.defaultProps = {
+	className: null,
+	icon: null
+};
+
+const Dashboard = ({ className, mainItem, footer, separator, subItems }) => (
 	<div className={clns('dashboard', className)}>
 		<Section {...mainItem} />
+		{separator}
 		<div className="dashboard__sub-sections">
-			{subItems.map(item => (
-				<SubSection {...item} />
+			{subItems.map(({ key, ...item }) => (
+				<SubSection key={key} {...item} />
 			))}
 		</div>
+		{footer}
 	</div>
 );
+
+Dashboard.propTypes = {
+	className: PropTypes.string,
+	footer: PropTypes.node,
+	mainItem: PropTypes.shape(Section.propTypes).isRequired,
+	separator: PropTypes.node,
+	subItems: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string.isRequired,
+			...SubSection.propTypes
+		})
+	).isRequired
+};
+
+Dashboard.defaultProps = {
+	className: null,
+	footer: null,
+	separator: null
+};
 
 export default Dashboard;

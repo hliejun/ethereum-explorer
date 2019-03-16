@@ -3,7 +3,7 @@
 
 /* Input Type */
 
-.field {
+.field:not(.field--toggle) {
   @include align-items;
   @include default-transition;
   @include inline-flex;
@@ -12,7 +12,7 @@
   width: fit-content;
 }
 
-.field:not(.field--checkbox):not(.field--radio) {
+.field:not(.field--checkbox):not(.field--radio):not(.field--toggle) {
   @include align-items(flex-start);
   @include flex-direction;
   @include justify-content;
@@ -129,6 +129,74 @@
   left: 0.3em;
   top: 0;
   width: 0.3em;
+}
+
+/* Toggle Switch Type */
+
+.field--toggle {
+  @include align-items;
+  @include justify-content(flex-start);
+  @include no-select;
+  @include use-flex;
+  cursor: pointer;
+  position: relative;
+  width: fit-content;
+}
+
+.field__label--toggle {
+  display: block;
+  margin-right: 0.5em;
+  padding-bottom: 0.125em;
+}
+
+.field__container {
+  display: block;
+  height: 1em;
+  position: relative;
+  width: 2em;
+}
+
+.field__input--toggle {
+  @include hidden;
+  cursor: pointer;
+  position: absolute;
+}
+
+.field__input-switch {
+  @include default-transition;
+  @include flush-top;
+  background-color: $field-toggle-background;
+  border-radius: 1em;
+  bottom: 0;
+  cursor: pointer;
+  position: absolute;
+}
+
+.field__input-switch:before {
+  @include default-transition;
+  @include square(0.75em);
+  background-color: $field-toggle-switch;
+  border-radius: 50%;
+  content: '';
+  left: 0.15em;
+  position: absolute;
+  top: 0.125em;
+}
+
+.no-touch .field__input-switch:hover {
+  background-color: $field-toggle-hover;
+}
+
+.field--toggle input:checked + .field__input-switch {
+  background-color: $field-toggle-highlight;
+}
+
+.field--toggle input:focus + .field__input-switch {
+  @include box-shadow(0 0 1px $field-toggle-highlight);
+}
+
+.field--toggle input:checked + .field__input-switch:before {
+  @include transform(translateX(1em));
 }
 
 /* Radio Type */

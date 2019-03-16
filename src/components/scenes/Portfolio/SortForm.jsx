@@ -1,23 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import { ControlledForm, Input, Select } from '../../common/Form';
+import { sortCategories } from './_constants';
 import { stopScroll } from '../../common/eventHandling';
 
 import './_transactionform.scss';
 
-const sortModes = [
-	{ label: 'Date', value: 'date' },
-	{ label: 'Amount', value: 'amount' }
-];
-
-export const sortFields = ({ category, name }) => (
+const SortFields = ({ category, name }) => (
 	<React.Fragment>
 		<Select
 			className="transaction-sort-form__sort-category"
 			label="Sort By:"
 			name={name}
-			options={sortModes}
+			options={sortCategories}
 		/>
 		<fieldset name={category}>
 			<legend>{`${category} Sort Order: `}</legend>
@@ -39,6 +36,11 @@ export const sortFields = ({ category, name }) => (
 	</React.Fragment>
 );
 
+SortFields.propTypes = {
+	category: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired
+};
+
 const SortForm = React.forwardRef(({ className, ...passthroughProps }, ref) => (
 	<ControlledForm
 		{...passthroughProps}
@@ -48,17 +50,17 @@ const SortForm = React.forwardRef(({ className, ...passthroughProps }, ref) => (
 	>
 		{({ values, isSubmitting }) => (
 			<React.Fragment>
-				{sortFields({ name: 'sort', category: values.sort })}
+				<SortFields category={values.sort} name="sort" />
 				<div className="transaction-form__actions">
 					<button className="transaction-form__button" type="reset">
-            Reset
+						<span>Reset</span>
 					</button>
 					<button
 						className="transaction-form__button transaction-form__button--main"
 						disabled={isSubmitting}
 						type="submit"
 					>
-            Done
+						<span>Done</span>
 					</button>
 				</div>
 			</React.Fragment>
@@ -66,4 +68,13 @@ const SortForm = React.forwardRef(({ className, ...passthroughProps }, ref) => (
 	</ControlledForm>
 ));
 
+SortForm.propTypes = {
+	className: PropTypes.string
+};
+
+SortForm.defaultProps = {
+	className: null
+};
+
+export { SortFields };
 export default stopScroll(SortForm);

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Waypoint } from 'react-waypoint';
-import throttle from 'lodash.throttle';
-import qs from 'query-string';
 import clns from 'classnames';
+import qs from 'query-string';
+import throttle from 'lodash.throttle';
 
 import {
 	bufferSize,
@@ -23,7 +23,10 @@ import { filter, paginate, sort, trim, untrim } from './helper';
 
 import List from '../../common/List';
 import Modal from '../../common/Modal';
+import Placeholder from '../../common/Placeholder';
 import Table from '../../common/Table';
+
+import { symbols } from '../../common/Currency';
 
 import { getTableViewModel, getTableFields } from './TransactionTableModel';
 import CombinedForm from './CombinedForm';
@@ -33,10 +36,32 @@ import SortForm from './SortForm';
 import TransactionDashboard from './TransactionDashboard';
 import TransactionListItem from './TransactionListItem';
 
+import EmptyIcon from '../../../assets/icons/empty.svg';
+import ErrorIcon from '../../../assets/icons/server.svg';
 import Filter from '../../../assets/icons/filter.svg';
 import Sort from '../../../assets/icons/sort.svg';
 
 import './_portfolio.scss';
+
+const emptyState = {
+	description:
+    'You currently do not have any historical transactions in this filter.',
+	refreshText: 'Reload',
+	status: 'empty',
+	title: 'No Transactions Found'
+};
+
+// Fetch rates
+// Fetch items
+// Fetch balance
+
+// Select items (indices)
+// Select item data
+// Select local rate
+// Select user data (ethereum address)
+// Select settings (currency code)
+
+//
 
 class Portfolio extends React.Component {
 	constructor(props) {
@@ -46,8 +71,8 @@ class Portfolio extends React.Component {
 			isMobile: false,
 			isSubmitting: false,
 			options: [
-				{ key: 'filter', Icon: Filter, handler: this.toggleFilterModal },
-				{ key: 'sort', Icon: Sort, handler: this.toggleSortModal }
+				{ handler: this.toggleFilterModal, icon: Filter, key: 'filter' },
+				{ handler: this.toggleSortModal, icon: Sort, key: 'sort' }
 			],
 			showFilterModal: false,
 			showSortModal: false,
@@ -172,11 +197,12 @@ class Portfolio extends React.Component {
 
   toggleBalance = waypoint => {
   	const { setSubtitle } = this.props;
-  	const { balance } = stubbedSummary;
+  	const { balance, code } = stubbedSummary;
+  	const symbol = symbols[code] || '$';
   	const balanceDisplay =
       waypoint.currentPosition === Waypoint.inside
       	? null
-      	: `Balance: $${balance}`;
+      	: `Balance: ${symbol}${balance}`;
   	setSubtitle(balanceDisplay);
   };
 
@@ -194,16 +220,30 @@ class Portfolio extends React.Component {
 
   renderDashboard = () => (
   	<TransactionDashboard
-  		balance={stubbedSummary.balance}
+  		balance={parseFloat(stubbedSummary.balance)}
   		className="portfolio__dashboard"
   		code={stubbedSummary.code}
-  		receivedEth={stubbedSummary.receivedEth}
-  		sentEth={stubbedSummary.sentEth}
-  		totalEth={stubbedSummary.totalEth}
+  		rate={1.285} // get rate
+  		received={parseFloat(stubbedSummary.receivedEth)}
+  		sent={parseFloat(stubbedSummary.sentEth)}
+  		total={parseFloat(stubbedSummary.totalEth)}
   	/>
   );
 
-  renderStubbedList = () => {
+  renderPlaceholder = ({ status, ...props }) => (
+  	<Placeholder
+  		className="portfolio__placeholder"
+  		emptyIcon={EmptyIcon}
+  		errorIcon={ErrorIcon}
+  		hasError={status === 'error'}
+  		isEmpty={status === 'empty'}
+  		isLoading={status === 'loading'}
+  		onRefresh={() => {}} // get from dispatch props
+  		{...props}
+  	/>
+  );
+
+  renderList = () => {
   	const { location } = this.props;
   	const { isMobile } = this.state;
   	const { page, ...formData } = untrim(
@@ -227,6 +267,7 @@ class Portfolio extends React.Component {
   			pageBufferSize={bufferSize}
   			pageMap={this.getItems()}
   			pageSize={pageSize}
+  			placeholder={this.renderPlaceholder(emptyState)}
   			render={TransactionListItem}
   			topOffset={6.25}
   			unit="rem"
@@ -235,7 +276,7 @@ class Portfolio extends React.Component {
   	);
   };
 
-  renderStubbedTable = () => {
+  renderTable = () => {
   	const { history, location } = this.props;
   	const { page: currentTablePage, ...formData } = untrim(
   		qs.parse(location.search),
@@ -246,8 +287,6 @@ class Portfolio extends React.Component {
   	const pageItemIds = paginatedItems[currentTablePage - 1];
   	return (
   		<Table
-  			// isLoading={false} // KIV: need to put in state / store
-  			// onRefresh={() => {}} // KIV: need to dispatch fetch
   			className="portfolio__transaction-table"
   			currentPage={parseInt(currentTablePage, 10)}
   			fields={getTableFields(code)}
@@ -263,7 +302,8 @@ class Portfolio extends React.Component {
   						...stubbedTransactions[id]
   					}))
   			}
-  			parser={getTableViewModel}
+  			parser={getTableViewModel(code)}
+  			placeholder={this.renderPlaceholder(emptyState)}
   			sort={{ fieldName: formData.sort, order: formData.order }}
   		/>
   	);
@@ -359,7 +399,7 @@ class Portfolio extends React.Component {
   					<span className="portfolio__section-label">
   						{transactionsSectionTitle}
   					</span>
-  					{isMobile ? this.renderStubbedList() : this.renderStubbedTable()}
+  					{isMobile ? this.renderList() : this.renderTable()}
   				</div>
   			</div>
   			{showFilterModal &&

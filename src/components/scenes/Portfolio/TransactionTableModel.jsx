@@ -1,57 +1,9 @@
 import React from 'react';
 import Day from 'dayjs';
 
-import './_transactiontableitem.scss';
+import { symbols } from '../../common/Currency';
 
-const getTableViewModel = ({
-	address,
-	cashAmount,
-	ethAmount,
-	id,
-	timestamp,
-	type
-}) => ({
-	id,
-	date: {
-		model: {
-			timestamp
-		},
-		view: ({ timestamp: dateTime }) => {
-			const date = Day(dateTime);
-			return <span>{date.format('DD/MM/YY h:mmA')}</span>;
-		}
-	},
-	type: {
-		model: {
-			type
-		},
-		view: ({ type: transactionType }) => (
-			<span>{transactionType === 'incoming' ? 'Incoming' : 'Outgoing'}</span>
-		)
-	},
-	amount: {
-		model: {
-			cashAmount,
-			ethAmount
-		},
-		view: ({ cashAmount: cash, ethAmount: ethereum }) => (
-			<div className="transaction-table-item__amount">
-				<span className="transaction-table-item__amount-item">
-					{`$${cash}`}
-				</span>
-				<span className="transaction-table-item__amount-item transaction-table-item__amount-item--ethereum monotype">
-					{`(${ethereum}ETH)`}
-				</span>
-			</div>
-		)
-	},
-	address: {
-		model: {
-			address
-		},
-		view: ({ address: ethAddress }) => <span>{ethAddress}</span>
-	}
-});
+import './_transactiontableitem.scss';
 
 const getTableFields = code => [
 	{
@@ -93,5 +45,55 @@ const getTableFields = code => [
 		width: '35%'
 	}
 ];
+
+const getTableViewModel = code => ({
+	address,
+	cashAmount,
+	ethAmount,
+	id,
+	timestamp,
+	type
+}) => ({
+	address: {
+		model: {
+			address
+		},
+		view: ({ address: ethAddress }) => <span>{ethAddress}</span>
+	},
+	amount: {
+		model: {
+			cashAmount,
+			ethAmount
+		},
+		view: ({ cashAmount: cash, ethAmount: ethereum }) => (
+			<div className="transaction-table-item__amount">
+				<span className="transaction-table-item__amount-item">
+					{`${symbols[code] || '$'}${cash}`}
+				</span>
+				<span className="transaction-table-item__amount-item transaction-table-item__amount-item--ethereum monotype">
+					{`${symbols.ETH}${ethereum}`}
+				</span>
+			</div>
+		)
+	},
+	date: {
+		model: {
+			timestamp
+		},
+		view: ({ timestamp: dateTime }) => {
+			const date = Day(dateTime);
+			return <span>{date.format('DD/MM/YY h:mmA')}</span>;
+		}
+	},
+	id,
+	type: {
+		model: {
+			type
+		},
+		view: ({ type: transactionType }) => (
+			<span>{transactionType === 'incoming' ? 'Incoming' : 'Outgoing'}</span>
+		)
+	}
+});
 
 export { getTableFields, getTableViewModel };

@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import { FormContext } from './Form';
 
 import './_field.scss';
 
-const Input = ({ className, label, name, type, value }) => {
+const Input = ({ className, disabled, label, name, type, value }) => {
 	const { formId, onBlur, onChange, values } = useContext(FormContext);
 	const inputProps = {
-		className: clns('field__input', `field__input--${type}`, className),
+		className: clns('field__input', `field__input--${type}`),
+		disabled,
 		id: name,
 		name,
 		onBlur: onBlur(name),
@@ -38,9 +40,11 @@ const Input = ({ className, label, name, type, value }) => {
 					role="checkbox"
 					tabIndex="0"
 				/>
-				<span className={clns('field__label', `field__label--${type}`)}>
-					{label}
-				</span>
+				{label && (
+					<span className={clns('field__label', `field__label--${type}`)}>
+						{label}
+					</span>
+				)}
 			</React.Fragment>
 		);
 		break;
@@ -66,9 +70,43 @@ const Input = ({ className, label, name, type, value }) => {
 					role="radio"
 					tabIndex="0"
 				/>
-				<span className={clns('field__label', `field__label--${type}`)}>
-					{label}
-				</span>
+				{label && (
+					<span className={clns('field__label', `field__label--${type}`)}>
+						{label}
+					</span>
+				)}
+			</React.Fragment>
+		);
+		break;
+	case 'toggle':
+		id = `${formId}-toggle-${name}`;
+		view = (
+			<React.Fragment>
+				{label && (
+					<span className={clns('field__label', `field__label--${type}`)}>
+						{label}
+					</span>
+				)}
+				<div className="field__container">
+					<input
+						{...inputProps}
+						checked={String(values[name]) === 'true'}
+						id={id}
+						onChange={event => onChange(name)(event.target.checked)}
+						type="checkbox"
+					/>
+					<span
+						aria-checked={String(values[name]) === 'true'}
+						className="field__input-switch"
+						onKeyPress={event => {
+							if (event.charCode === 13 || event.charCode === 32) {
+								onChange(name)(String(values[name]) === 'false');
+							}
+						}}
+						role="checkbox"
+						tabIndex="0"
+					/>
+				</div>
 			</React.Fragment>
 		);
 		break;
@@ -76,9 +114,11 @@ const Input = ({ className, label, name, type, value }) => {
 		id = `${formId}-input-${name}`;
 		view = (
 			<React.Fragment>
-				<span className={clns('field__label', `field__label--${type}`)}>
-					{label}
-				</span>
+				{label && (
+					<span className={clns('field__label', `field__label--${type}`)}>
+						{label}
+					</span>
+				)}
 				<input
 					{...inputProps}
 					onChange={event => onChange(name)(event.target.value)}
@@ -88,19 +128,71 @@ const Input = ({ className, label, name, type, value }) => {
 		);
 	}
 	return (
-		<label className={clns('field', `field--${type}`)} htmlFor={id}>
+		<label className={clns('field', `field--${type}`, className)} htmlFor={id}>
 			{view}
 		</label>
 	);
 };
 
-const Select = ({ children, className, label: selectLabel, name, options }) => {
+Input.propTypes = {
+	className: PropTypes.string,
+	label: PropTypes.string,
+	name: PropTypes.string.isRequired,
+	type: PropTypes.oneOf([
+		'button',
+		'checkbox',
+		'color',
+		'date',
+		'datetime-local',
+		'email',
+		'file',
+		'hidden',
+		'image',
+		'month',
+		'number',
+		'password',
+		'radio',
+		'range',
+		'reset',
+		'search',
+		'submit',
+		'tel',
+		'text',
+		'time',
+		'toggle',
+		'url',
+		'week'
+	]).isRequired,
+	value: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.number,
+		PropTypes.string
+	])
+};
+
+Input.defaultProps = {
+	className: null,
+	label: null,
+	value: null
+};
+
+const Select = ({
+	children,
+	className,
+	disabled,
+	label: selectLabel,
+	name,
+	options
+}) => {
 	const { formId, onBlur, onChange, values } = useContext(FormContext);
 	return (
 		<label className="field field--select" htmlFor={name}>
-			<span className="field__label field__label--select">{selectLabel}</span>
+			{selectLabel && (
+				<span className="field__label field__label--select">{selectLabel}</span>
+			)}
 			<select
 				className={clns('field__input', 'field__input--select', className)}
+				disabled={disabled}
 				id={`${formId}-select-${name}`}
 				name={name}
 				onBlur={onBlur(name)}
@@ -116,15 +208,36 @@ const Select = ({ children, className, label: selectLabel, name, options }) => {
 				>
           Choose your option
 				</option>
-				{options.map(({ label, value }) => (
-					<option className="field__option" key={value} value={value}>
-						{label}
-					</option>
-				))}
+				{options &&
+          options.map(({ label, value }) => (
+          	<option className="field__option" key={value} value={value}>
+          		{label}
+          	</option>
+          ))}
 				{children}
 			</select>
 		</label>
 	);
+};
+
+Select.propTypes = {
+	children: PropTypes.node,
+	className: PropTypes.string,
+	label: PropTypes.string,
+	name: PropTypes.string.isRequired,
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string.isRequired,
+			value: PropTypes.string.isRequired
+		})
+	)
+};
+
+Select.defaultProps = {
+	children: null,
+	className: null,
+	label: null,
+	options: []
 };
 
 const Message = ({ className, name, render }) => {
@@ -136,6 +249,16 @@ const Message = ({ className, name, render }) => {
 		message,
 		value
 	});
+};
+
+Message.propTypes = {
+	className: PropTypes.string,
+	name: PropTypes.string.isRequired,
+	render: PropTypes.func.isRequired
+};
+
+Message.defaultProps = {
+	className: null
 };
 
 export { Input, Message, Select };

@@ -7,6 +7,7 @@
 }
 
 body {
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -38,6 +39,21 @@ button,
 [type='reset'],
 [type='submit'] {
   @include appearance(button);
+}
+
+#app-root,
+.container {
+  @include flex-direction;
+  @include use-flex;
+  min-height: inherit;
+  min-width: inherit;
+}
+
+.page {
+  @include flex-direction;
+  @include flex-grow;
+  @include justify-content(flex-start);
+  @include use-flex;
 }
 
 // Desktop Landscape

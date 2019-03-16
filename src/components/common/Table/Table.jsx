@@ -1,20 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Header from './Header';
+import Header, { fieldTypes as headerFieldTypes, sortTypes } from './Header';
 import Paginator from './Paginator';
-import Row from './Row';
+import Row, { fieldTypes as rowFieldTypes } from './Row';
 
 import './_table.scss';
 
 const Body = ({
-	// isLoading, // KIV: For loader animation
-	// onRefresh, // KIV: For placeholder reload
 	className,
 	fields,
 	onSelectRow,
 	pageItems,
-	parser
+	parser,
+	placeholder
 }) => {
 	const viewModels = pageItems.map(parser);
 	const rows = viewModels.map(({ id, ...item }, index) => (
@@ -25,21 +25,41 @@ const Body = ({
 			onClick={() => onSelectRow(id, index)}
 		/>
 	));
-	return <div className={clns('table-body', className)}>{rows}</div>;
+	return (
+		<div className={clns('table-body', className)}>
+			{rows && rows.length > 0 ? rows : placeholder}
+		</div>
+	);
+};
+
+const itemTypes = PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any));
+
+Body.propTypes = {
+	className: PropTypes.string,
+	fields: rowFieldTypes.isRequired,
+	onSelectRow: PropTypes.func,
+	pageItems: itemTypes.isRequired,
+	parser: PropTypes.func.isRequired,
+	placeholder: PropTypes.node
+};
+
+Body.defaultProps = {
+	className: null,
+	onSelectRow: () => {},
+	placeholder: null
 };
 
 const Table = ({
 	className,
 	currentPage,
 	fields,
-	isLoading,
 	lastPage,
 	onPageChange,
-	onRefresh,
 	onSelectRow,
 	onSort,
 	pageItems,
 	parser,
+	placeholder,
 	sort
 }) => (
 	<div className={clns('table', className)}>
@@ -47,11 +67,10 @@ const Table = ({
 			<Header fields={fields} onSort={onSort} sort={sort} />
 			<Body
 				fields={fields}
-				isLoading={isLoading}
-				onRefresh={onRefresh}
 				onSelectRow={onSelectRow}
 				pageItems={pageItems}
 				parser={parser}
+				placeholder={placeholder}
 			/>
 		</div>
 		<Paginator
@@ -61,5 +80,27 @@ const Table = ({
 		/>
 	</div>
 );
+
+Table.propTypes = {
+	className: PropTypes.string,
+	currentPage: PropTypes.number.isRequired,
+	fields: headerFieldTypes.isRequired,
+	lastPage: PropTypes.number.isRequired,
+	onPageChange: PropTypes.func.isRequired,
+	onSelectRow: PropTypes.func,
+	onSort: PropTypes.func,
+	pageItems: itemTypes.isRequired,
+	parser: PropTypes.func.isRequired,
+	placeholder: PropTypes.node,
+	sort: sortTypes
+};
+
+Table.defaultProps = {
+	className: null,
+	onSelectRow: () => {},
+	onSort: () => {},
+	placeholder: null,
+	sort: null
+};
 
 export default Table;

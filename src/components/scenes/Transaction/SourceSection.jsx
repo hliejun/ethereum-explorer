@@ -69,7 +69,7 @@ const SourceSection = ({ address, className, id, status, timestamp, type }) => {
 				icon={Type}
 				title="Type"
 			>
-				<span className="source__sub-section-value">{type}</span>
+				<span className="source__sub-section-type">{type}</span>
 			</SubSection>
 			<SubSection
 				className="source__sub-section source__sub-section--address"

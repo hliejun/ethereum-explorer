@@ -1,3 +1,4 @@
-import Currency from './Currency';
+import Currency, { symbols } from './Currency';
 
+export { symbols };
 export default Currency;

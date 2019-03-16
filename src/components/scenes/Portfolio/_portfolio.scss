@@ -1,12 +1,19 @@
 @import '../../../assets/colors';
 @import '../../../assets/mixins';
 
+.portfolio__body {
+  @include flex-direction;
+  @include flex-grow;
+  @include use-flex;
+}
+
 .portfolio__section--right {
   @include flex-grow;
   @include flex-shrink(1);
 }
 
 .portfolio__section-label {
+  @include flex-grow(0);
   color: $portfolio-section-label;
   display: block;
   font-weight: 500;
@@ -14,6 +21,9 @@
 }
 
 .portfolio__transaction-list {
+  @include flex-direction;
+  @include flex-grow;
+  @include use-flex;
   margin: 0 1em;
 }
 
@@ -90,7 +100,7 @@
 // Desktop / Tablet Landscape
 @media only screen and (min-width: 768px) and (orientation: landscape) {
   .portfolio__body {
-    display: flex;
+    @include flex-direction(row);
   }
   .portfolio__modal,
   .portfolio__section--left {
@@ -103,6 +113,22 @@
   .portfolio__section-label {
     font-size: 1.2em;
     margin: 1em;
+  }
+}
+
+// Mobile
+@media only screen and (max-width: 767px) {
+  .portfolio__section--right {
+    @include flex-direction;
+    @include flex-grow;
+    @include flex-shrink(1);
+    @include use-flex;
+  }
+  .portfolio__section-label {
+    margin: 0 1em 1em;
+  }
+  .portfolio__placeholder {
+    margin-top: -1.5em;
   }
 }
 

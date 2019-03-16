@@ -7,7 +7,7 @@
   @include elevation(1);
   @include setup-button($transaction-list-background);
   display: block;
-  margin: 1em 0;
+  margin: 0 0 1em;
   text-align: left;
   width: 100%;
 }
@@ -15,6 +15,7 @@
 .no-touch .transaction-list-item:hover {
   @include elevation(2);
   background-color: $transaction-list-background-hover;
+  z-index: 5;
 }
 
 .transaction-list-item__header {
@@ -41,6 +42,7 @@
 
   .overline__label {
     margin-left: 0.25em;
+    text-transform: capitalize;
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import { stopScrollPropagation } from '../eventHandling';
@@ -25,18 +26,44 @@ const MenuHeader = ({ className, icon: Icon, link, onClick, title }) => (
 		role="presentation"
 	>
 		<Link to={link}>
-			<Icon className="header__glyph" />
+			{Icon && <Icon className="header__glyph" />}
 			<span className="header__title monotype">{title}</span>
 		</Link>
 	</div>
 );
 
+MenuHeader.propTypes = {
+	className: PropTypes.string,
+	icon: PropTypes.elementType,
+	link: PropTypes.string,
+	onClick: PropTypes.func,
+	title: PropTypes.string.isRequired
+};
+
+MenuHeader.defaultProps = {
+	className: null,
+	icon: null,
+	link: null,
+	onClick: () => {}
+};
+
 const MenuSection = ({ children, className, label }) => (
 	<div className={clns('side-menu__section', className)}>
-		{label != null && <span className="side-menu__section-label">{label}</span>}
+		{label && <span className="side-menu__section-label">{label}</span>}
 		<div className="section__items">{children}</div>
 	</div>
 );
+
+MenuSection.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+	label: PropTypes.string
+};
+
+MenuSection.defaultProps = {
+	className: null,
+	label: null
+};
 
 const MenuItem = ({ className, icon: Icon, label, onClick }) => (
 	<button
@@ -48,6 +75,17 @@ const MenuItem = ({ className, icon: Icon, label, onClick }) => (
 		<span className="item__label">{label}</span>
 	</button>
 );
+
+MenuItem.propTypes = {
+	className: PropTypes.string,
+	icon: PropTypes.elementType.isRequired,
+	label: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired
+};
+
+MenuItem.defaultProps = {
+	className: null
+};
 
 const LinkedMenuItem = withRouter(
 	({ history, link, onClick, ...passthroughProps }) => (
@@ -61,8 +99,22 @@ const LinkedMenuItem = withRouter(
 	)
 );
 
+LinkedMenuItem.propTypes = {
+	history: PropTypes.shape({
+		push: PropTypes.func.isRequired
+	}),
+	link: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired
+};
+
+LinkedMenuItem.defaultProps = {
+	history: {
+		push: () => {}
+	}
+};
+
 const SideMenu = React.forwardRef(
-	({ className, onLogout, handleClose }, ref) => {
+	({ className, handleClose, onLogout }, ref) => {
 		const close = () => {
 			handleClose();
 		};
@@ -150,5 +202,16 @@ const SideMenu = React.forwardRef(
 		);
 	}
 );
+
+SideMenu.propTypes = {
+	className: PropTypes.string,
+	handleClose: PropTypes.func.isRequired,
+	onLogout: PropTypes.func
+};
+
+SideMenu.defaultProps = {
+	className: null,
+	onLogout: () => {}
+};
 
 export default stopScrollPropagation(SideMenu);
