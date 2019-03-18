@@ -15,7 +15,7 @@ import Loader from '../Loader';
 
 import './_list.scss';
 
-class List extends React.Component {
+class List extends React.PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -40,7 +40,7 @@ class List extends React.Component {
   getListItems = () => {
   	const result = [];
   	const { dataMap, pageMap } = this.props;
-  	const { bufferStart, bufferEnd } = this.state;
+  	const { bufferEnd, bufferStart } = this.state;
   	let index;
   	for (index = bufferStart; index <= bufferEnd; index += 1) {
   		const pageContent = pageMap[index - 1];
@@ -57,7 +57,7 @@ class List extends React.Component {
 
   bufferShiftPrev = () => {
   	const { pageBufferSize } = this.props;
-  	this.setState(({ bufferStart, bufferEnd }) => {
+  	this.setState(({ bufferEnd, bufferStart }) => {
   		const nextStart = Math.max(1, bufferStart - 1);
   		const nextEnd = Math.max(pageBufferSize, bufferEnd - 1);
   		return {
@@ -71,7 +71,7 @@ class List extends React.Component {
   	const { pageBufferSize, pageMap } = this.props;
   	const lastPage = pageMap.length;
   	const maxStart = Math.max(1, lastPage - pageBufferSize + 1);
-  	this.setState(({ bufferStart, bufferEnd }) => {
+  	this.setState(({ bufferEnd, bufferStart }) => {
   		const nextStart = Math.min(maxStart, bufferStart + 1);
   		const nextEnd = Math.min(lastPage, bufferEnd + 1);
   		return {
@@ -124,16 +124,19 @@ class List extends React.Component {
   	const {
   		bottomOffset,
   		className,
+  		dataMap,
   		fontSize,
+  		onRefresh,
   		pageMap,
   		pageSize,
   		placeholder,
   		render: ListItem,
   		topOffset,
   		unit,
-  		unitBufferHeight
+  		unitBufferHeight,
+  		...otherProps
   	} = this.props;
-  	const { bufferStart, bufferEnd, isBuffering, isJumpVisible } = this.state;
+  	const { bufferEnd, bufferStart, isBuffering, isJumpVisible } = this.state;
 
   	const pagesCount = pageMap.length;
   	const listObjects = this.getListItems();
@@ -171,7 +174,7 @@ class List extends React.Component {
   							}}
   						/>
   						{listObjects.map(props => (
-  							<ListItem key={props.id} {...props} />
+  							<ListItem {...otherProps} {...props} key={props.id} />
   						))}
   						<div
   							className="list__bottom-padding"
@@ -224,9 +227,7 @@ List.propTypes = {
 	fontSize: PropTypes.number,
 	onRefresh: PropTypes.func,
 	pageBufferSize: PropTypes.number.isRequired,
-	pageMap: PropTypes.arrayOf(
-		PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))
-	).isRequired,
+	pageMap: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
 	pageSize: PropTypes.number.isRequired,
 	placeholder: PropTypes.node,
 	render: PropTypes.elementType.isRequired,

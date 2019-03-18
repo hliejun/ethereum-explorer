@@ -12,7 +12,6 @@ const Placeholder = ({
 	emptyIcon: EmptyIcon,
 	errorIcon: ErrorIcon,
 	hasError,
-	isEmpty,
 	isLoading,
 	onRefresh,
 	refreshText,
@@ -20,7 +19,7 @@ const Placeholder = ({
 }) => {
 	return (
 		<div className={clns('placeholder', className)}>
-			{!isLoading && isEmpty && EmptyIcon && (
+			{!isLoading && !hasError && EmptyIcon && (
 				<EmptyIcon className="placeholder__glyph placeholder__glyph--empty" />
 			)}
 			{!isLoading && hasError && ErrorIcon && (
@@ -54,7 +53,6 @@ Placeholder.propTypes = {
 	emptyIcon: PropTypes.elementType,
 	errorIcon: PropTypes.elementType,
 	hasError: PropTypes.bool,
-	isEmpty: PropTypes.bool,
 	isLoading: PropTypes.bool,
 	onRefresh: PropTypes.func,
 	refreshText: PropTypes.string,
@@ -67,7 +65,6 @@ Placeholder.defaultProps = {
 	emptyIcon: null,
 	errorIcon: null,
 	hasError: false,
-	isEmpty: false,
 	isLoading: false,
 	onRefresh: null,
 	refreshText: 'Try Again',

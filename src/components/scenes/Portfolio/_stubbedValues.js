@@ -1,45 +1,64 @@
-const itemCount = 1000;
-const pageSize = 20;
-const bufferSize = 10;
-// const pageSize = Math.max(10, itemCount / 50);
-// const bufferSize = Math.max(5, itemCount / 100);
+const itemCount = 10;
 
-const getRandomNumber = (max, min, precision) =>
+const getRandomInt = (min, max) =>
+	Math.floor(Math.random() * (max - min + 1) + min);
+
+const getRandomNumber = (min, max, precision) =>
 	(Math.random() * (max - min) + min).toFixed(precision).toString();
 
-const getStubbedContent = id => ({
-	address: `[${id}] ${Math.random()
-		.toString(36)
-		.substr(2, 16)}-ABCDEFGHIJKLMNOPQRSTUVWXYZ`,
-	cashAmount: getRandomNumber(1000000000.0, 0.01, 2),
-	code: 'KRW',
-	ethAmount: getRandomNumber(1000000.0, 0.01, 4),
-	timestamp: new Date(Date.now() - id * 864e5),
-	type: Math.floor(Math.random() * 2) === 0 ? 'incoming' : 'outgoing'
-});
+const getStubbedContent = id => {
+	const gas = getRandomInt(10000, 100000);
+	const gasUsed = gas - getRandomInt(1, 5000);
+	const price = getRandomInt(10000, 100000000);
+	const statusDraw = getRandomInt(0, 2);
+	let status;
+	switch (statusDraw) {
+	case 0:
+		status = 'success';
+		break;
+	case 1:
+		status = 'failed';
+		break;
+	default:
+		status = 'pending';
+	}
+	return {
+		block: {
+			confirmations: String(getRandomInt(1000, 1000000)),
+			height: String(getRandomInt(100, 100000)),
+			id: Math.random()
+				.toString(36)
+				.substr(2, 16)
+		},
+		gas: {
+			cumulativeUsed: String(gasUsed),
+			price: String(price),
+			used: String(gasUsed),
+			value: String(gas)
+		},
+		id: String(id),
+		source: {
+			address: `[${id}]-${Math.random()
+				.toString(36)
+				.substr(2, 16)}-ABCDEFGHIJKLMNOPQRSTUVWXYZ`,
+			timestamp: String(new Date(Date.now() - id * 864e5).getTime() / 1000),
+			type: Math.floor(Math.random() * 2) === 0 ? 'incoming' : 'outgoing'
+		},
+		status,
+		value: String(getRandomNumber(0.01, 100, 8))
+	};
+};
 
 const indices = [...Array(itemCount + 1).keys()].slice(1);
 
-const paginate = (array, size) => {
-	const result = [];
-	let index;
-	for (index = 0; index < array.length; index += size) {
-		result.push(array.slice(index, index + size));
-	}
-	return result;
-};
-
-const stubbedPagination = paginate(indices, pageSize);
-
-// const stubbedIds = [].concat(...stubbedPagination);
 const stubbedIds = indices.map(index => String(index));
 
 const stubbedSummary = {
-	balance: getRandomNumber(10000000.0, 0.01, 2),
+	balance: getRandomNumber(0.01, 10000000.0, 2),
 	code: 'KRW',
-	receivedEth: getRandomNumber(1000.0, 0.01, 4),
-	sentEth: getRandomNumber(1000.0, 0.01, 4),
-	totalEth: getRandomNumber(1000.0, 0.01, 4)
+	received: getRandomNumber(0.01, 1000.0, 4),
+	sent: getRandomNumber(0.01, 1000.0, 4),
+	subtotal: getRandomNumber(0.01, 1000.0, 4)
 };
 
 const stubbedTransactions = indices.reduce(
@@ -47,12 +66,4 @@ const stubbedTransactions = indices.reduce(
 	{}
 );
 
-export {
-	bufferSize,
-	itemCount,
-	pageSize,
-	stubbedIds,
-	stubbedPagination,
-	stubbedSummary,
-	stubbedTransactions
-};
+export { itemCount, stubbedIds, stubbedSummary, stubbedTransactions };

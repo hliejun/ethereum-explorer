@@ -20,8 +20,8 @@
 
 .transaction-list-item__header {
   @include align-items(flex-start);
-  @include use-flex;
   @include justify-content(space-between);
+  @include use-flex;
   font-size: 0.85em;
   margin-bottom: 0.5em;
 }
@@ -63,6 +63,8 @@
 .transaction-list-item__amount {
   @include flex-shrink;
   color: $transaction-list-content;
+  font-size: 1.1em;
+  margin: 0.25em 0;
   max-width: 100%;
 }
 
@@ -83,15 +85,15 @@
   overflow: hidden;
 }
 
-.transaction-list-item__section--source {
-  @include flex-shrink;
-  min-width: 5em;
-}
-
 .transaction-list-item__section--address {
   @include ellipsize-content('.transaction-list-item__address');
   @include flex-shrink(1);
+}
+
+.transaction-list-item__section--source {
+  @include flex-shrink;
   margin-left: 2em;
+  min-width: 5em;
 }
 
 .transaction-list-item__info-label {

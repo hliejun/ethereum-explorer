@@ -46,52 +46,48 @@ const getTableFields = code => [
 	}
 ];
 
-const getTableViewModel = code => ({
-	address,
-	cashAmount,
-	ethAmount,
-	id,
-	timestamp,
-	type
-}) => ({
+const getTableViewModel = (code, rate) => ({ id, source, value }) => ({
 	address: {
 		model: {
-			address
+			address: source.address
 		},
-		view: ({ address: ethAddress }) => <span>{ethAddress}</span>
+		view: ({ address }) => <span>{address}</span>
 	},
 	amount: {
 		model: {
-			cashAmount,
-			ethAmount
+			value
 		},
-		view: ({ cashAmount: cash, ethAmount: ethereum }) => (
+		view: ({ value: amount }) => (
 			<div className="transaction-table-item__amount">
 				<span className="transaction-table-item__amount-item">
-					{`${symbols[code] || '$'}${cash}`}
+					{rate
+						? `${symbols[code] || '$'}${parseFloat(amount) * rate}`
+						: `${symbols.ETH}${parseFloat(amount)}`}
 				</span>
-				<span className="transaction-table-item__amount-item transaction-table-item__amount-item--ethereum monotype">
-					{`${symbols.ETH}${ethereum}`}
-				</span>
+				{rate && (
+					<span className="transaction-table-item__amount-item transaction-table-item__amount-item--ethereum monotype">
+						{`${symbols.ETH}${amount}`}
+					</span>
+				)}
 			</div>
 		)
 	},
 	date: {
 		model: {
-			timestamp
+			timestamp: source.timestamp
 		},
-		view: ({ timestamp: dateTime }) => {
-			const date = Day(dateTime);
+		view: ({ timestamp }) => {
+			const date = Day(parseInt(timestamp, 10) * 1000);
 			return <span>{date.format('DD/MM/YY h:mmA')}</span>;
 		}
 	},
 	id,
 	type: {
 		model: {
-			type
+			type: source.type
 		},
-		view: ({ type: transactionType }) => (
-			<span>{transactionType === 'incoming' ? 'Incoming' : 'Outgoing'}</span>
+		view: ({ type }) => (
+			<span className="transaction-table-item__type-item">{type}</span>
 		)
 	}
 });

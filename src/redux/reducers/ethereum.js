@@ -1,34 +1,40 @@
 import { ETHEREUM } from '../actions/types';
 
-/* Shape of Transaction:
- *  [id]: {
- *		confirmations,
- *		date,
- *		ethAmount,
- *		gasFee,
- *		status,
- *		transactionAddress,
- *		type
- *	}
- */
+import {
+	stubbedIds,
+	stubbedSummary,
+	stubbedTransactions
+} from '../../components/scenes/Portfolio/_stubbedValues';
 
 const initialState = {
 	balance: {
 		error: null,
 		isLoading: false,
-		value: null
+		// value: null
+		value: stubbedSummary.balance
 	},
 	transactions: {
-		byIds: {},
+		// byIds: {},
+		byIds: stubbedTransactions,
 		error: null,
 		isLoading: false,
-		list: []
+		// list: []
+		list: stubbedIds
 	},
-	pagination: {
+	currency: {
+		base: 'USD',
 		error: null,
 		isLoading: false,
-		lastPage: 0,
-		total: 0
+		lastUpdated: null,
+		// rates: {}
+		rates: {
+			CNY: 6.7135,
+			ETH: 0.0072508429,
+			GBP: 0.7514,
+			JPY: 111.42557908,
+			KRW: 1134.116271,
+			SGD: 1.3504
+		}
 	}
 };
 
@@ -74,41 +80,35 @@ const ethereumReducer = (state = initialState, action) => {
 			}
 		};
 	}
-	case ETHEREUM.PAGINATE_TRANSACTIONS_STARTED: {
+	case ETHEREUM.UPDATE_TRANSACTIONS_STARTED: {
 		return {
 			...state,
-			pagination: {
-				...state.pagination,
+			transactions: {
+				...state.transactions,
 				isLoading: true
 			}
 		};
 	}
-	case ETHEREUM.PAGINATE_TRANSACTIONS_SUCCESS: {
-		const { transactions, byIds, page, total } = action.payload;
+	case ETHEREUM.UPDATE_TRANSACTIONS_SUCCESS: {
+		const { transactions } = action.payload;
 		return {
 			...state,
 			transactions: {
 				...state.transactions,
 				byIds: {
 					...state.transactions.byIds,
-					...byIds
+					...transactions
 				},
-				list: [...state.transactions.list, ...transactions]
-			},
-			pagination: {
-				...state.pagination,
-				total,
-				isLoading: false,
-				lastPage: page
+				list: Object.keys(transactions)
 			}
 		};
 	}
-	case ETHEREUM.PAGINATE_TRANSACTIONS_ERROR: {
+	case ETHEREUM.UPDATE_TRANSACTIONS_ERROR: {
 		const { error } = action.payload;
 		return {
 			...state,
-			pagination: {
-				...state.pagination,
+			transactions: {
+				...state.transactions,
 				error,
 				isLoading: false
 			}
@@ -121,11 +121,6 @@ const ethereumReducer = (state = initialState, action) => {
 				...state.transactions,
 				byIds: {},
 				list: []
-			},
-			pagination: {
-				...state.pagination,
-				lastPage: 0,
-				total: 0
 			}
 		};
 	}

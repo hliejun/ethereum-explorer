@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import throttle from 'lodash.throttle';
 
 import Home from './scenes/Home';
 import Missing from './scenes/Missing';
@@ -10,11 +11,10 @@ import Transaction from './scenes/Transaction';
 
 import AppBar from './common/AppBar';
 
-const attachOptions = Page => options => props => (
-	<Page {...options} {...props} />
-);
+const attach = Page => options => props => <Page {...options} {...props} />;
 
 const initialState = {
+	isMobile: false,
 	pageOptions: [],
 	pageSubtitle: null,
 	pageTitle: 'Tx Ethereum Explorer',
@@ -26,6 +26,7 @@ const Container = ({ match }) => {
 	const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
 	const [pageSubtitle, setPageSubtitle] = useState(initialState.pageSubtitle);
 	const [pageOptions, setPageOptions] = useState(initialState.pageOptions);
+	const [isMobile, setIsMobile] = useState(false);
 
 	const resetAppBar = () => {
 		setUseBackLink(initialState.useBackLink);
@@ -34,13 +35,30 @@ const Container = ({ match }) => {
 		setPageOptions(initialState.pageOptions);
 	};
 
-	const options = {
+	const appControl = {
+		isMobile,
 		reset: resetAppBar,
 		setBackLink: setUseBackLink,
 		setOptions: setPageOptions,
 		setSubtitle: setPageSubtitle,
 		setTitle: setPageTitle
 	};
+
+	const updateDimensions = throttle(() => {
+		const currentlyIsMobile = window.innerWidth < 768;
+		if (currentlyIsMobile !== isMobile) {
+			setIsMobile(currentlyIsMobile);
+		}
+	}, 800);
+
+	useEffect(() => {
+		updateDimensions();
+		window.addEventListener('resize', updateDimensions);
+		return function cleanup() {
+			updateDimensions.flush();
+			window.removeEventListener('resize', updateDimensions);
+		};
+	}, [window, updateDimensions]);
 
 	return (
 		<div className="container">
@@ -51,32 +69,28 @@ const Container = ({ match }) => {
 				useBackLink={useBackLink}
 			/>
 			<Switch>
-				<Route
-					exact
-					path={`${match.url}/`}
-					render={attachOptions(Home)(options)}
-				/>
+				<Route exact path={`${match.url}/`} render={attach(Home)(appControl)} />
 				<Route
 					exact
 					path={`${match.url}/profile/:mode?/:item?`}
-					render={attachOptions(Profile)(options)}
+					render={attach(Profile)(appControl)}
 				/>
 				<Route
 					exact
 					path={`${match.url}/settings/:mode?/:item?`}
-					render={attachOptions(Settings)(options)}
+					render={attach(Settings)(appControl)}
 				/>
 				<Route
 					exact
 					path={`${match.url}/portfolio`}
-					render={attachOptions(Portfolio)(options)}
+					render={attach(Portfolio)(appControl)}
 				/>
 				<Route
 					exact
 					path={`${match.url}/transaction/:id`}
-					render={attachOptions(Transaction)(options)}
+					render={attach(Transaction)(appControl)}
 				/>
-				<Route component={Missing} />
+				<Route render={attach(Missing)(appControl)} />
 			</Switch>
 		</div>
 	);

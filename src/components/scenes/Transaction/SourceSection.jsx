@@ -14,7 +14,9 @@ import Success from '../../../assets/icons/success.svg';
 import Type from '../../../assets/icons/transaction.svg';
 
 const SourceSection = ({ address, className, id, status, timestamp, type }) => {
-	const formattedDate = Day(timestamp).format('DD/MM/YY h:mmA');
+	const formattedDate = Day(parseInt(timestamp, 10) * 1000).format(
+		'DD/MM/YY h:mmA'
+	);
 	const isIncoming = type === 'incoming';
 	let StatusIcon;
 	switch (status) {

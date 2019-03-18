@@ -1,7 +1,5 @@
 import { USER } from '../actions/types';
 
-// TODO: make OTP opt-in
-
 const initialState = {
 	avatar: {
 		error: null,
@@ -9,7 +7,8 @@ const initialState = {
 		url: null
 	},
 	country: {
-		code: null,
+		// code: null,
+		code: 'SGD',
 		error: null,
 		isLoading: false
 	},
@@ -20,7 +19,8 @@ const initialState = {
 	},
 	error: null,
 	ethAccount: {
-		address: null,
+		// address: null,
+		address: '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae',
 		error: null,
 		isLoading: false
 	},

@@ -8,7 +8,7 @@ import './_modal.scss';
 
 const modalRoot = document.getElementById('modal-root');
 
-class Modal extends React.Component {
+class Modal extends React.PureComponent {
 	componentDidMount() {
 		document.body.classList.add('modal-open');
 	}

@@ -34,7 +34,7 @@ Overline.defaultProps = {
 };
 
 const Meta = memo(({ className, timestamp }) => {
-	const date = Day(timestamp);
+	const date = Day(parseInt(timestamp, 10) * 1000);
 	const isSameYear = Day().isSame(date, 'year');
 	const dateFormat = isSameYear ? 'D/M h:mmA' : 'D/M/YY h:mmA';
 	return (
@@ -44,11 +44,7 @@ const Meta = memo(({ className, timestamp }) => {
 
 Meta.propTypes = {
 	className: PropTypes.string,
-	timestamp: PropTypes.oneOfType([
-		PropTypes.instanceOf(Date),
-		PropTypes.number,
-		PropTypes.string
-	]).isRequired
+	timestamp: PropTypes.string.isRequired
 };
 
 Meta.defaultProps = {
@@ -115,30 +111,10 @@ AddressSection.defaultProps = {
 	className: null
 };
 
-const TransactionListItem = withRouter(
-	({ history, id, ...passthroughProps }) => (
-		<ListItem
-			{...passthroughProps}
-			onClick={() => history.push(`/app/transaction/${id}`)}
-		/>
-	)
-);
-
-TransactionListItem.propTypes = {
-	id: PropTypes.string.isRequired
-};
-
-const ListItem = memo(
-	({
-		address,
-		cashAmount,
-		className,
-		code,
-		ethAmount,
-		onClick,
-		timestamp,
-		type
-	}) => (
+const ListItem = memo(({ className, code, onClick, rate, source, value }) => {
+	const { address, timestamp, type } = source;
+	const displayedAmount = rate ? parseFloat(value) * rate : parseFloat(value);
+	return (
 		<button
 			className={clns('transaction-list-item', className)}
 			onClick={onClick}
@@ -150,38 +126,53 @@ const ListItem = memo(
 			</div>
 			<div className="transaction-list-item__currencies">
 				<Currency
-					amount={type === 'outgoing' ? `-${cashAmount}` : cashAmount}
+					amount={
+						type === 'outgoing'
+							? `-${displayedAmount}`
+							: String(displayedAmount)
+					}
 					className={clns('transaction-list-item__amount', {
 						'transaction-list-item__amount--negative': type === 'outgoing'
 					})}
-					code={code}
+					code={rate ? code : 'ETH'}
 				/>
 			</div>
 			<div className="transaction-list-item__description">
-				<SourceSection amount={ethAmount} />
 				<AddressSection address={address} type={type} />
+				{rate && <SourceSection amount={value} />}
 			</div>
 		</button>
-	)
-);
+	);
+});
 
 ListItem.propTypes = {
-	address: PropTypes.string.isRequired,
-	cashAmount: PropTypes.string.isRequired,
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
-	ethAmount: PropTypes.string.isRequired,
 	onClick: PropTypes.func.isRequired,
-	timestamp: PropTypes.oneOfType([
-		PropTypes.number,
-		PropTypes.string,
-		PropTypes.instanceOf(Date)
-	]).isRequired,
-	type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
+	rate: PropTypes.number.isRequired,
+	source: PropTypes.shape({
+		address: PropTypes.string.isRequired,
+		timestamp: PropTypes.string.isRequired,
+		type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
+	}).isRequired,
+	value: PropTypes.string.isRequired
 };
 
 ListItem.defaultProps = {
 	className: null
+};
+
+const TransactionListItem = withRouter(
+	({ history, id, ...passthroughProps }) => (
+		<ListItem
+			{...passthroughProps}
+			onClick={() => history.push(`/app/transaction/${id}`)}
+		/>
+	)
+);
+
+TransactionListItem.propTypes = {
+	id: PropTypes.string.isRequired
 };
 
 /* eslint-enable react/no-multi-comp */

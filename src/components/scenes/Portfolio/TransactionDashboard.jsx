@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Dashboard from '../../common/Dashboard';
 import { Form, Input } from '../../common/Form';
 import { symbols } from '../../common/Currency';
+import Dashboard from '../../common/Dashboard';
 
 import Balance from '../../../assets/icons/balance.svg';
 import Receive from '../../../assets/icons/receive.svg';
@@ -15,6 +15,7 @@ const TransactionDashboard = ({
 	balance,
 	className,
 	code: localCode,
+	placeholder,
 	rate,
 	received,
 	sent,
@@ -77,13 +78,17 @@ const TransactionDashboard = ({
 		</Form>
 	);
 
-	return (
+	// if balance not available, switch to placeholder
+	// (add props and props check for placeholder)
+	return balance ? (
 		<Dashboard
 			className={className}
 			footer={overline}
 			mainItem={mainItem}
 			subItems={subItems}
 		/>
+	) : (
+		placeholder
 	);
 };
 
@@ -91,6 +96,7 @@ TransactionDashboard.propTypes = {
 	balance: PropTypes.number.isRequired,
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	placeholder: PropTypes.node.isRequired,
 	rate: PropTypes.number.isRequired,
 	received: PropTypes.number.isRequired,
 	sent: PropTypes.number.isRequired,

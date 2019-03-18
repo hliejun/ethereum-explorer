@@ -1,11 +1,11 @@
-export const filter = (transactionIds, transactions, fieldName, filters) => {
+export const filter = (list, items, category, filters) => {
 	const result = [];
-	transactionIds.forEach(id => {
-		const data = transactions[id];
+	list.forEach(id => {
+		const data = items[id];
 		if (
 			data != null &&
-      data[fieldName] != null &&
-      String(filters[data[fieldName]]) === 'true'
+      data.source[category] != null &&
+      String(filters[data.source[category]]) === 'true'
 		) {
 			result.push(id);
 		}
@@ -13,22 +13,22 @@ export const filter = (transactionIds, transactions, fieldName, filters) => {
 	return result;
 };
 
-export const sort = (transactionIds, transactions, fieldName, order) => {
-	const result = [...transactionIds];
+export const sort = (list, items, category, order) => {
+	const result = [...list];
 	const isAscending = order === 'ascending';
 
 	const comparator = (firstId, secondId) => {
 		let firstComparable;
 		let secondComparable;
-		switch (fieldName) {
+		switch (category) {
 		case 'amount':
-			firstComparable = parseFloat(transactions[firstId].ethAmount);
-			secondComparable = parseFloat(transactions[secondId].ethAmount);
+			firstComparable = parseFloat(items[firstId].value);
+			secondComparable = parseFloat(items[secondId].value);
 			break;
 		case 'date':
 		default:
-			firstComparable = transactions[firstId].timestamp;
-			secondComparable = transactions[secondId].timestamp;
+			firstComparable = items[firstId].source.timestamp;
+			secondComparable = items[secondId].source.timestamp;
 		}
 		if (firstComparable < secondComparable) {
 			return isAscending ? -1 : 1;
@@ -40,16 +40,6 @@ export const sort = (transactionIds, transactions, fieldName, order) => {
 	};
 
 	return result.sort(comparator);
-};
-
-export const paginate = (transactionIds, size) => {
-	const result = [];
-	let index;
-	for (index = 0; index < transactionIds.length; index += size) {
-		const pageTransactionIds = transactionIds.slice(index, index + size);
-		result.push(pageTransactionIds);
-	}
-	return result;
 };
 
 export const trim = (data, validation) => {

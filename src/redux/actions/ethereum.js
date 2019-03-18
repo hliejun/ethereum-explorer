@@ -25,7 +25,6 @@ const getBalanceFailure = error => ({
 const getBalance = ({ token, address }) => {
 	return dispatch => {
 		dispatch(getBalanceStarted());
-		// TODO: Encrypt ethAddress (end-to-end incl. storage)
 		axios
 			.post('https://jsonplaceholder.typicode.com/balance', {
 				address,
@@ -55,44 +54,29 @@ const clearBalance = () => {
 /* Get Paginated Transactions */
 
 const getTransactionsStarted = () => ({
-	type: ETHEREUM.PAGINATE_TRANSACTIONS_STARTED
+	type: ETHEREUM.UPDATE_TRANSACTIONS_STARTED
 });
 
-const getTransactionsSuccess = ({ byIds, page, total, transactions }) => ({
-	type: ETHEREUM.PAGINATE_TRANSACTIONS_SUCCESS,
+const getTransactionsSuccess = ({ transactions }) => ({
+	type: ETHEREUM.UPDATE_TRANSACTIONS_SUCCESS,
 	payload: {
-		byIds,
-		page,
-		total,
 		transactions
 	}
 });
 
 const getTransactionsFailure = error => ({
-	type: ETHEREUM.PAGINATE_TRANSACTIONS_ERROR,
+	type: ETHEREUM.UPDATE_TRANSACTIONS_ERROR,
 	payload: {
 		error
 	}
 });
 
-const getTransactions = ({
-	address,
-	filter,
-	page,
-	sortBy,
-	sortOrder,
-	token
-}) => {
+const getTransactions = ({ address, token }) => {
 	return dispatch => {
 		dispatch(getTransactionsStarted());
-		// TODO: Encrypt ethAddress (end-to-end incl. storage)
 		axios
 			.post('https://jsonplaceholder.typicode.com/transactions', {
 				address,
-				filter,
-				page,
-				sortBy,
-				sortOrder,
 				token
 			})
 			.then(response => {
@@ -118,17 +102,12 @@ const clearTransactions = () => {
 
 /* Clean Load Transactions */
 
-const reloadTransactions = ({ token, address, filter, sortBy, sortOrder }) => {
+const reloadTransactions = ({ token, address }) => {
 	return dispatch => {
 		dispatch(getTransactionsStarted());
-		// TODO: Encrypt ethAddress (end-to-end incl. storage)
 		axios
 			.post('https://jsonplaceholder.typicode.com/transactions', {
 				address,
-				filter,
-				page: 1,
-				sortBy,
-				sortOrder,
 				token
 			})
 			.then(response => {
