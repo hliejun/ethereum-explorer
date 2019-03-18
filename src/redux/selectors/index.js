@@ -11,6 +11,8 @@ import {
 
 const getQuery = (_, props) => props.location;
 
+const getId = (_, props) => props.match.params.id;
+
 /* Settings Data */
 
 export const getCode = ({ settingsReducer, userReducer }) =>
@@ -21,6 +23,8 @@ export const getCode = ({ settingsReducer, userReducer }) =>
 export const getAddress = ({ userReducer }) => userReducer.ethAccount.address;
 
 /* Ethereum Data */
+
+const getBaseCode = ({ ethereumReducer }) => ethereumReducer.currency.base;
 
 const getCurrencyRates = ({ ethereumReducer }) =>
 	ethereumReducer.currency.rates;
@@ -81,8 +85,8 @@ export const getPagination = createSelector(
 );
 
 export const getRates = createSelector(
-	[getCurrencyRates],
-	rates => {
+	[getCurrencyRates, getBaseCode],
+	(rates, baseCode) => {
 		const convertedRates = {};
 		if (!rates || !rates.ETH) {
 			return convertedRates;
@@ -94,8 +98,9 @@ export const getRates = createSelector(
 			return convertedRates;
 		}
 		Object.keys(rates).forEach(key => {
-			convertedRates[key] = parseFloat(rates[key]) / baseRate;
+			convertedRates[key] = parseFloat(rates[key]) * baseRate;
 		});
+		convertedRates[baseCode] = baseRate;
 		return convertedRates;
 	}
 );
@@ -110,6 +115,11 @@ export const getSimpleTransactions = createSelector(
 		});
 		return simpleTransactions;
 	}
+);
+
+export const getTransaction = createSelector(
+	[getTransactions, getId],
+	(transactions, id) => (transactions[id] ? { id, ...transactions[id] } : null)
 );
 
 export const getErrorStates = ({ ethereumReducer }) => ({

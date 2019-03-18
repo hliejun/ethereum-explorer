@@ -22,6 +22,7 @@ import {
 	defaultFormData,
 	defaultSortData,
 	emptyTransactionsHolderState,
+	errorAddressHolderState,
 	errorBalanceHolderState,
 	errorTransactionsHolderState,
 	formValidation,
@@ -160,6 +161,19 @@ class Portfolio extends React.PureComponent {
   };
 
   /* Rendering */
+
+  renderAddressPlaceholder = () => {
+  	const { history } = this.props;
+  	return (
+  		<Placeholder
+  			className="portfolio__placeholder portfolio__placeholder--address"
+  			errorIcon={ErrorIcon}
+  			hasError
+  			onRefresh={() => history.push('/app/settings')}
+  			{...errorAddressHolderState}
+  		/>
+  	);
+  };
 
   renderBalancePlaceholder = () => {
   	const { isLoading: loading } = this.props;
@@ -358,13 +372,22 @@ class Portfolio extends React.PureComponent {
   	/>
   );
 
+  // TODO: Render placeholder if address is not available (link to address page)
   render() {
-  	const { className, isMobile, location } = this.props;
+  	const { address, className, isMobile, location } = this.props;
   	const { showFilterModal, showSortModal } = this.state;
   	const { page, ...formData } = untrim(
   		qs.parse(location.search),
   		formValidation
   	);
+
+  	if (!address) {
+  		return (
+  			<div className={clns('page', 'portfolio', className)}>
+  				{this.renderAddressPlaceholder()}
+  			</div>
+  		);
+  	}
 
   	return (
   		<div className={clns('page', 'portfolio', className)}>
@@ -406,6 +429,7 @@ class Portfolio extends React.PureComponent {
 }
 
 Portfolio.propTypes = {
+	address: PropTypes.string,
 	balance: PropTypes.number,
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
@@ -436,6 +460,7 @@ Portfolio.propTypes = {
 };
 
 Portfolio.defaultProps = {
+	address: null,
 	balance: null,
 	className: null,
 	rate: null

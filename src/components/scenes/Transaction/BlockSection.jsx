@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Section, SubSection } from '../../common/Sections';
 
@@ -40,5 +41,16 @@ const BlockSection = ({ className, confirmations, height, id }) => (
 		</SubSection>
 	</Section>
 );
+
+BlockSection.propTypes = {
+	className: PropTypes.string,
+	confirmations: PropTypes.string.isRequired,
+	height: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired
+};
+
+BlockSection.defaultProps = {
+	className: null
+};
 
 export default BlockSection;

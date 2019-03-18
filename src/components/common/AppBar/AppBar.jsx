@@ -103,7 +103,7 @@ const AppBar = withRouter(
 		return (
 			<div className={clns('app-bar', 'app-bar--normal', className)}>
 				<LeftButton
-					goBack={history.goBack}
+					goBack={() => history.push('/app/portfolio')}
 					toggleMenu={toggleMenu}
 					useBackLink={useBackLink}
 				/>
@@ -118,7 +118,7 @@ const AppBar = withRouter(
 AppBar.propTypes = {
 	className: PropTypes.string,
 	history: PropTypes.shape({
-		goBack: PropTypes.func.isRequired
+		push: PropTypes.func.isRequired
 	}),
 	options: PageOptions.propTypes.options,
 	subtitle: PropTypes.string,
@@ -129,7 +129,7 @@ AppBar.propTypes = {
 AppBar.defaultProps = {
 	className: null,
 	history: {
-		goBack: () => {}
+		push: () => {}
 	},
 	subtitle: null
 };

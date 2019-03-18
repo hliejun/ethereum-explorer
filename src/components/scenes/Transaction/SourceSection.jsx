@@ -1,5 +1,6 @@
 import React from 'react';
 import Day from 'dayjs';
+import PropTypes from 'prop-types';
 
 import { Section, SubSection } from '../../common/Sections';
 
@@ -85,6 +86,19 @@ const SourceSection = ({ address, className, id, status, timestamp, type }) => {
 			</SubSection>
 		</Section>
 	);
+};
+
+SourceSection.propTypes = {
+	address: PropTypes.string.isRequired,
+	className: PropTypes.string,
+	id: PropTypes.string.isRequired,
+	status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
+	timestamp: PropTypes.string.isRequired,
+	type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
+};
+
+SourceSection.defaultProps = {
+	className: null
 };
 
 export default SourceSection;

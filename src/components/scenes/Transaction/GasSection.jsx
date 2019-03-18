@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Section } from '../../common/Sections';
 import ItemRow from '../../common/ItemRow';
@@ -46,5 +47,17 @@ const GasSection = ({ className, cumulativeUsed, price, used, value }) => (
 		/>
 	</Section>
 );
+
+GasSection.propTypes = {
+	className: PropTypes.string,
+	cumulativeUsed: PropTypes.string.isRequired,
+	price: PropTypes.string.isRequired,
+	used: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired
+};
+
+GasSection.defaultProps = {
+	className: null
+};
 
 export default GasSection;

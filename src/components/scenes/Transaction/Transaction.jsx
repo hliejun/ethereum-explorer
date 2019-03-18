@@ -1,61 +1,83 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import { stubbedConversionRates, stubbedTransaction } from './_stubbedValues';
-import { countriesToDisplay, countryIcons } from './_constants';
+import {
+	getAddress,
+	getLoadStates,
+	getRates,
+	getTransaction
+} from '../../../redux/selectors';
+
+import {
+	countryIcons,
+	errorAddressHolderState,
+	errorTransactionHolderState,
+	loadingTransactionHolderState
+} from './_constants';
 import { copyData, formatTransaction } from './_helper';
 
-import Currency from '../../common/Currency';
-import Jumbotron from '../../common/Jumbotron';
-
 import BlockSection from './BlockSection';
+import Currency from '../../common/Currency';
 import GasSection from './GasSection';
+import Jumbotron from '../../common/Jumbotron';
+import Placeholder from '../../common/Placeholder';
 import SourceSection from './SourceSection';
 
 import Copy from '../../../assets/icons/copy.svg';
+import ErrorIcon from '../../../assets/icons/server.svg';
 
 import './_transaction.scss';
 
-const LocalValues = ({ countries, rates, value }) =>
-	countries.map(countryName => {
-		const country = rates[countryName];
-		const Icon = countryIcons[countryName];
-		return country == null ? null : (
+const LocalValues = ({ rates, value }) => {
+	const { ETH, ...localRates } = rates;
+	return Object.keys(localRates).map(code => {
+		const rate = rates[code];
+		const Icon = countryIcons[code];
+		return (
 			<div
 				className={clns(
 					'transaction__local-amount',
-					`transaction__local-amount--${countryName}`
+					`transaction__local-amount--${code}`
 				)}
-				key={country.code}
+				key={code}
 			>
 				{Icon && <Icon className="transaction__glyph" />}
 				<Currency
-					amount={parseFloat(country.rate) * value}
+					amount={rate * value}
 					className="transaction__local-currency"
-					code={country.code}
+					code={code}
 				/>
 			</div>
 		);
 	});
+};
+
+LocalValues.propTypes = {
+	rates: PropTypes.objectOf(PropTypes.number).isRequired,
+	value: PropTypes.number.isRequired
+};
 
 const Transaction = ({
+	address,
 	className,
-	// match,
+	history,
+	isLoading,
+	rates,
 	reset,
 	setBackLink: updateBacklink,
 	setOptions: updateOptions,
 	setSubtitle: updateSubtitle,
-	setTitle: updateTitle
+	setTitle: updateTitle,
+	transaction
 }) => {
-	const handleCopy = copyData(formatTransaction(stubbedTransaction));
+	const [showId /* , setShowId */] = useState(true);
+
+	const handleCopy = copyData(formatTransaction(transaction));
 	const options = [{ handler: handleCopy, icon: Copy, key: 'copy' }];
 	const title = 'Transaction Details';
-	// const subtitle = `ID: ${match.params.id}`;
-
-	const { block, gas, id, source, status, value } = stubbedTransaction;
-	const subtitle = `ID: ${id}`;
-
-	const [showId /* , setShowId */] = useState(true);
+	const subtitle = transaction ? `ID: ${transaction.id}` : null;
 
 	useEffect(() => {
 		updateSubtitle(showId ? subtitle : null);
@@ -65,7 +87,7 @@ const Transaction = ({
 		return () => {
 			reset();
 		};
-	}, [showId]);
+	}, [showId, subtitle]);
 
 	useEffect(() => {
 		if (window) {
@@ -73,23 +95,56 @@ const Transaction = ({
 		}
 	}, [window]);
 
-	// TODO: Get transaction data by url id param (don't fire if same id)
+	if (!address) {
+		return (
+			<div className={clns('page', 'transaction', className)}>
+				<Placeholder
+					className="transaction__placeholder transaction__placeholder--address"
+					errorIcon={ErrorIcon}
+					hasError
+					onRefresh={() => history.push('/app/settings')}
+					{...errorAddressHolderState}
+				/>
+			</div>
+		);
+	}
 
-	// TODO: Convert value to local amounts (all countries) using conversion rates from store
+	let state = errorTransactionHolderState;
+	if (isLoading.transactions) {
+		state = loadingTransactionHolderState;
+	}
 
+	if (!transaction) {
+		return (
+			<div className={clns('page', 'transaction', className)}>
+				<Placeholder
+					className="transaction__placeholder transaction__placeholder--transaction"
+					errorIcon={ErrorIcon}
+					hasError
+					isLoading={isLoading.transactions}
+					// TODO: Get fetch transaction from dispatch props
+					onRefresh={() => {}}
+					{...state}
+				/>
+			</div>
+		);
+	}
+
+	const { block, gas, id, source, status, value } = transaction;
+	const parsedValue = parseFloat(value) || 0;
+
+	// TODO: Render placeholder if address is not available (link to address page)
 	return (
 		<div className={clns('page', 'transaction', className)}>
 			<div className="transaction__header">
 				<Jumbotron
 					className="transaction__values"
 					subtitle="Transacted Ether"
-					title={<Currency amount={value} code="ETH" />}
+					title={<Currency amount={parsedValue} code="ETH" />}
 				>
-					<LocalValues
-						countries={countriesToDisplay}
-						rates={stubbedConversionRates}
-						value={value}
-					/>
+					{rates && Object.keys(rates).length > 0 && (
+						<LocalValues rates={rates} value={parsedValue} />
+					)}
 				</Jumbotron>
 			</div>
 			<div className="transaction__body">
@@ -112,4 +167,56 @@ const Transaction = ({
 	);
 };
 
-export default Transaction;
+Transaction.propTypes = {
+	address: PropTypes.string,
+	className: PropTypes.string,
+	isLoading: PropTypes.objectOf(PropTypes.bool).isRequired,
+	rates: PropTypes.objectOf(PropTypes.number),
+	reset: PropTypes.func.isRequired,
+	setBackLink: PropTypes.func.isRequired,
+	setOptions: PropTypes.func.isRequired,
+	setSubtitle: PropTypes.func.isRequired,
+	setTitle: PropTypes.func.isRequired,
+	transaction: PropTypes.shape({
+		block: PropTypes.shape({
+			confirmations: PropTypes.string.isRequired,
+			height: PropTypes.string.isRequired,
+			id: PropTypes.string.isRequired
+		}),
+		gas: PropTypes.shape({
+			cumulativeUsed: PropTypes.string.isRequired,
+			price: PropTypes.string.isRequired,
+			used: PropTypes.string.isRequired,
+			value: PropTypes.string.isRequired
+		}),
+		id: PropTypes.string.isRequired,
+		source: PropTypes.shape({
+			address: PropTypes.string.isRequired,
+			timestamp: PropTypes.string.isRequired,
+			type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
+		}).isRequired,
+		status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
+		value: PropTypes.string.isRequired
+	})
+};
+
+Transaction.defaultProps = {
+	address: null,
+	className: null,
+	rates: {},
+	transaction: null
+};
+
+const mapStateToProps = (state, props) => ({
+	address: getAddress(state),
+	isLoading: getLoadStates(state),
+	rates: getRates(state),
+	transaction: getTransaction(state, props)
+});
+
+// const mapDispatchToProps = dispatch => {};
+
+export default connect(
+	mapStateToProps
+	// mapDispatchToProps
+)(Transaction);

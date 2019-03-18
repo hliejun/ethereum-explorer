@@ -38,6 +38,13 @@ export const defaultFormData = {
 	...defaultSortData
 };
 
+export const errorAddressHolderState = {
+	description: 'You have yet to designate an ethereum address.',
+	refreshText: 'Go to Settings',
+	status: 'error',
+	title: 'No Ethereum Address'
+};
+
 export const errorBalanceHolderState = {
 	description: 'Something went wrong while fetching your balance.',
 	refreshText: 'Try Again',
