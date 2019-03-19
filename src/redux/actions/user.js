@@ -2,8 +2,6 @@ import axios from 'axios';
 
 import { USER } from './types';
 
-// TODO: make OTP opt-in
-
 /* Fetch User Data */
 
 const getUserStarted = () => ({

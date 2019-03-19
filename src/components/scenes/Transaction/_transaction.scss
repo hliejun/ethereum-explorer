@@ -1,6 +1,11 @@
 @import '../../../assets/colors';
 @import '../../../assets/mixins';
 
+.transaction .jumbotron__content {
+  font-size: 0.9em;
+  padding: 0.5em 0;
+}
+
 .transaction__body {
   @include flex-wrap;
   @include use-flex;
@@ -8,11 +13,26 @@
 
 .transaction__local-amount {
   @include align-items;
-  @include justify-content;
+  @include justify-content(space-evenly);
   @include use-flex;
   font-size: 1.2em;
-  padding: 0.75em;
-  width: 33.3%;
+  max-width: 33.3%;
+  padding: 0.5em;
+}
+
+.transaction__glyph {
+  @include flex-grow;
+  @include square(1.5em);
+  @include use-flex;
+  margin: 0.25em auto 0.25em 0;
+  padding: 0.05em;
+}
+
+.transaction__local-currency {
+  @include flex-grow(2);
+  margin-right: 0.5em;
+  min-width: 9em;
+  padding-left: 0.5em;
 }
 
 .transaction__section {
@@ -46,7 +66,10 @@
 // Mobile
 @media only screen and (min-width: 1440px) {
   .transaction__local-amount {
-    width: 16.6%;
+    max-width: 16.6%;
+  }
+  .transaction__local-currency {
+    min-width: 7em;
   }
 }
 
@@ -56,14 +79,17 @@
     @include flex-basis(100%);
   }
   .transaction__local-amount {
-    width: 50%;
+    max-width: 50%;
   }
 }
 
 // Small Mobile
 @media only screen and (max-width: 479px) {
   .transaction__local-amount {
-    padding: 0.5em;
-    width: 100%;
+    max-width: 100%;
+    padding: 0.1em;
+  }
+  .transaction__local-currency {
+    min-width: 12em;
   }
 }

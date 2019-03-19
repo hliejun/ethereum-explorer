@@ -1,7 +1,17 @@
-// TODO: Import country icons
+import China from '../../../assets/icons/china.svg';
+import Japan from '../../../assets/icons/japan.svg';
+import Korea from '../../../assets/icons/korea.svg';
+import Singapore from '../../../assets/icons/singapore.svg';
+import UnitedKingdom from '../../../assets/icons/uk.svg';
+import UnitedStates from '../../../assets/icons/us.svg';
 
 export const countryIcons = {
-	// TODO: Create icon map (by name)
+	CNY: China,
+	GBP: UnitedKingdom,
+	JPY: Japan,
+	KRW: Korea,
+	SGD: Singapore,
+	USD: UnitedStates
 };
 
 export const errorAddressHolderState = {

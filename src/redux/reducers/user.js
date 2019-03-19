@@ -18,7 +18,7 @@ const initialState = {
 	},
 	error: null,
 	ethAccount: {
-		address: null,
+		address: '',
 		error: null,
 		isLoading: false
 	},

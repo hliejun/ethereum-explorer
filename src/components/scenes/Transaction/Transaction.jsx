@@ -30,6 +30,7 @@ import ErrorIcon from '../../../assets/icons/server.svg';
 
 import './_transaction.scss';
 
+// TODO: Add flags
 const LocalValues = ({ rates, value }) => {
 	const { ETH, ...localRates } = rates;
 	return Object.keys(localRates).map(code => {
