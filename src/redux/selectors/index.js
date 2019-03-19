@@ -18,6 +18,8 @@ const getId = (_, props) => props.match.params.id;
 export const getCode = ({ settingsReducer, userReducer }) =>
 	settingsReducer.currency || userReducer.country.code || 'USD';
 
+export const getTheme = ({ settingsReducer }) => settingsReducer.nightMode;
+
 /* User Data */
 
 export const getAddress = ({ userReducer }) => userReducer.ethAccount.address;

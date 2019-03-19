@@ -259,6 +259,13 @@ const setEthAddressFailure = error => ({
 	}
 });
 
+const setOfflineEthAddress = address => ({
+	type: USER.SET_ADDRESS_SUCCESS,
+	payload: {
+		address
+	}
+});
+
 const setEthAddress = ({ token, address }) => {
 	// TODO: Encrypt ethAddress (end-to-end incl. storage)
 	return dispatch => {
@@ -297,5 +304,6 @@ export {
 	setEmail,
 	setEthAddress,
 	setName,
-	setNumber
+	setNumber,
+	setOfflineEthAddress
 };

@@ -6,9 +6,18 @@ import { FormContext } from './Form';
 
 import './_field.scss';
 
-const Input = ({ className, disabled, label, name, type, value }) => {
+const Input = ({
+	className,
+	disabled,
+	label,
+	name,
+	type,
+	value,
+	...passthroughProps
+}) => {
 	const { formId, onBlur, onChange, values } = useContext(FormContext);
 	const inputProps = {
+		...passthroughProps,
 		className: clns('field__input', `field__input--${type}`),
 		disabled,
 		id: name,
@@ -110,6 +119,25 @@ const Input = ({ className, disabled, label, name, type, value }) => {
 			</React.Fragment>
 		);
 		break;
+	case 'textarea':
+		id = `${formId}-textarea-${name}`;
+		view = (
+			<React.Fragment>
+				{label && (
+					<span className={clns('field__label', `field__label--${type}`)}>
+						{label}
+					</span>
+				)}
+				<textarea
+					{...inputProps}
+					form={formId}
+					id={id}
+					onChange={event => onChange(name)(event.target.value)}
+					value={values[name]}
+				/>
+			</React.Fragment>
+		);
+		break;
 	default:
 		id = `${formId}-input-${name}`;
 		view = (
@@ -121,6 +149,7 @@ const Input = ({ className, disabled, label, name, type, value }) => {
 				)}
 				<input
 					{...inputProps}
+					id={id}
 					onChange={event => onChange(name)(event.target.value)}
 					value={values[name]}
 				/>
@@ -158,6 +187,7 @@ Input.propTypes = {
 		'submit',
 		'tel',
 		'text',
+		'textarea',
 		'time',
 		'toggle',
 		'url',

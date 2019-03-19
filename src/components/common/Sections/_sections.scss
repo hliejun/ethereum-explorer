@@ -19,6 +19,8 @@
 .data-section__title {
   @include align-items;
   @include use-flex;
+  color: $section-content;
+  fill: $section-content;
   font-weight: 500;
   margin-bottom: 1em;
   white-space: nowrap;
@@ -28,6 +30,12 @@
   @include ellipsize;
   font-size: 1.2em;
   margin-left: 0.5em;
+}
+
+.data-section__description {
+  color: $section-hint;
+  display: block;
+  margin-bottom: 1em;
 }
 
 .data-section__content {

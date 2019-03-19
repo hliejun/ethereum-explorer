@@ -39,7 +39,15 @@ SubSection.defaultProps = {
 	icon: null
 };
 
-const Section = ({ children, className, footer, icon: Icon, image, title }) => (
+const Section = ({
+	children,
+	className,
+	description,
+	footer,
+	icon: Icon,
+	image,
+	title
+}) => (
 	<div className={clns('data-section', className)}>
 		{image && <div className="data-section__image">{image}</div>}
 		<div className="data-section__content">
@@ -47,6 +55,9 @@ const Section = ({ children, className, footer, icon: Icon, image, title }) => (
 				{Icon && <Icon className="data-section__glyph" />}
 				<span className="data-section__title-label">{title}</span>
 			</div>
+			{description && (
+				<span className="data-section__description">{description}</span>
+			)}
 			{children}
 		</div>
 		{footer && <div className="data-section__footer">{footer}</div>}
@@ -56,6 +67,7 @@ const Section = ({ children, className, footer, icon: Icon, image, title }) => (
 Section.propTypes = {
 	children: PropTypes.node.isRequired,
 	className: PropTypes.string,
+	description: PropTypes.string,
 	footer: PropTypes.node,
 	icon: PropTypes.elementType,
 	image: PropTypes.elementType,
@@ -64,6 +76,7 @@ Section.propTypes = {
 
 Section.defaultProps = {
 	className: null,
+	description: null,
 	footer: null,
 	icon: null,
 	image: null

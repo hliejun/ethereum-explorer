@@ -1,10 +1,7 @@
 import { SETTINGS } from '../actions/types';
 
-import { stubbedSummary } from '../../components/scenes/Portfolio/_stubbedValues';
-
 const initialState = {
-	// currency: 'SGD', // USD, JPY, SGD, KRW, GBP, CNY
-	currency: stubbedSummary.code,
+	currency: null,
 	nightMode: false
 };
 

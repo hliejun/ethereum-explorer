@@ -1,0 +1,46 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+.settings__subsection:not(.settings__subsection--address) {
+  @include align-items;
+  @include flex-direction(row);
+  @include flex-wrap;
+  @include justify-content(space-between);
+  overflow-x: hidden;
+}
+
+.settings__subsection .data-subsection__content {
+  @include flex-grow;
+  @include justify-content(flex-end);
+  @include use-flex;
+  margin: 0 0.5em 0 1.5em;
+}
+
+.settings__subsection--currency .data-subsection__header {
+  @include flex-grow;
+  margin-right: 1em;
+}
+
+.settings__subsection--currency .data-subsection__content {
+  @include flex-grow(0);
+  margin-left: 0.5em;
+}
+
+.settings__subsection--theme .data-subsection__content {
+  @include justify-content(flex-end);
+}
+
+.settings__subsection--address .data-subsection__content {
+  margin: 0;
+  width: 100%;
+}
+
+.settings__field--address {
+  @include flex-grow;
+  padding: 0 0.5em;
+
+  textarea {
+    resize: none;
+    width: 100%;
+  }
+}

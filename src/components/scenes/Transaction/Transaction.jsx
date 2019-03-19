@@ -133,7 +133,6 @@ const Transaction = ({
 	const { block, gas, id, source, status, value } = transaction;
 	const parsedValue = parseFloat(value) || 0;
 
-	// TODO: Render placeholder if address is not available (link to address page)
 	return (
 		<div className={clns('page', 'transaction', className)}>
 			<div className="transaction__header">
