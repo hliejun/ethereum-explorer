@@ -20,7 +20,7 @@ import {
 	toggleNightMode
 } from '../../../redux/actions/settings';
 
-import { setEthAddress } from '../../../redux/actions/user';
+import { clearEthAddress, setEthAddress } from '../../../redux/actions/user';
 
 import { symbols } from '../../common/Currency';
 
@@ -71,7 +71,6 @@ const Settings = ({
 			if (values.apiKey !== apiKey) {
 				updateApiKey(values.apiKey);
 				if (!authToken && values.apiKey && values.apiKey.length === 64) {
-					// TODO: Consider throttling this or checking if is fetching...
 					updateAuthToken(values.apiKey);
 				}
 			}
@@ -222,7 +221,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	clearSettings: () => dispatch(resetSettings()),
+	clearSettings: () => {
+		dispatch(resetSettings());
+		dispatch(clearEthAddress());
+	},
 	updateAddress: address => dispatch(setEthAddress(address)),
 	updateApiKey: apiKey => dispatch(setApiKey(apiKey)),
 	updateAuthToken: token => dispatch(fetchAuthToken(token)),

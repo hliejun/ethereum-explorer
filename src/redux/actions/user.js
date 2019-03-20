@@ -11,8 +11,12 @@ const setEthAddress = address => ({
 
 /* Clear User Data */
 
+const clearEthAddress = () => ({
+	type: USER.CLEAR_ADDRESS
+});
+
 const clearUserData = () => ({
 	type: USER.CLEAR_ALL
 });
 
-export { clearUserData, setEthAddress };
+export { clearEthAddress, clearUserData, setEthAddress };

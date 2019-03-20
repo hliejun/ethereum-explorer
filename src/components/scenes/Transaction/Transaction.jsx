@@ -97,12 +97,9 @@ const Transaction = ({
 		updateBacklink(true);
 		updateOptions(options);
 		updateTitle(title);
-
-		// TODO: Consider only call at root
 		if (!rates && !isLoading.currency) {
 			updateRates(authToken, Object.keys(symbols));
 		}
-
 		return () => {
 			reset();
 		};
@@ -114,6 +111,7 @@ const Transaction = ({
 		}
 	}, [window]);
 
+	// TODO: Display error messages
 	const getPlaceholder = (state, key) => (
 		<Placeholder
 			className={`transaction__placeholder transaction__placeholder--${key}`}

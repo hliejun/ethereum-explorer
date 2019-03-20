@@ -22,7 +22,6 @@ const getBalanceFailure = error => ({
 	}
 });
 
-// TODO: Debounce call by load state? (should be done in app pages)
 const getBalance = (token, address) => {
 	return dispatch => {
 		dispatch(getBalanceStarted());
@@ -72,7 +71,6 @@ const getTransactionsFailure = error => ({
 	}
 });
 
-// TODO: Debounce call by load state? (should be done in app pages)
 const getTransactions = (token, address) => {
 	return dispatch => {
 		dispatch(getTransactionsStarted());
@@ -104,7 +102,6 @@ const clearTransactions = () => ({
 
 /* Clean Load Transactions */
 
-// TODO: Debounce call by load state? (should be done in app pages)
 const reloadTransactions = (token, address) => {
 	return dispatch => {
 		dispatch(getTransactionsStarted());
@@ -151,7 +148,6 @@ const getCurrencyRatesFailure = error => ({
 	}
 });
 
-// TODO: Debounce call by load state? (should be done in app pages)
 // TODO: Conditionally fetch (based on timestamp)
 const getCurrencyRates = (token, symbols) => {
 	return dispatch => {

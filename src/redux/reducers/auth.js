@@ -10,8 +10,6 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
 	switch (action.type) {
 	case AUTH.SESSION_TOKEN_STARTED: {
-		console.log('fetching auth token...');
-
 		return {
 			...state,
 			isLoading: true
@@ -19,10 +17,6 @@ const authReducer = (state = initialState, action) => {
 	}
 	case AUTH.SESSION_TOKEN_SUCCESS: {
 		const { authToken, timestamp } = action.payload;
-
-		console.log(`setting auth token: ${authToken}`);
-		console.log(`setting auth timestamp: ${timestamp}`);
-
 		return {
 			...state,
 			isLoading: false,
@@ -34,7 +28,6 @@ const authReducer = (state = initialState, action) => {
 		const { error } = action.payload;
 
 		// TODO: Parse error
-		console.log(`error fetching auth token: ${error}`);
 
 		return {
 			...state,
@@ -43,8 +36,6 @@ const authReducer = (state = initialState, action) => {
 		};
 	}
 	case AUTH.SESSION_TOKEN_CLEAR: {
-		console.log('clearing auth state...');
-
 		return {
 			...initialState
 		};

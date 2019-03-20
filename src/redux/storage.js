@@ -1,8 +1,6 @@
 const KEY_LOCAL_STATE = 'localState';
 const KEY_SESSION_STATE = 'sessionState';
 
-// TODO: Encrypt sensitive data (end-to-end incl. storage)
-
 const loadStateFromSession = () => {
 	try {
 		const serialisedState = sessionStorage.getItem(KEY_SESSION_STATE);
@@ -17,7 +15,7 @@ const saveStateToSession = state => {
 		const serialisedState = JSON.stringify(state);
 		sessionStorage.setItem(KEY_SESSION_STATE, serialisedState);
 	} catch (error) {
-		// TODO: Handle write errors here...
+		// Ignore errors...
 	}
 };
 
@@ -35,7 +33,7 @@ const saveStateToLocal = state => {
 		const serialisedState = JSON.stringify(state);
 		localStorage.setItem(KEY_LOCAL_STATE, serialisedState);
 	} catch (error) {
-		// TODO: Handle write errors here...
+		// Ignore errors...
 	}
 };
 

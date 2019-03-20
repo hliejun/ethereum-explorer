@@ -12,9 +12,6 @@ const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 	case USER.SET_ADDRESS: {
 		const { address } = action.payload;
-
-		console.log(`setting user address: ${address}`);
-
 		return {
 			...state,
 			ethAccount: {
@@ -24,9 +21,15 @@ const userReducer = (state = initialState, action) => {
 			}
 		};
 	}
+	case USER.CLEAR_ADDRESS: {
+		return {
+			...state,
+			ethAccount: {
+				...initialState.ethAccount
+			}
+		};
+	}
 	case USER.CLEAR_ALL: {
-		console.log('clearing user data...');
-
 		return initialState;
 	}
 	default:

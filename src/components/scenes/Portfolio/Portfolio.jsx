@@ -88,7 +88,7 @@ class Portfolio extends React.PureComponent {
 			setSubtitle,
 			setTitle,
 			updateBalance,
-			updateRates, // TODO: Consider only call at root
+			updateRates,
 			updateTransactions
 		} = this.props;
 		const { subtitle } = this.state;
@@ -96,7 +96,6 @@ class Portfolio extends React.PureComponent {
 		setSubtitle(subtitle);
 		setOptions(this.options);
 		if (authToken && !rate && !isLoading.currency) {
-			// TODO: Consider only call at root
 			updateRates(authToken, Object.keys(symbols));
 		}
 		if (authToken && address && !isLoading.balance) {
@@ -132,12 +131,16 @@ class Portfolio extends React.PureComponent {
 
   toggleBalance = waypoint => {
   	const { balance, code, setSubtitle } = this.props;
-  	const symbol = symbols[code] || '$';
-  	const balanceDisplay =
-      waypoint.currentPosition === Waypoint.inside
-      	? null
-      	: `Balance: ${symbol}${balance}`;
-  	setSubtitle(balanceDisplay);
+  	if (balance == null) {
+  		setSubtitle(null);
+  	} else {
+  		const symbol = symbols[code] || '$';
+  		const balanceDisplay =
+        waypoint.currentPosition === Waypoint.inside
+        	? null
+        	: `Balance: ${symbol}${balance}`;
+  		setSubtitle(balanceDisplay);
+  	}
   };
 
   setFormData = values => {
@@ -213,7 +216,7 @@ class Portfolio extends React.PureComponent {
   		isLoading: loading,
   		rate,
   		updateBalance,
-  		updateRates // TODO: Consider only call at root
+  		updateRates
   	} = this.props;
   	const isLoading = loading.balance;
   	let state = errorBalanceHolderState;
@@ -228,7 +231,6 @@ class Portfolio extends React.PureComponent {
   			isLoading={isLoading}
   			onRefresh={() => {
   				if (!rate && !isLoading.currency) {
-  					// TODO: Consider only call at root
   					updateRates(authToken, Object.keys(symbols));
   				}
   				updateBalance(authToken, address);
@@ -262,7 +264,7 @@ class Portfolio extends React.PureComponent {
   		errors,
   		isLoading: loading,
   		rate,
-  		updateRates, // TODO: Consider only call at root
+  		updateRates,
   		updateTransactions
   	} = this.props;
   	const error = errors.transactions;
@@ -283,7 +285,6 @@ class Portfolio extends React.PureComponent {
   			isLoading={isLoading}
   			onRefresh={() => {
   				if (!rate && !isLoading.currency) {
-  					// TODO: Consider only call at root
   					updateRates(authToken, Object.keys(symbols));
   				}
   				updateTransactions(authToken, address);

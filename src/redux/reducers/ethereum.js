@@ -24,8 +24,6 @@ const initialState = {
 const ethereumReducer = (state = initialState, action) => {
 	switch (action.type) {
 	case ETHEREUM.UPDATE_BALANCE_STARTED: {
-		console.log('fetching balance...');
-
 		return {
 			...state,
 			balance: {
@@ -36,9 +34,6 @@ const ethereumReducer = (state = initialState, action) => {
 	}
 	case ETHEREUM.UPDATE_BALANCE_SUCCESS: {
 		const { balance } = action.payload;
-
-		console.log(`setting fetched balance: ${balance}`);
-
 		return {
 			...state,
 			balance: {
@@ -52,7 +47,6 @@ const ethereumReducer = (state = initialState, action) => {
 		const { error } = action.payload;
 
 		// TODO: Parse error
-		console.log(`error fetching balance: ${error}`);
 
 		return {
 			...state,
@@ -64,8 +58,6 @@ const ethereumReducer = (state = initialState, action) => {
 		};
 	}
 	case ETHEREUM.CLEAR_BALANCE: {
-		console.log('clearing balance...');
-
 		return {
 			...state,
 			balance: {
@@ -75,8 +67,6 @@ const ethereumReducer = (state = initialState, action) => {
 		};
 	}
 	case ETHEREUM.UPDATE_TRANSACTIONS_STARTED: {
-		console.log('fetching transactions...');
-
 		return {
 			...state,
 			transactions: {
@@ -93,10 +83,6 @@ const ethereumReducer = (state = initialState, action) => {
 			updatedTransactions[transaction.id] = transaction;
 			transactionsList.push(transaction.id);
 		});
-
-		console.log('setting transactions: ', updatedTransactions);
-		console.log('setting transactions list: ', transactionsList);
-
 		return {
 			...state,
 			transactions: {
@@ -111,7 +97,6 @@ const ethereumReducer = (state = initialState, action) => {
 		const { error } = action.payload;
 
 		// TODO: Parse error
-		console.log(`error fetching transactions: ${error}`);
 
 		return {
 			...state,
@@ -123,8 +108,6 @@ const ethereumReducer = (state = initialState, action) => {
 		};
 	}
 	case ETHEREUM.CLEAR_TRANSACTIONS: {
-		console.log('clearing transactions...');
-
 		return {
 			...state,
 			transactions: {
@@ -135,8 +118,6 @@ const ethereumReducer = (state = initialState, action) => {
 		};
 	}
 	case ETHEREUM.UPDATE_CURRENCY_RATES_STARTED: {
-		console.log('fetching currency rates...');
-
 		return {
 			...state,
 			currency: {
@@ -147,11 +128,6 @@ const ethereumReducer = (state = initialState, action) => {
 	}
 	case ETHEREUM.UPDATE_CURRENCY_RATES_SUCCESS: {
 		const { base, rates, timestamp } = action.payload;
-
-		console.log('setting currency rates: ', rates);
-		console.log(`setting base currency: ${base}`);
-		console.log(`setting currency timestamp: ${timestamp}`);
-
 		return {
 			...state,
 			currency: {
@@ -170,7 +146,6 @@ const ethereumReducer = (state = initialState, action) => {
 		const { error } = action.payload;
 
 		// TODO: Parse error
-		console.log(`error fetching currency rates: ${error}`);
 
 		return {
 			...state,

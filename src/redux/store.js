@@ -4,6 +4,16 @@ import thunk from 'redux-thunk';
 import combinedReducer from './reducers';
 import storage from './storage';
 
+const middlewares = [thunk];
+const { logger } =
+  process.env.NODE_ENV === 'development'
+  	? require('redux-logger')
+  	: { logger: null };
+
+if (logger) {
+	middlewares.push(logger);
+}
+
 const persistedSessionState = storage.session.loadState();
 const persistedLocalState = storage.local.loadState();
 
@@ -14,13 +24,13 @@ const store = createStore(
 		...persistedLocalState,
 		...persistedSessionState
 	},
-	composeEnhancers(applyMiddleware(thunk))
+	composeEnhancers(applyMiddleware(...middlewares))
 );
 
+// TODO: Selectively destructure and persist data (different storage types)
 store.subscribe(() => {
-	const { settings, ...sessionData } = store.getState();
-	storage.session.saveState(sessionData);
-	storage.local.saveState({ settings });
+	const { ...data } = store.getState();
+	storage.local.saveState(data);
 });
 
 export default store;
