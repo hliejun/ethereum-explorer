@@ -6,41 +6,49 @@ import ItemRow from '../../common/ItemRow';
 
 import Gas from '../../../assets/icons/gas.svg';
 import Limit from '../../../assets/icons/limit.svg';
+import Fee from '../../../assets/icons/currency.svg';
 import Price from '../../../assets/icons/crypto.svg';
 import Total from '../../../assets/icons/total.svg';
 import Usage from '../../../assets/icons/usage.svg';
 
-const GasSection = ({ className, cumulativeUsed, price, used, value }) => (
+const GasSection = ({ className, cumulativeUsed, fee, limit, price, used }) => (
 	<Section
 		className={className}
-		footer="Units are in Gwei; 1ETH = 1,000,000,000 Gwei"
+		footer="Higher gas price increases mining speed"
 		icon={Gas}
 		title="Gas Details"
 	>
 		<ItemRow
+			className="gas__row gas__row--fee"
+			description="Fee for this transaction (ETH)"
+			icon={Fee}
+			label="Fee"
+			value={fee}
+		/>
+		<ItemRow
 			className="gas__row gas__row--value"
-			description="Limit placed on transaction fee"
+			description="Limit placed on gas used"
 			icon={Limit}
 			label="Limit"
-			value={value}
+			value={limit}
 		/>
 		<ItemRow
 			className="gas__row gas__row--price"
-			description="Transaction tax rate; higher rate increases mining speed"
+			description="Price per unit gas used (ETH)"
 			icon={Price}
 			label="Price"
 			value={price}
 		/>
 		<ItemRow
 			className="gas__row gas__row--used"
-			description="Eventual transaction fee incurred by this transaction"
+			description="Gas used for this transaction"
 			icon={Usage}
 			label="Used"
 			value={used}
 		/>
 		<ItemRow
 			className="gas__row gas__row--cumulative"
-			description="Total accumulated fee paid for the transaction block (inclusive)"
+			description="Total accumulated gas used for this block (inclusive)"
 			icon={Total}
 			label="Cumulative used"
 			value={cumulativeUsed}
@@ -51,9 +59,10 @@ const GasSection = ({ className, cumulativeUsed, price, used, value }) => (
 GasSection.propTypes = {
 	className: PropTypes.string,
 	cumulativeUsed: PropTypes.string.isRequired,
+	fee: PropTypes.string.isRequired,
+	limit: PropTypes.string.isRequired,
 	price: PropTypes.string.isRequired,
-	used: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired
+	used: PropTypes.string.isRequired
 };
 
 GasSection.defaultProps = {

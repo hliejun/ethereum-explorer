@@ -10,6 +10,7 @@ const getStubbedContent = id => {
 	const gas = getRandomInt(10000, 100000);
 	const gasUsed = gas - getRandomInt(1, 5000);
 	const price = getRandomInt(10000, 100000000);
+	const fee = getRandomNumber(0.00001, 1, 8);
 	const statusDraw = getRandomInt(0, 2);
 	let status;
 	switch (statusDraw) {
@@ -32,9 +33,10 @@ const getStubbedContent = id => {
 		},
 		gas: {
 			cumulativeUsed: String(gasUsed),
+			fee: String(fee),
+			limit: String(gas),
 			price: String(price),
-			used: String(gasUsed),
-			value: String(gas)
+			used: String(gasUsed)
 		},
 		id: String(id),
 		source: {

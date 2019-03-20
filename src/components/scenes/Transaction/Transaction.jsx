@@ -185,9 +185,10 @@ Transaction.propTypes = {
 		}),
 		gas: PropTypes.shape({
 			cumulativeUsed: PropTypes.string.isRequired,
+			fee: PropTypes.string.isRequired,
+			limit: PropTypes.string.isRequired,
 			price: PropTypes.string.isRequired,
-			used: PropTypes.string.isRequired,
-			value: PropTypes.string.isRequired
+			used: PropTypes.string.isRequired
 		}),
 		id: PropTypes.string.isRequired,
 		source: PropTypes.shape({
