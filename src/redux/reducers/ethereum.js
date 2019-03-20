@@ -1,25 +1,16 @@
 import { ETHEREUM } from '../actions/types';
 
-// import {
-// 	stubbedIds,
-// 	stubbedSummary,
-// 	stubbedTransactions
-// } from '../../components/scenes/Portfolio/_stubbedValues';
-
 const initialState = {
 	balance: {
 		error: null,
 		isLoading: false,
 		value: null
-		// value: stubbedSummary.balance
 	},
 	transactions: {
 		byIds: {},
-		// byIds: stubbedTransactions,
 		error: null,
 		isLoading: false,
 		list: []
-		// list: stubbedIds
 	},
 	currency: {
 		base: 'USD',
@@ -27,14 +18,6 @@ const initialState = {
 		isLoading: false,
 		lastUpdated: null,
 		rates: {}
-		// rates: {
-		// 	CNY: '6.7135',
-		// 	ETH: '0.0072508429',
-		// 	GBP: '0.7514',
-		// 	JPY: '111.42557908',
-		// 	KRW: '1134.116271',
-		// 	SGD: '1.3504'
-		// }
 	}
 };
 
