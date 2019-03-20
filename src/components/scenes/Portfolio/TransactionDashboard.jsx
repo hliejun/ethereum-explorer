@@ -23,10 +23,10 @@ const TransactionDashboard = ({
 }) => {
 	const [isLocal, setIsLocal] = useState(false);
 
-	const code = isLocal ? localCode : 'ETH';
+	const code = isLocal && rate ? localCode : 'ETH';
 
 	const mainItem = {
-		amount: isLocal ? balance * rate : balance,
+		amount: isLocal && rate ? balance * rate : balance,
 		classLabel: 'balance',
 		code,
 		label: 'Balance'
@@ -34,7 +34,7 @@ const TransactionDashboard = ({
 
 	const subItems = [
 		{
-			amount: isLocal ? received * rate : received,
+			amount: isLocal && rate ? received * rate : received,
 			classLabel: 'received',
 			code,
 			icon: Receive,
@@ -42,7 +42,7 @@ const TransactionDashboard = ({
 			label: 'INCOMING'
 		},
 		{
-			amount: isLocal ? sent * rate : sent,
+			amount: isLocal && rate ? sent * rate : sent,
 			classLabel: 'sent',
 			code,
 			icon: Send,
@@ -50,7 +50,7 @@ const TransactionDashboard = ({
 			label: 'OUTGOING'
 		},
 		{
-			amount: isLocal ? total * rate : total,
+			amount: isLocal && rate ? total * rate : total,
 			classLabel: 'nett',
 			code,
 			icon: Balance,
@@ -97,14 +97,15 @@ TransactionDashboard.propTypes = {
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
 	placeholder: PropTypes.node.isRequired,
-	rate: PropTypes.number.isRequired,
+	rate: PropTypes.number,
 	received: PropTypes.number.isRequired,
 	sent: PropTypes.number.isRequired,
 	total: PropTypes.number.isRequired
 };
 
 TransactionDashboard.defaultProps = {
-	className: null
+	className: null,
+	rate: null
 };
 
 export default TransactionDashboard;

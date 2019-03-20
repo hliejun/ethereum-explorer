@@ -13,10 +13,16 @@ const getQuery = (_, props) => props.location;
 
 const getId = (_, props) => props.match.params.id;
 
+/* Auth Data */
+
+export const getAuthToken = ({ authReducer }) => authReducer.sessionAuth;
+
 /* Settings Data */
 
-export const getCode = ({ settingsReducer, userReducer }) =>
-	settingsReducer.currency || userReducer.country.code || 'USD';
+export const getApiKey = ({ settingsReducer }) => settingsReducer.apiKey;
+
+export const getCode = ({ settingsReducer }) =>
+	settingsReducer.currency || 'USD';
 
 export const getTheme = ({ settingsReducer }) => settingsReducer.nightMode;
 

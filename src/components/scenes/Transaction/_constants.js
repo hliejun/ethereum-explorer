@@ -21,6 +21,14 @@ export const errorAddressHolderState = {
 	title: 'No Ethereum Address'
 };
 
+export const errorKeyHolderState = {
+	description:
+    'You will need an API key to explore blocks. Please obtain it from @hliejun.',
+	refreshText: 'Go to Settings',
+	status: 'error',
+	title: 'No API Key'
+};
+
 export const errorTransactionHolderState = {
 	description: 'Something went wrong while fetching this transaction.',
 	refreshText: 'Try Again',

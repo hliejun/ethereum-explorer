@@ -149,7 +149,7 @@ ListItem.propTypes = {
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
 	onClick: PropTypes.func.isRequired,
-	rate: PropTypes.number.isRequired,
+	rate: PropTypes.number,
 	source: PropTypes.shape({
 		address: PropTypes.string.isRequired,
 		timestamp: PropTypes.string.isRequired,
@@ -159,7 +159,8 @@ ListItem.propTypes = {
 };
 
 ListItem.defaultProps = {
-	className: null
+	className: null,
+	rate: null
 };
 
 const TransactionListItem = withRouter(

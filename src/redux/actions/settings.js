@@ -1,5 +1,12 @@
 import { SETTINGS } from './types';
 
+/* API Key */
+
+const setApiKey = apiKey => ({
+	type: SETTINGS.SET_API_KEY,
+	payload: { apiKey }
+});
+
 /* Currency */
 
 const setCurrency = currency => ({
@@ -19,4 +26,4 @@ const resetSettings = () => ({
 	type: SETTINGS.RESET
 });
 
-export { resetSettings, setCurrency, toggleNightMode };
+export { resetSettings, setApiKey, setCurrency, toggleNightMode };

@@ -22,14 +22,21 @@ const getBalanceFailure = error => ({
 	}
 });
 
-const getBalance = ({ token, address }) => {
+// TODO: Debounce call by load state? (should be done in app pages)
+const getBalance = (token, address) => {
 	return dispatch => {
 		dispatch(getBalanceStarted());
 		axios
-			.post('https://jsonplaceholder.typicode.com/balance', {
-				address,
-				token
-			})
+			.post(
+				`${process.env.API_URL}/balance`,
+				{ address },
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+						'Content-Type': 'application/json'
+					}
+				}
+			)
 			.then(response => {
 				dispatch(getBalanceSuccess(response.data));
 			})
@@ -41,17 +48,11 @@ const getBalance = ({ token, address }) => {
 
 /* Clear Balance */
 
-const clearBalanceAction = () => ({
+const clearBalance = () => ({
 	type: ETHEREUM.CLEAR_BALANCE
 });
 
-const clearBalance = () => {
-	return dispatch => {
-		dispatch(clearBalanceAction());
-	};
-};
-
-/* Get Paginated Transactions */
+/* Get Transactions */
 
 const getTransactionsStarted = () => ({
 	type: ETHEREUM.UPDATE_TRANSACTIONS_STARTED
@@ -71,14 +72,21 @@ const getTransactionsFailure = error => ({
 	}
 });
 
-const getTransactions = ({ address, token }) => {
+// TODO: Debounce call by load state? (should be done in app pages)
+const getTransactions = (token, address) => {
 	return dispatch => {
 		dispatch(getTransactionsStarted());
 		axios
-			.post('https://jsonplaceholder.typicode.com/transactions', {
-				address,
-				token
-			})
+			.post(
+				`${process.env.API_URL}/transactions`,
+				{ address },
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+						'Content-Type': 'application/json'
+					}
+				}
+			)
 			.then(response => {
 				dispatch(getTransactionsSuccess(response.data));
 			})
@@ -90,28 +98,29 @@ const getTransactions = ({ address, token }) => {
 
 /* Clear Transactions */
 
-const clearTransactionsAction = () => ({
+const clearTransactions = () => ({
 	type: ETHEREUM.CLEAR_TRANSACTIONS
 });
 
-const clearTransactions = () => {
-	return dispatch => {
-		dispatch(clearTransactionsAction());
-	};
-};
-
 /* Clean Load Transactions */
 
-const reloadTransactions = ({ token, address }) => {
+// TODO: Debounce call by load state? (should be done in app pages)
+const reloadTransactions = (token, address) => {
 	return dispatch => {
 		dispatch(getTransactionsStarted());
 		axios
-			.post('https://jsonplaceholder.typicode.com/transactions', {
-				address,
-				token
-			})
+			.post(
+				`${process.env.API_URL}/transactions`,
+				{ address },
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+						'Content-Type': 'application/json'
+					}
+				}
+			)
 			.then(response => {
-				dispatch(clearTransactionsAction());
+				dispatch(clearTransactions());
 				dispatch(getTransactionsSuccess(response.data));
 			})
 			.catch(error => {
@@ -120,10 +129,58 @@ const reloadTransactions = ({ token, address }) => {
 	};
 };
 
+/* Get Currency Rates */
+
+const getCurrencyRatesStarted = () => ({
+	type: ETHEREUM.UPDATE_CURRENCY_RATES_STARTED
+});
+
+const getCurrencyRatesSuccess = ({ base, rates, timestamp }) => ({
+	type: ETHEREUM.UPDATE_CURRENCY_RATES_SUCCESS,
+	payload: {
+		base,
+		rates,
+		timestamp
+	}
+});
+
+const getCurrencyRatesFailure = error => ({
+	type: ETHEREUM.UPDATE_CURRENCY_RATES_ERROR,
+	payload: {
+		error
+	}
+});
+
+// TODO: Debounce call by load state? (should be done in app pages)
+// TODO: Conditionally fetch (based on timestamp)
+const getCurrencyRates = (token, symbols) => {
+	return dispatch => {
+		dispatch(getCurrencyRatesStarted());
+		axios
+			.post(
+				`${process.env.API_URL}/rates`,
+				{ symbols },
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+						'Content-Type': 'application/json'
+					}
+				}
+			)
+			.then(response => {
+				dispatch(getCurrencyRatesSuccess(response.data));
+			})
+			.catch(error => {
+				dispatch(getCurrencyRatesFailure(error.message));
+			});
+	};
+};
+
 export {
 	clearBalance,
 	clearTransactions,
 	getBalance,
+	getCurrencyRates,
 	getTransactions,
 	reloadTransactions
 };

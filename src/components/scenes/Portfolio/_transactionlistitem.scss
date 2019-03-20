@@ -73,6 +73,7 @@
 }
 
 .transaction-list-item__ethereum {
+  @include align-self(flex-end);
   @include flex-grow;
   @include flex-shrink;
   color: $transaction-list-content;

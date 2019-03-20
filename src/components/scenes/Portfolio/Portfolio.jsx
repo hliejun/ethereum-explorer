@@ -7,6 +7,8 @@ import qs from 'query-string';
 
 import {
 	getAddress,
+	getApiKey,
+	getAuthToken,
 	getBalance,
 	getErrorStates,
 	getHistoricalSummary,
@@ -17,6 +19,12 @@ import {
 } from '../../../redux/selectors';
 
 import {
+	getBalance as fetchBalance,
+	getCurrencyRates as fetchCurrencyRates,
+	reloadTransactions as fetchTransactions
+} from '../../../redux/actions/ethereum';
+
+import {
 	bufferSize,
 	defaultFilterData,
 	defaultFormData,
@@ -24,6 +32,7 @@ import {
 	emptyTransactionsHolderState,
 	errorAddressHolderState,
 	errorBalanceHolderState,
+	errorKeyHolderState,
 	errorTransactionsHolderState,
 	formValidation,
 	loadingBalanceHolderState,
@@ -70,11 +79,32 @@ class Portfolio extends React.PureComponent {
 	}
 
 	componentDidMount() {
-		const { setOptions, setSubtitle, setTitle } = this.props;
+		const {
+			address,
+			authToken,
+			isLoading,
+			rate,
+			setOptions,
+			setSubtitle,
+			setTitle,
+			updateBalance,
+			updateRates, // TODO: Consider only call at root
+			updateTransactions
+		} = this.props;
 		const { subtitle } = this.state;
 		setTitle(this.title);
 		setSubtitle(subtitle);
 		setOptions(this.options);
+		if (authToken && !rate && !isLoading.currency) {
+			// TODO: Consider only call at root
+			updateRates(authToken, Object.keys(symbols));
+		}
+		if (authToken && address && !isLoading.balance) {
+			updateBalance(authToken, address);
+		}
+		if (authToken && address && !isLoading.transactions) {
+			updateTransactions(authToken, address);
+		}
 	}
 
 	componentWillUnmount() {
@@ -162,21 +192,29 @@ class Portfolio extends React.PureComponent {
 
   /* Rendering */
 
-  renderAddressPlaceholder = () => {
+  renderErrorPlaceholder = (state, key) => {
   	const { history } = this.props;
   	return (
   		<Placeholder
-  			className="portfolio__placeholder portfolio__placeholder--address"
+  			className={`portfolio__placeholder portfolio__placeholder--${key}`}
   			errorIcon={ErrorIcon}
   			hasError
   			onRefresh={() => history.push('/app/settings')}
-  			{...errorAddressHolderState}
+  			{...state}
   		/>
   	);
   };
 
+  // TODO: Display error message from errors state props object
   renderBalancePlaceholder = () => {
-  	const { isLoading: loading } = this.props;
+  	const {
+  		address,
+  		authToken,
+  		isLoading: loading,
+  		rate,
+  		updateBalance,
+  		updateRates // TODO: Consider only call at root
+  	} = this.props;
   	const isLoading = loading.balance;
   	let state = errorBalanceHolderState;
   	if (isLoading) {
@@ -188,8 +226,13 @@ class Portfolio extends React.PureComponent {
   			errorIcon={ErrorIcon}
   			hasError
   			isLoading={isLoading}
-  			// TODO: Get fetch balance from dispatch props
-  			onRefresh={() => {}}
+  			onRefresh={() => {
+  				if (!rate && !isLoading.currency) {
+  					// TODO: Consider only call at root
+  					updateRates(authToken, Object.keys(symbols));
+  				}
+  				updateBalance(authToken, address);
+  			}}
   			{...state}
   		/>
   	);
@@ -211,8 +254,17 @@ class Portfolio extends React.PureComponent {
   	);
   };
 
+  // TODO: Display error message from errors state props object
   renderTransactionsPlaceholder = () => {
-  	const { errors, isLoading: loading } = this.props;
+  	const {
+  		address,
+  		authToken,
+  		errors,
+  		isLoading: loading,
+  		rate,
+  		updateRates, // TODO: Consider only call at root
+  		updateTransactions
+  	} = this.props;
   	const error = errors.transactions;
   	const hasError = error != null && Object.keys(error).length > 0;
   	const isLoading = loading.transactions;
@@ -229,8 +281,13 @@ class Portfolio extends React.PureComponent {
   			errorIcon={ErrorIcon}
   			hasError={hasError}
   			isLoading={isLoading}
-  			// TODO: Get fetch transactions from dispatch props
-  			onRefresh={() => {}}
+  			onRefresh={() => {
+  				if (!rate && !isLoading.currency) {
+  					// TODO: Consider only call at root
+  					updateRates(authToken, Object.keys(symbols));
+  				}
+  				updateTransactions(authToken, address);
+  			}}
   			{...placeholderState}
   		/>
   	);
@@ -372,19 +429,26 @@ class Portfolio extends React.PureComponent {
   	/>
   );
 
-  // TODO: Render placeholder if address is not available (link to address page)
   render() {
-  	const { address, className, isMobile, location } = this.props;
+  	const { address, apiKey, className, isMobile, location } = this.props;
   	const { showFilterModal, showSortModal } = this.state;
   	const { page, ...formData } = untrim(
   		qs.parse(location.search),
   		formValidation
   	);
 
+  	if (!apiKey) {
+  		return (
+  			<div className={clns('page', 'portfolio', className)}>
+  				{this.renderErrorPlaceholder(errorKeyHolderState, 'key')}
+  			</div>
+  		);
+  	}
+
   	if (!address) {
   		return (
   			<div className={clns('page', 'portfolio', className)}>
-  				{this.renderAddressPlaceholder()}
+  				{this.renderErrorPlaceholder(errorAddressHolderState, 'address')}
   			</div>
   		);
   	}
@@ -430,6 +494,8 @@ class Portfolio extends React.PureComponent {
 
 Portfolio.propTypes = {
 	address: PropTypes.string,
+	apiKey: PropTypes.string,
+	authToken: PropTypes.string,
 	balance: PropTypes.number,
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
@@ -456,11 +522,16 @@ Portfolio.propTypes = {
 			status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
 			value: PropTypes.string.isRequired
 		})
-	).isRequired
+	).isRequired,
+	updateBalance: PropTypes.func.isRequired,
+	updateRates: PropTypes.func.isRequired,
+	updateTransactions: PropTypes.func.isRequired
 };
 
 Portfolio.defaultProps = {
 	address: null,
+	apiKey: null,
+	authToken: null,
 	balance: null,
 	className: null,
 	rate: null
@@ -471,6 +542,8 @@ const mapStateToProps = (state, props) => {
 	const { received, sent, subtotal } = getHistoricalSummary(state);
 	return {
 		address: getAddress(state),
+		apiKey: getApiKey(state),
+		authToken: getAuthToken(state),
 		balance: getBalance(state),
 		code,
 		errors: getErrorStates(state),
@@ -484,13 +557,16 @@ const mapStateToProps = (state, props) => {
 	};
 };
 
-// const mapDispatchToProps = dispatch => ({
-// getTransactions => (address) => {}
-// getCurrencyRate => (code?) => {}
-// getBalance => (address) => {}
-// });
+const mapDispatchToProps = dispatch => ({
+	updateBalance: (authToken, address) =>
+		dispatch(fetchBalance(authToken, address)),
+	updateRates: (authToken, codes) =>
+		dispatch(fetchCurrencyRates(authToken, codes)),
+	updateTransactions: (authToken, address) =>
+		dispatch(fetchTransactions(authToken, address))
+});
 
 export default connect(
-	mapStateToProps
-	// mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(Portfolio);

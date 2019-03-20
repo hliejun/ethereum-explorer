@@ -1,7 +1,7 @@
 @import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-.settings__subsection:not(.settings__subsection--address) {
+.settings__subsection:not(.settings__subsection--address):not(.settings__subsection--key) {
   @include align-items;
   @include flex-direction(row);
   @include flex-wrap;
@@ -30,12 +30,14 @@
   @include justify-content(flex-end);
 }
 
-.settings__subsection--address .data-subsection__content {
+.settings__subsection--address .data-subsection__content,
+.settings__subsection--key .data-subsection__content {
   margin: 0;
   width: 100%;
 }
 
-.settings__field--address {
+.settings__field--address,
+.settings__field--key {
   @include flex-grow;
   padding: 0 0.5em;
 

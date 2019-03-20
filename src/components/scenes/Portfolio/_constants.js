@@ -52,6 +52,14 @@ export const errorBalanceHolderState = {
 	title: 'Problem Loading'
 };
 
+export const errorKeyHolderState = {
+	description:
+    'You will need an API key to explore blocks. Please obtain it from @hliejun.',
+	refreshText: 'Go to Settings',
+	status: 'error',
+	title: 'No API Key'
+};
+
 export const loadingBalanceHolderState = {
 	description: 'Fetching your balance, please wait...',
 	status: 'loading',

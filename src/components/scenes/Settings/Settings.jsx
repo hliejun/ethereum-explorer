@@ -3,13 +3,24 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import { getAddress, getCode, getTheme } from '../../../redux/selectors';
+import {
+	getAddress,
+	getApiKey,
+	getAuthToken,
+	getCode,
+	getTheme
+} from '../../../redux/selectors';
+
+import { getAuthToken as fetchAuthToken } from '../../../redux/actions/auth';
+
 import {
 	resetSettings,
+	setApiKey,
 	setCurrency,
 	toggleNightMode
 } from '../../../redux/actions/settings';
-import { setOfflineEthAddress } from '../../../redux/actions/user';
+
+import { setEthAddress } from '../../../redux/actions/user';
 
 import { symbols } from '../../common/Currency';
 
@@ -24,6 +35,8 @@ import './_settings.scss';
 
 const Settings = ({
 	address,
+	apiKey,
+	authToken,
 	className,
 	clearSettings,
 	currency,
@@ -32,6 +45,8 @@ const Settings = ({
 	setOptions: updateOptions,
 	setTitle: updateTitle,
 	updateAddress,
+	updateApiKey,
+	updateAuthToken,
 	updateCurrency,
 	updateNightMode
 }) => {
@@ -52,6 +67,15 @@ const Settings = ({
 				updateNightMode();
 			}
 			break;
+		case 'apiKey':
+			if (values.apiKey !== apiKey) {
+				updateApiKey(values.apiKey);
+				if (!authToken && values.apiKey && values.apiKey.length === 64) {
+					// TODO: Consider throttling this or checking if is fetching...
+					updateAuthToken(values.apiKey);
+				}
+			}
+			break;
 		default:
       // do nothing
 		}
@@ -66,7 +90,7 @@ const Settings = ({
 		return () => {
 			reset();
 		};
-	}, [options, title]);
+	}, [options.length, title]);
 
 	useEffect(() => {
 		if (window) {
@@ -77,23 +101,38 @@ const Settings = ({
 	return (
 		<div className={clns('page', 'settings', className)}>
 			<ControlledForm
-				defaultValues={{ address, currency, isDarkMode }}
+				defaultValues={{ address, apiKey, currency, isDarkMode }}
 				id="settings-form"
 				onChange={updateSettings}
-				values={{ address, currency, isDarkMode }}
+				values={{ address, apiKey, currency, isDarkMode }}
 			>
 				{() => (
 					<React.Fragment>
 						<Section
 							className="settings__section settings__section--app"
-							description="View behaviours, customisations and themes, etc."
+							description="Credentials, view behaviours and customisations, etc."
+							footer="* Conversion rates are hidden when unavailable"
 							icon={AppIcon}
 							title="Application Settings"
 						>
 							<SubSection
+								className="settings__subsection settings__subsection--key"
+								description="Usage key for controlled API endpoint access"
+								title="API Key"
+							>
+								<Input
+									className="settings__field--key"
+									maxLength={64}
+									name="apiKey"
+									placeholder="Enter your API key..."
+									type="textarea"
+									value={apiKey}
+								/>
+							</SubSection>
+							<SubSection
 								className="settings__subsection settings__subsection--currency"
 								description="Conversion rate for localising Ethereum"
-								title="Preferred Currency"
+								title="Preferred Currency *"
 							>
 								<Select
 									className="settings__field--currency"
@@ -123,7 +162,7 @@ const Settings = ({
 						</Section>
 						<Section
 							className="settings__section settings__section--user"
-							description="User account, credentials, profile options, etc."
+							description="User account and profile options, etc."
 							icon={UserIcon}
 							title="User Settings"
 						>
@@ -151,6 +190,8 @@ const Settings = ({
 
 Settings.propTypes = {
 	address: PropTypes.string,
+	apiKey: PropTypes.string,
+	authToken: PropTypes.string,
 	className: PropTypes.string,
 	clearSettings: PropTypes.func.isRequired,
 	currency: PropTypes.oneOf(Object.keys(symbols)).isRequired,
@@ -159,24 +200,32 @@ Settings.propTypes = {
 	setOptions: PropTypes.func.isRequired,
 	setTitle: PropTypes.func.isRequired,
 	updateAddress: PropTypes.func.isRequired,
+	updateApiKey: PropTypes.func.isRequired,
+	updateAuthToken: PropTypes.func.isRequired,
 	updateCurrency: PropTypes.func.isRequired,
 	updateNightMode: PropTypes.func.isRequired
 };
 
 Settings.defaultProps = {
 	address: '',
+	apiKey: '',
+	authToken: null,
 	className: null
 };
 
 const mapStateToProps = state => ({
 	address: getAddress(state),
+	apiKey: getApiKey(state),
+	authToken: getAuthToken(state),
 	currency: getCode(state),
 	isDarkMode: getTheme(state)
 });
 
 const mapDispatchToProps = dispatch => ({
 	clearSettings: () => dispatch(resetSettings()),
-	updateAddress: address => dispatch(setOfflineEthAddress(address)),
+	updateAddress: address => dispatch(setEthAddress(address)),
+	updateApiKey: apiKey => dispatch(setApiKey(apiKey)),
+	updateAuthToken: token => dispatch(fetchAuthToken(token)),
 	updateCurrency: currency => dispatch(setCurrency(currency)),
 	updateNightMode: () => dispatch(toggleNightMode())
 });

@@ -38,6 +38,10 @@
   letter-spacing: 0.25em;
 }
 
+.item-row__value {
+  @include flex-shrink;
+}
+
 .item-row__description {
   @include align-items(flex-start);
   @include use-flex;

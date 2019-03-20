@@ -5,21 +5,30 @@ import clns from 'classnames';
 
 import {
 	getAddress,
+	getApiKey,
+	getAuthToken,
 	getLoadStates,
 	getRates,
 	getTransaction
 } from '../../../redux/selectors';
 
 import {
+	getCurrencyRates as fetchCurrencyRates,
+	reloadTransactions as fetchTransactions
+} from '../../../redux/actions/ethereum';
+
+import {
 	countryIcons,
 	errorAddressHolderState,
+	errorKeyHolderState,
 	errorTransactionHolderState,
 	loadingTransactionHolderState
 } from './_constants';
+
 import { copyData, formatTransaction } from './_helper';
 
 import BlockSection from './BlockSection';
-import Currency from '../../common/Currency';
+import Currency, { symbols } from '../../common/Currency';
 import GasSection from './GasSection';
 import Jumbotron from '../../common/Jumbotron';
 import Placeholder from '../../common/Placeholder';
@@ -30,7 +39,6 @@ import ErrorIcon from '../../../assets/icons/server.svg';
 
 import './_transaction.scss';
 
-// TODO: Add flags
 const LocalValues = ({ rates, value }) => {
 	const { ETH, ...localRates } = rates;
 	return Object.keys(localRates).map(code => {
@@ -62,6 +70,8 @@ LocalValues.propTypes = {
 
 const Transaction = ({
 	address,
+	apiKey,
+	authToken,
 	className,
 	history,
 	isLoading,
@@ -71,7 +81,9 @@ const Transaction = ({
 	setOptions: updateOptions,
 	setSubtitle: updateSubtitle,
 	setTitle: updateTitle,
-	transaction
+	transaction,
+	updateRates,
+	updateTransactions
 }) => {
 	const [showId /* , setShowId */] = useState(true);
 
@@ -85,6 +97,12 @@ const Transaction = ({
 		updateBacklink(true);
 		updateOptions(options);
 		updateTitle(title);
+
+		// TODO: Consider only call at root
+		if (!rates && !isLoading.currency) {
+			updateRates(authToken, Object.keys(symbols));
+		}
+
 		return () => {
 			reset();
 		};
@@ -96,16 +114,28 @@ const Transaction = ({
 		}
 	}, [window]);
 
+	const getPlaceholder = (state, key) => (
+		<Placeholder
+			className={`transaction__placeholder transaction__placeholder--${key}`}
+			errorIcon={ErrorIcon}
+			hasError
+			onRefresh={() => history.push('/app/settings')}
+			{...state}
+		/>
+	);
+
+	if (!apiKey) {
+		return (
+			<div className={clns('page', 'transaction', className)}>
+				{getPlaceholder(errorKeyHolderState, 'key')}
+			</div>
+		);
+	}
+
 	if (!address) {
 		return (
 			<div className={clns('page', 'transaction', className)}>
-				<Placeholder
-					className="transaction__placeholder transaction__placeholder--address"
-					errorIcon={ErrorIcon}
-					hasError
-					onRefresh={() => history.push('/app/settings')}
-					{...errorAddressHolderState}
-				/>
+				{getPlaceholder(errorAddressHolderState, 'address')}
 			</div>
 		);
 	}
@@ -123,8 +153,7 @@ const Transaction = ({
 					errorIcon={ErrorIcon}
 					hasError
 					isLoading={isLoading.transactions}
-					// TODO: Get fetch transaction from dispatch props
-					onRefresh={() => {}}
+					onRefresh={() => updateTransactions(authToken, address)}
 					{...state}
 				/>
 			</div>
@@ -142,7 +171,7 @@ const Transaction = ({
 					subtitle="Transacted Ether"
 					title={<Currency amount={parsedValue} code="ETH" />}
 				>
-					{rates && Object.keys(rates).length > 0 && (
+					{rates && parsedValue !== 0 && Object.keys(rates).length > 0 && (
 						<LocalValues rates={rates} value={parsedValue} />
 					)}
 				</Jumbotron>
@@ -169,6 +198,8 @@ const Transaction = ({
 
 Transaction.propTypes = {
 	address: PropTypes.string,
+	apiKey: PropTypes.string,
+	authToken: PropTypes.string,
 	className: PropTypes.string,
 	isLoading: PropTypes.objectOf(PropTypes.bool).isRequired,
 	rates: PropTypes.objectOf(PropTypes.number),
@@ -198,11 +229,15 @@ Transaction.propTypes = {
 		}).isRequired,
 		status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
 		value: PropTypes.string.isRequired
-	})
+	}),
+	updateRates: PropTypes.func.isRequired,
+	updateTransactions: PropTypes.func.isRequired
 };
 
 Transaction.defaultProps = {
 	address: null,
+	apiKey: null,
+	authToken: null,
 	className: null,
 	rates: {},
 	transaction: null
@@ -210,14 +245,21 @@ Transaction.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	address: getAddress(state),
+	apiKey: getApiKey(state),
+	authToken: getAuthToken(state),
 	isLoading: getLoadStates(state),
 	rates: getRates(state),
 	transaction: getTransaction(state, props)
 });
 
-// const mapDispatchToProps = dispatch => {};
+const mapDispatchToProps = dispatch => ({
+	updateRates: (authToken, codes) =>
+		dispatch(fetchCurrencyRates(authToken, codes)),
+	updateTransactions: (authToken, address) =>
+		dispatch(fetchTransactions(authToken, address))
+});
 
 export default connect(
-	mapStateToProps
-	// mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(Transaction);
