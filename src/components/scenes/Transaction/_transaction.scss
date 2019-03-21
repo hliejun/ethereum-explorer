@@ -50,8 +50,31 @@
 }
 
 .transaction .source__sub-section-status {
-  @include align-items(flex-start);
+  @include align-items(center);
   @include use-flex;
+  border-radius: 1em;
+  color: $transaction-status-content;
+  font-size: 0.85em;
+  font-weight: 500;
+  margin-top: 0.25em;
+  padding: 0.2em 0.75em;
+
+  .source__sub-section-glyph {
+    @include square(1.1em);
+    fill: $transaction-status-content;
+  }
+}
+
+.transaction .source__sub-section-status--failed {
+  background-color: $transaction-status-background-failed;
+}
+
+.transaction .source__sub-section-status--pending {
+  background-color: $transaction-status-background-pending;
+}
+
+.transaction .source__sub-section-status--success {
+  background-color: $transaction-status-background-success;
 }
 
 .transaction .source__sub-section-status-text {
@@ -75,8 +98,16 @@
 
 // Mobile
 @media only screen and (max-width: 767px) {
+  .transaction__values {
+    margin: 2rem 2rem 1rem;
+  }
   .transaction__section {
     @include flex-basis(100%);
+    margin: 1rem 2rem;
+  }
+  .transaction__section:last-child {
+    @include flex-basis(100%);
+    margin-bottom: 2rem;
   }
   .transaction__local-amount {
     max-width: 50%;

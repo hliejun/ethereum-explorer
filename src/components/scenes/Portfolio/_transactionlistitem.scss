@@ -46,10 +46,22 @@
   }
 }
 
+.no-touch .transaction-list-item:hover .transaction-list-item__overline {
+  color: $transaction-list-hint-hover;
+
+  .overline__glyph {
+    fill: $transaction-list-hint-hover;
+  }
+}
+
 .transaction-list-item__meta {
   @include flex-shrink;
   color: $transaction-list-hint;
   white-space: nowrap;
+}
+
+.no-touch .transaction-list-item:hover .transaction-list-item__meta {
+  color: $transaction-list-hint-hover;
 }
 
 .transaction-list-item__currencies {
@@ -62,7 +74,7 @@
 
 .transaction-list-item__amount {
   @include flex-shrink;
-  color: $transaction-list-content;
+  color: $transaction-list-positive;
   font-size: 1.1em;
   margin: 0.25em 0;
   max-width: 100%;
@@ -72,11 +84,27 @@
   color: $transaction-list-negative;
 }
 
+.transaction-list-item__amount--pending {
+  color: $transaction-list-pending;
+}
+
+.transaction-list-item__amount--failed {
+  color: $transaction-list-failed;
+}
+
+.no-touch .transaction-list-item:hover .transaction-list-item__amount {
+  color: $transaction-list-content-hover;
+}
+
 .transaction-list-item__ethereum {
   @include align-self(flex-end);
   @include flex-grow;
   @include flex-shrink;
   color: $transaction-list-content;
+}
+
+.no-touch .transaction-list-item:hover .transaction-list-item__ethereum {
+  color: $transaction-list-content-hover;
 }
 
 .transaction-list-item__section {
@@ -103,6 +131,10 @@
   white-space: nowrap;
 }
 
+.no-touch .transaction-list-item:hover .transaction-list-item__info-label {
+  color: $transaction-list-hint-hover;
+}
+
 .transaction-list-item__description {
   @include align-items;
   @include justify-content(space-between);
@@ -115,4 +147,8 @@
   @include flex-shrink(1);
   color: $transaction-list-content;
   font-size: 0.85rem;
+}
+
+.no-touch .transaction-list-item:hover .transaction-list-item__address {
+  color: $transaction-list-content-hover;
 }

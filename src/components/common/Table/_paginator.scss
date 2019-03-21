@@ -24,10 +24,13 @@
 }
 
 .table-paginator__current-page {
+  background-color: transparent;
   border-color: $table-paginator-border;
   border-radius: 0;
   border-style: solid;
   border-width: 0 0 1px;
+  color: $table-paginator-content;
+  font-weight: 500;
   margin-right: 0.25em;
   text-align: center;
   width: 4em;
@@ -36,6 +39,7 @@
 .table-paginator__button {
   @include default-transition;
   @include setup-button;
+  border-radius: 1em;
   line-height: 0;
   margin: 0 0.25em;
   overflow: hidden;
@@ -47,11 +51,13 @@
   fill: $table-paginator-content;
 }
 
-.no-touch
-  .table-paginator__button:hover:not(:disabled)
+.no-touch .table-paginator__button:hover:not(:disabled) {
+  background-color: $table-paginator-background-hover;
+
   .table-paginator__glyph {
-  color: $table-paginator-content-hover;
-  fill: $table-paginator-content-hover;
+    color: $table-paginator-content-hover;
+    fill: $table-paginator-content-hover;
+  }
 }
 
 .table-paginator__button:disabled .table-paginator__glyph {

@@ -39,6 +39,7 @@
 .table-row__cell:first-child {
   @include align-items(flex-start);
   @include justify-content(flex-start);
+  padding: 1rem 2rem 1rem 1rem;
 
   span {
     text-align: left;

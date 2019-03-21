@@ -36,11 +36,12 @@
 
 .no-touch .transaction-form__button:not(.transaction-form__button--main):hover {
   background-color: $form-hover-light;
+  color: $form-content-hover-light;
 }
 
 .transaction-form__button:not(.transaction-form__button--main):active {
   background-color: $form-active-light;
-  color: $form-active;
+  color: $form-content-hover-light;
 }
 
 .transaction-form__button--main:last-child {

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import throttle from 'lodash.throttle';
+
+import { getTheme } from '../redux/selectors';
+import setTheme from './themes';
 
 import Home from './scenes/Home';
 import Missing from './scenes/Missing';
@@ -21,7 +26,7 @@ const initialState = {
 	useBackLink: false
 };
 
-const Container = ({ match }) => {
+const Container = ({ isDarkMode, match }) => {
 	const [useBackLink, setUseBackLink] = useState(initialState.useBackLink);
 	const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
 	const [pageSubtitle, setPageSubtitle] = useState(initialState.pageSubtitle);
@@ -60,6 +65,11 @@ const Container = ({ match }) => {
 		};
 	}, [window, updateDimensions]);
 
+	useEffect(() => {
+		const theme = isDarkMode ? 'dark' : 'light';
+		setTheme(theme);
+	}, [isDarkMode]);
+
 	return (
 		<div className="container">
 			<AppBar
@@ -96,4 +106,12 @@ const Container = ({ match }) => {
 	);
 };
 
-export default Container;
+Container.propTypes = {
+	isDarkMode: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = state => ({
+	isDarkMode: getTheme(state)
+});
+
+export default connect(mapStateToProps)(Container);

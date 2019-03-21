@@ -145,6 +145,7 @@
 
 .field__label--toggle {
   display: block;
+  color: $field-content;
   margin-right: 0.5em;
   padding-bottom: 0.125em;
 }
@@ -219,7 +220,7 @@
   @include square(1.1em);
   background-color: $field-input-unselected;
   border-radius: 50%;
-  border: 1px solid $field-border;
+  border: 0.1em solid $field-border;
   left: 0.15em;
   position: absolute;
   top: 0.15em;
@@ -230,7 +231,7 @@
 }
 
 .field--radio input:checked ~ .field__input-dot {
-  border: 1px solid $field-input-selected;
+  border: 0.1em solid $field-input-selected;
 }
 
 .field__input-dot:after {
@@ -244,7 +245,7 @@
 }
 
 .field--radio .field__input-dot:after {
-  @include square(0.75em);
+  @include square(0.6em);
   background-color: $field-input-selected;
   border-radius: 50%;
 }

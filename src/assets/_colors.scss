@@ -1,118 +1,212 @@
+@import 'css-vars';
+
+// Light
+$inverted-background--light: #607d8b;
+$inverted-background-rgb--light: 96, 125, 139;
+$inverted-secondary-text--light: #cfd8dc;
+$inverted-text--light: #eceff1;
+$primary-active--light: #4b626d;
+$primary-active-rgb--light: 75, 98, 109;
+$primary-background--light: #eceff1;
+$primary-highlight--light: #5c6bc0;
+$primary-text--light: #263238;
+$secondary-active--light: #4150a8;
+$secondary-background--light: #ffffff;
+$secondary-hover--light: #a6aedc;
+$secondary-text--light: #607d8b;
+$secondary-text-rgb--light: 96, 125, 139;
+
+// Dark
+$inverted-background--dark: #cfd8dc;
+$inverted-background-rgb--dark: 207, 216, 220;
+$inverted-secondary-text--dark: #607d8b;
+$inverted-text--dark: #263238;
+$primary-active--dark: #b2c0c6;
+$primary-active-rgb--dark: 178, 192, 198;
+$primary-background--dark: #263238;
+$primary-highlight--dark: #4db6ac;
+$primary-text--dark: #90a4ae;
+$secondary-active--dark: #3c948b;
+$secondary-background--dark: #37474f;
+$secondary-hover--dark: #95d4ce;
+$secondary-text--dark: #78909c;
+$secondary-text-rgb--dark: 120, 144, 156;
+
+$css-vars-use-native: true;
+
+@include css-vars(
+  (
+    --inverted-background-rgb: '96, 125, 139',
+    --inverted-background: #607d8b,
+    --inverted-secondary-text: #cfd8dc,
+    --inverted-text: #eceff1,
+    --primary-active-rgb: '75, 98, 109',
+    --primary-active: #4b626d,
+    --primary-background: #eceff1,
+    --primary-highlight: #5c6bc0,
+    --primary-text: #263238,
+    --secondary-active: #4150a8,
+    --secondary-background: #ffffff,
+    --secondary-hover: #a6aedc,
+    --secondary-text-rgb: '96, 125, 139',
+    --secondary-text: #607d8b
+  )
+);
+
+// Colors
+$highlight-content: #ffffff;
+$primary-shadow: #000000;
+
+$error: #ef5350;
+$success: #66bb6a;
+$warning: #ffa726;
+
+$primary-mask: rgba($primary-shadow, 0.5);
+$primary-outline: rgba($primary-shadow, 0.12);
+$secondary-outline: rgba(var(--secondary-text-rgb), 0.26);
+
+$primary-active: rgba(var(--primary-active-rgb), 0.75);
+$primary-hover: rgba(var(--inverted-background-rgb), 0.75);
+
+// Page
+$page-background: var(--primary-background);
+
+// Scroll Bar
+$scrollbar-background: transparent;
+$scrollbar-content: var(--primary-text);
+
 // Card
-$card-background: white;
-$card-content: #202124;
+$card-background: var(--secondary-background);
+$card-content: var(--primary-text);
 
 // App Bar
-$app-bar-background: white;
-$app-bar-border: rgba(black, 0.12);
-$app-bar-button-hover: rgba(black, 0.1);
-$app-bar-content: #202124;
+$app-bar-background-wide: var(--primary-background);
+$app-bar-background: var(--secondary-background);
+$app-bar-border: $primary-outline;
+$app-bar-button-content-hover: var(--inverted-text);
+$app-bar-button-hover: $primary-hover;
+$app-bar-content: var(--primary-text);
 
 // Side Menu
-$side-bar-background: white;
-$side-bar-border: rgba(black, 0.12);
-$side-bar-button-hover: rgba(black, 0.1);
-$side-bar-content-hover: #202124;
-$side-bar-content: rgba(#202124, 0.75);
-$side-bar-label: #202124;
+$side-bar-background: var(--secondary-background);
+$side-bar-border: $secondary-outline;
+$side-bar-button-hover: $primary-hover;
+$side-bar-content-hover: var(--inverted-text);
+$side-bar-content: var(--primary-text);
+$side-bar-label: var(--primary-text);
 
 // Modal
-$modal-mask-background: rgba(black, 0.5);
+$modal-mask-background: $primary-mask;
+
+// Dashboard
+$dashboard-hint: var(--secondary-text);
+$dashboard-primary-content: var(--primary-text);
+$dashboard-secondary-content: var(--primary-text);
 
 // Form
-$form-border: rgba(black, 0.12);
-$form-label: rgba(black, 0.26);
+$form-border: var(--secondary-text);
+$form-label: var(--secondary-text);
 
 // Fields
-$field-border: rgba(black, 0.12);
-$field-content: #202124;
-$field-input-hover: #ccc;
-$field-input-mark: white;
-$field-input-selected: #4db6ac;
-$field-input-unselected: #eee;
-$field-label: rgba(black, 0.26);
-$field-toggle-background: #eee;
-$field-toggle-highlight: #4db6ac;
-$field-toggle-hover: #ccc;
-$field-toggle-switch: white;
+$field-border: var(--primary-highlight);
+$field-content: var(--primary-text);
+$field-input-hover: var(--secondary-hover);
+$field-input-mark: $highlight-content;
+$field-input-selected: var(--primary-highlight);
+$field-input-unselected: $highlight-content;
+$field-label: var(--primary-highlight);
+$field-toggle-background: var(--inverted-background);
+$field-toggle-highlight: var(--primary-highlight);
+$field-toggle-hover: var(--secondary-hover);
+$field-toggle-switch: $highlight-content;
 
 // Jumbotron
-$jumbotron-content: #202124;
+$jumbotron-content: var(--primary-text);
 
 // Section
-$section-content: #202124;
-$section-hint: #5f6368;
+$section-content: var(--primary-text);
+$section-hint: var(--secondary-text);
 
 // Sub-Section
-$sub-section-content: #202124;
-$sub-section-hint: #5f6368;
+$sub-section-content: var(--primary-text);
+$sub-section-hint: var(--secondary-text);
 
 // Item Row
-$item-row-content: #202124;
-$item-row-hint: #5f6368;
+$item-row-content: var(--primary-text);
+$item-row-hint: var(--secondary-text);
 
 // List
-$list-jump-background-active: black;
-$list-jump-background-hover: #5f6368;
-$list-jump-background: #202124;
-$list-jump-content: white;
-$list-footer-content: #202124;
+$list-footer-content: var(--primary-text);
+$list-jump-background-active: var(--secondary-active);
+$list-jump-background-hover: var(--secondary-hover);
+$list-jump-background: var(--primary-highlight);
+$list-jump-content: $highlight-content;
 
 // Table
-$table-background: white;
-$table-shadow: black;
+$table-background: var(--secondary-background);
+$table-shadow: $primary-shadow;
 
 // Table Header
-$table-header-border: rgba(black, 0.12);
-$table-header-content-hover: #202124;
-$table-header-content: rgba(#202124, 0.75);
+$table-header-border: $primary-outline;
+$table-header-content-hover: var(--secondary-hover);
+$table-header-content: var(--primary-highlight);
 
 // Table Tooltip
-$table-tooltip-background: #707070;
-$table-tooltip-content: white;
+$table-tooltip-background: var(--inverted-background);
+$table-tooltip-content: var(--inverted-text);
 
 // Table Row
-$table-row-background-hover: #eee;
-$table-row-border: rgba(black, 0.12);
-$table-row-content-hover: #202124;
-$table-row-content: rgba(#202124, 0.75);
+$table-row-background-hover: $primary-hover;
+$table-row-border: $primary-outline;
+$table-row-content-hover: var(--inverted-text);
+$table-row-content: var(--primary-text);
 
 // Table Paginator
-$table-paginator-border: rgba(black, 0.12);
-$table-paginator-content-hover: #202124;
-$table-paginator-content: rgba(#202124, 0.5);
+$table-paginator-background-hover: $primary-hover;
+$table-paginator-border: var(--primary-highlight);
+$table-paginator-content-hover: var(--inverted-text);
+$table-paginator-content: var(--primary-text);
 
 // Loader
-$loader-stroke: #4db6ac;
+$loader-stroke: var(--primary-highlight);
 
 // Placeholder
-$placeholder-background-active: #bdbdbd;
-$placeholder-background-hover: #eee;
-$placeholder-background: white;
-$placeholder-content: #202124;
+$placeholder-button-background-active: var(--secondary-active);
+$placeholder-button-background-hover: var(--secondary-hover);
+$placeholder-button-background: var(--primary-highlight);
+$placeholder-button-content: $highlight-content;
+$placeholder-content: var(--primary-text);
 
 // Portfolio Page
-$portfolio-modal-content: #202124;
-$portfolio-section-label: #202124;
+$portfolio-modal-content: var(--primary-text);
+$portfolio-section-label: var(--primary-text);
 
 // Portfolio Transaction Form
-$form-active-light: #b2dfdb;
-$form-active: #26a69a;
-$form-border: rgba(black, 0.12);
-$form-button-label: white;
-$form-content: #202124;
-$form-hover-light: #e0f2f1;
-$form-hover: #80cbc4;
-$form-label: rgba(black, 0.26);
-$form-selected: #4db6ac;
-$form-unselected: #eee;
+$form-active-light: $primary-active;
+$form-active: var(--secondary-active);
+$form-button-label: $highlight-content;
+$form-content-hover-light: var(--inverted-text);
+$form-content: var(--primary-text);
+$form-hover-light: $primary-hover;
+$form-hover: var(--secondary-hover);
+$form-selected: var(--primary-highlight);
+$form-unselected: var(--primary-highlight);
 
 // Portfolio Transaction List
-$transaction-list-background-hover: rgba(black, 0.05);
-$transaction-list-background: white;
-$transaction-list-content: #202124;
-$transaction-list-hint: #5f6368;
-$transaction-list-negative: #e57373;
+$transaction-list-background-hover: $primary-hover;
+$transaction-list-background: var(--secondary-background);
+$transaction-list-content-hover: var(--inverted-text);
+$transaction-list-content: var(--primary-text);
+$transaction-list-failed: var(--primary-text);
+$transaction-list-hint-hover: var(--inverted-secondary-text);
+$transaction-list-hint: var(--secondary-text);
+$transaction-list-negative: $error;
+$transaction-list-pending: var(--primary-text);
+$transaction-list-positive: $success;
 
 // Transaction Page
-$transaction-content: #202124;
+$transaction-content: var(--primary-text);
+$transaction-status-background-failed: $error;
+$transaction-status-background-pending: $warning;
+$transaction-status-background-success: $success;
+$transaction-status-content: $highlight-content;

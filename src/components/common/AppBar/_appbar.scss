@@ -40,6 +40,10 @@
 
 .no-touch .app-bar__button:hover {
   background-color: $app-bar-button-hover;
+
+  .app-bar__button-glyph {
+    fill: $app-bar-button-content-hover;
+  }
 }
 
 .app-bar__button--option {
@@ -75,6 +79,7 @@
 @media only screen and (min-width: 1440px) {
   .app-bar {
     @include flat;
+    background-color: $app-bar-background-wide;
     border-bottom: 1px solid $app-bar-border;
   }
 }

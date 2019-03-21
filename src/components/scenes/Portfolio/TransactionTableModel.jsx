@@ -10,7 +10,7 @@ const getTableFields = code => [
 		description: 'The date (DD/MM/YY) and time of a transaction.',
 		isSortable: true,
 		label: 'Date',
-		minWidth: '15rem',
+		minWidth: '12rem',
 		name: 'date',
 		width: '20%'
 	},

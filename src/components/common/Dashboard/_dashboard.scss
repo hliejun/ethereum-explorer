@@ -1,3 +1,4 @@
+@import '../../../assets/colors';
 @import '../../../assets/mixins';
 
 .dashboard {
@@ -10,6 +11,7 @@
   @include flex-wrap;
   @include justify-content(space-between);
   @include use-flex;
+  color: $dashboard-primary-content;
   padding: 0.5em 0;
   width: 100%;
 }
@@ -35,6 +37,8 @@
   @include flex-grow;
   @include justify-content(space-between);
   @include use-flex;
+  color: $dashboard-secondary-content;
+  fill: $dashboard-secondary-content;
   margin-top: 0.25em;
   max-width: 100%;
   overflow-x: hidden;
@@ -55,6 +59,7 @@
 }
 
 .dashboard__sub-section-separator:after {
+  color: $dashboard-hint;
   content: '.........................................................................................................................................................................................................................................';
   font-weight: 500;
   letter-spacing: 0.25em;

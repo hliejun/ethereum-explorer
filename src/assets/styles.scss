@@ -1,9 +1,16 @@
+@import './colors';
 @import './mixins';
 @import './typo';
 
 * {
   @include border-box;
   margin: 0;
+}
+
+html,
+body,
+.page {
+  background-color: $page-background;
 }
 
 body {
@@ -39,6 +46,19 @@ button,
 [type='reset'],
 [type='submit'] {
   @include appearance(button);
+}
+
+::-webkit-scrollbar-track {
+  background-color: $scrollbar-background;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.25em;
+  background-color: $scrollbar-content;
 }
 
 #app-root,

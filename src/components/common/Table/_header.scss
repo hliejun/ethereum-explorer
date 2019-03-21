@@ -25,6 +25,7 @@
 .table-header__cell:first-child {
   @include align-items(flex-start);
   @include justify-content(flex-start);
+  padding: 1rem 2rem 1rem 1rem;
 
   .table-header__label {
     text-align: left;

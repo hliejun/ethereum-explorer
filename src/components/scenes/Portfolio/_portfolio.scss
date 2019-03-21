@@ -24,7 +24,7 @@
   @include flex-direction;
   @include flex-grow;
   @include use-flex;
-  margin: 0 1em;
+  margin: 0.5em 2em 2em;
 }
 
 .portfolio__transaction-table {
@@ -125,10 +125,16 @@
     @include use-flex;
   }
   .portfolio__section-label {
-    margin: 0 1em 1em;
+    margin: 1.5em 2em 0.5em;
   }
-  .portfolio__placeholder {
-    margin-top: -1.5em;
+  .portfolio__dashboard {
+    margin: 2em 2em 0.5em;
+  }
+  .portfolio__placeholder--balance {
+    margin: 2em 2em 0;
+  }
+  .portfolio__placeholder--transactions {
+    margin: 0;
   }
 }
 

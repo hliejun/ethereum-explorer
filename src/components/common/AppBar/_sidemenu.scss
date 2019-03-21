@@ -36,6 +36,7 @@
 .header__glyph {
   @include square(2.5em);
   display: inline-block;
+  fill: $side-bar-content;
   margin-right: 1em;
 }
 

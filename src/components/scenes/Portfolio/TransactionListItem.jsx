@@ -111,39 +111,45 @@ AddressSection.defaultProps = {
 	className: null
 };
 
-const ListItem = memo(({ className, code, onClick, rate, source, value }) => {
-	const { address, timestamp, type } = source;
-	const displayedAmount = rate ? parseFloat(value) * rate : parseFloat(value);
-	return (
-		<button
-			className={clns('transaction-list-item', className)}
-			onClick={onClick}
-			type="button"
-		>
-			<div className="transaction-list-item__header">
-				<Meta className="transaction-list-item__meta" timestamp={timestamp} />
-				<Overline className="transaction-list-item__overline" type={type} />
-			</div>
-			<div className="transaction-list-item__currencies">
-				<Currency
-					amount={
-						type === 'outgoing'
-							? `-${displayedAmount}`
-							: String(displayedAmount)
-					}
-					className={clns('transaction-list-item__amount', {
-						'transaction-list-item__amount--negative': type === 'outgoing'
-					})}
-					code={rate ? code : 'ETH'}
-				/>
-			</div>
-			<div className="transaction-list-item__description">
-				<AddressSection address={address} type={type} />
-				{rate && <SourceSection amount={value} />}
-			</div>
-		</button>
-	);
-});
+const ListItem = memo(
+	({ className, code, onClick, rate, source, status, value }) => {
+		const { address, timestamp, type } = source;
+		const displayedAmount = rate ? parseFloat(value) * rate : parseFloat(value);
+		return (
+			<button
+				className={clns('transaction-list-item', className)}
+				onClick={onClick}
+				type="button"
+			>
+				<div className="transaction-list-item__header">
+					<Meta className="transaction-list-item__meta" timestamp={timestamp} />
+					<Overline className="transaction-list-item__overline" type={type} />
+				</div>
+				<div className="transaction-list-item__currencies">
+					<Currency
+						amount={
+							type === 'outgoing'
+								? `-${displayedAmount}`
+								: String(displayedAmount)
+						}
+						className={clns(
+							'transaction-list-item__amount',
+							`transaction-list-item__amount--${status}`,
+							{
+								'transaction-list-item__amount--negative': type === 'outgoing'
+							}
+						)}
+						code={rate ? code : 'ETH'}
+					/>
+				</div>
+				<div className="transaction-list-item__description">
+					<AddressSection address={address} type={type} />
+					{rate && <SourceSection amount={value} />}
+				</div>
+			</button>
+		);
+	}
+);
 
 ListItem.propTypes = {
 	className: PropTypes.string,

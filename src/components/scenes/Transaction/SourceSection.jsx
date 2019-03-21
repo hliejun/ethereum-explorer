@@ -1,6 +1,7 @@
 import React from 'react';
 import Day from 'dayjs';
 import PropTypes from 'prop-types';
+import clns from 'classnames';
 
 import { Section, SubSection } from '../../common/Sections';
 
@@ -51,7 +52,12 @@ const SourceSection = ({ address, className, id, status, timestamp, type }) => {
 				icon={Status}
 				title="Status"
 			>
-				<div className="source__sub-section-status">
+				<div
+					className={clns(
+						'source__sub-section-status',
+						`source__sub-section-status--${status}`
+					)}
+				>
 					<StatusIcon className="source__sub-section-glyph" />
 					<span className="source__sub-section-status-text">{status}</span>
 				</div>

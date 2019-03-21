@@ -2,6 +2,8 @@
 @import '../../../assets/mixins';
 
 .placeholder {
+  @include card;
+  @include elevation(1);
   @include align-items;
   @include flex-direction;
   @include flex-grow;
@@ -43,8 +45,8 @@
 .placeholder__refresh {
   @include elevation(1);
   @include setup-button;
-  background-color: $placeholder-background;
-  color: $placeholder-content;
+  background-color: $placeholder-button-background;
+  color: $placeholder-button-content;
   border-radius: 2em;
   font-weight: 500;
   margin: 1em;
@@ -52,9 +54,9 @@
 }
 
 .no-touch .placeholder__refresh:hover {
-  background-color: $placeholder-background-hover;
+  background-color: $placeholder-button-background-hover;
 }
 
 .placeholder__refresh:active {
-  background-color: $placeholder-background-active;
+  background-color: $placeholder-button-background-active;
 }

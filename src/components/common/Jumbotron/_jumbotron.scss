@@ -38,5 +38,6 @@
 
 .jumbotron__subtitle {
   @include ellipsize;
+  color: $jumbotron-content;
   white-space: nowrap;
 }
