@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -52,4 +52,4 @@ Notification.defaultProps = {
 	title: 'Notification'
 };
 
-export default Notification;
+export default memo(Notification);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -79,4 +79,4 @@ Paginator.defaultProps = {
 	className: null
 };
 
-export default Paginator;
+export default memo(Paginator);

@@ -9,10 +9,13 @@ import setTheme from './themes';
 
 import Home from './scenes/Home';
 import Missing from './scenes/Missing';
-import Portfolio from './scenes/Portfolio';
 import Profile from './scenes/Profile';
-import Settings from './scenes/Settings';
-import Transaction from './scenes/Transaction';
+
+import {
+	PortfolioPage,
+	SettingsPage,
+	TransactionPage
+} from './common/PageLoader';
 
 import AppBar from './common/AppBar';
 import Notification from './common/Notification';
@@ -108,17 +111,17 @@ const Container = ({ isDarkMode, match }) => {
 				<Route
 					exact
 					path={`${match.url}/settings`}
-					render={attach(Settings)(appControl)}
+					render={attach(SettingsPage)(appControl)}
 				/>
 				<Route
 					exact
 					path={`${match.url}/portfolio`}
-					render={attach(Portfolio)(appControl)}
+					render={attach(PortfolioPage)(appControl)}
 				/>
 				<Route
 					exact
 					path={`${match.url}/transaction/:id`}
-					render={attach(Transaction)(appControl)}
+					render={attach(TransactionPage)(appControl)}
 				/>
 				<Route render={attach(Missing)(appControl)} />
 			</Switch>

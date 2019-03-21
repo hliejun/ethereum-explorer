@@ -30,10 +30,11 @@ export const errorKeyHolderState = {
 };
 
 export const errorTransactionHolderState = {
-	description: 'Something went wrong while fetching this transaction.',
+	description:
+    'Please ensure that you have provided a valid ethereum address and API key.',
 	refreshText: 'Try Again',
 	status: 'error',
-	title: 'Problem Loading'
+	title: 'Problem Loading Transactions'
 };
 
 export const loadingTransactionHolderState = {

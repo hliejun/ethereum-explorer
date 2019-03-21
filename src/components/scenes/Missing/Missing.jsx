@@ -1,19 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
-// TODO: Implement component
+import Construction from '../../common/Construction';
 
-const Missing = () => {
-	const [name, setName] = useState('404 not found');
+import './_missing.scss';
+
+const Home = ({ history, reset, setTitle }) => {
+	const title = 'Page Not Found';
+
+	useEffect(() => {
+		if (setTitle) {
+			setTitle(title);
+		}
+		return () => {
+			if (reset) {
+				reset();
+			}
+		};
+	}, [title]);
+
 	return (
 		<div className="page missing">
-			<input
-				id="name"
-				type="text"
-				value={name}
-				onChange={e => setName(e.target.value)}
-			/>
+			<Construction
+				className="missing__under-construction"
+				subtitle="The URL you have entered is invalid."
+				title="Page Not Found"
+			>
+				<button
+					className="missing__link"
+					onClick={() => history.push('/app/portfolio')}
+					type="button"
+				>
+          Go to Portfolio
+				</button>
+			</Construction>
 		</div>
 	);
 };
 
-export default Missing;
+export default Home;

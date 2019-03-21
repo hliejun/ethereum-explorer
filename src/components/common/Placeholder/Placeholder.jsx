@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -71,4 +71,4 @@ Placeholder.defaultProps = {
 	title: null
 };
 
-export default Placeholder;
+export default memo(Placeholder);

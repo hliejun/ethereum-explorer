@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -41,4 +41,4 @@ ItemRow.defaultProps = {
 	icon: null
 };
 
-export default ItemRow;
+export default memo(ItemRow);

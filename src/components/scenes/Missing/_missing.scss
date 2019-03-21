@@ -1,0 +1,21 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+.missing__link {
+  @include elevation(1);
+  @include setup-button;
+  background-color: $missing-button-background;
+  border-radius: 2em;
+  color: $missing-button-content;
+  font-weight: 500;
+  margin: 1em;
+  padding: 0.5em 1em;
+}
+
+.no-touch .missing__link:hover {
+  background-color: $missing-button-background-hover;
+}
+
+.missing__link:active {
+  background-color: $missing-button-background-active;
+}

@@ -52,20 +52,11 @@ button,
   background-color: $scrollbar-background;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 0.25em;
-  background-color: $scrollbar-content;
-}
-
 #app-root,
 .container {
   @include flex-direction;
   @include use-flex;
-  min-height: inherit;
+  min-height: 100vh;
   min-width: inherit;
 }
 
@@ -86,7 +77,21 @@ button,
 
 // Desktop / Tablet
 @media only screen and (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.25em;
+    background-color: $scrollbar-content;
+  }
+
   body {
     padding: 1em;
+  }
+
+  #app-root,
+  .container {
+    min-height: calc(100vh - 2em);
   }
 }

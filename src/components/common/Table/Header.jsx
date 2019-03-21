@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -98,4 +98,4 @@ Header.defaultProps = {
 	sort: null
 };
 
-export default Header;
+export default memo(Header);

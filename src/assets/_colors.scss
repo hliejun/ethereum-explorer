@@ -58,7 +58,7 @@ $highlight-content: #ffffff;
 $primary-shadow: #000000;
 
 $error: #ef5350;
-$success: #66bb6a;
+$success: #4db6ac;
 $warning: #ffa726;
 
 $primary-mask: rgba($primary-shadow, 0.5);
@@ -103,6 +103,10 @@ $side-bar-button-hover: $primary-hover;
 $side-bar-content-hover: var(--inverted-text);
 $side-bar-content: var(--primary-text);
 $side-bar-label: var(--primary-text);
+
+// Construction
+$construction-content: var(--primary-text);
+$construction-hint: var(--secondary-text);
 
 // Modal
 $modal-mask-background: $primary-mask;
@@ -186,6 +190,12 @@ $placeholder-button-background-hover: var(--secondary-hover);
 $placeholder-button-background: var(--primary-highlight);
 $placeholder-button-content: $highlight-content;
 $placeholder-content: var(--primary-text);
+
+// Missing
+$missing-button-background-active: var(--secondary-active);
+$missing-button-background-hover: var(--secondary-hover);
+$missing-button-background: var(--primary-highlight);
+$missing-button-content: $highlight-content;
 
 // Portfolio Page
 $portfolio-modal-content: var(--primary-text);

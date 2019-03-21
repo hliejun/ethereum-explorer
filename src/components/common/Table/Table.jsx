@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -103,4 +103,4 @@ Table.defaultProps = {
 	sort: null
 };
 
-export default Table;
+export default memo(Table);

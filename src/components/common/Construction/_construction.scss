@@ -1,0 +1,48 @@
+@import '../../../assets/colors';
+@import '../../../assets/mixins';
+
+.construction {
+  @include align-items;
+  @include card;
+  @include elevation(1);
+  @include flex-direction;
+  @include flex-grow;
+  @include justify-content;
+  @include use-flex;
+}
+
+.construction__glyph {
+  @include square(6em);
+  fill: $construction-content;
+  margin: 0.5em;
+}
+
+.construction__header {
+  @include align-items;
+  @include flex-direction;
+  @include justify-content;
+  @include use-flex;
+}
+
+.construction__header-title {
+  color: $construction-content;
+  font-weight: 500;
+  margin: 0.5em;
+}
+
+.construction__header-subtitle {
+  color: $construction-hint;
+  font-size: 0.85em;
+  text-align: center;
+}
+
+.construction__content {
+  margin: 1em;
+}
+
+// Mobile
+@media only screen and (max-width: 767px) {
+  .construction {
+    margin: 2em;
+  }
+}

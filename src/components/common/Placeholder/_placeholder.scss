@@ -46,8 +46,8 @@
   @include elevation(1);
   @include setup-button;
   background-color: $placeholder-button-background;
-  color: $placeholder-button-content;
   border-radius: 2em;
+  color: $placeholder-button-content;
   font-weight: 500;
   margin: 1em;
   padding: 0.5em 1em;
@@ -59,4 +59,11 @@
 
 .placeholder__refresh:active {
   background-color: $placeholder-button-background-active;
+}
+
+// Mobile
+@media only screen and (max-width: 767px) {
+  .placeholder {
+    margin: 2em;
+  }
 }

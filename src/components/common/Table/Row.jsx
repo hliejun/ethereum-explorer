@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -62,4 +62,4 @@ Row.defaultProps = {
 	onClick: () => {}
 };
 
-export default Row;
+export default memo(Row);

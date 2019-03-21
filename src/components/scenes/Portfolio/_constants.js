@@ -46,10 +46,11 @@ export const errorAddressHolderState = {
 };
 
 export const errorBalanceHolderState = {
-	description: 'Something went wrong while fetching your balance.',
+	description:
+    'Please ensure that you have provided a valid ethereum address and API key.',
 	refreshText: 'Try Again',
 	status: 'error',
-	title: 'Problem Loading'
+	title: 'Problem Loading Balance'
 };
 
 export const errorKeyHolderState = {
@@ -75,10 +76,11 @@ export const emptyTransactionsHolderState = {
 };
 
 export const errorTransactionsHolderState = {
-	description: 'Something went wrong while fetching your transactions history.',
+	description:
+    'Please ensure that you have provided a valid ethereum address and API key.',
 	refreshText: 'Try Again',
 	status: 'error',
-	title: 'Problem Loading'
+	title: 'Problem Loading Transactions'
 };
 
 export const loadingTransactionsHolderState = {

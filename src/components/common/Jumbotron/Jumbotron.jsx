@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -27,4 +27,4 @@ Jumbotron.defaultProps = {
 	subtitle: null
 };
 
-export default Jumbotron;
+export default memo(Jumbotron);

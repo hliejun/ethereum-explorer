@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
@@ -109,4 +109,4 @@ ControlledForm.defaultProps = {
 	validate: () => ({})
 };
 
-export default ControlledForm;
+export default memo(ControlledForm);

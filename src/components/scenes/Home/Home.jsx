@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
-// TODO: Implement component
+import Construction from '../../common/Construction';
 
-const Home = () => {
-	const [name, setName] = useState('home');
+import HomeIcon from '../../../assets/icons/home.svg';
+
+import './_home.scss';
+
+const Home = ({ reset, setSubtitle, setTitle }) => {
+	const title = 'Home';
+	const subtitle = 'Under Construction';
+
+	useEffect(() => {
+		setTitle(title);
+		setSubtitle(subtitle);
+		return () => {
+			reset();
+		};
+	}, [title, subtitle]);
 	return (
 		<div className="page home">
-			<input
-				id="name"
-				type="text"
-				value={name}
-				onChange={e => setName(e.target.value)}
-			/>
+			<Construction className="home__under-construction" icon={HomeIcon} />
 		</div>
 	);
 };
