@@ -5,15 +5,16 @@ import clns from 'classnames';
 
 import { stopScrollPropagation } from '../eventHandling';
 
-import Home from '../../../assets/icons/home.svg';
-import Portfolio from '../../../assets/icons/balance.svg';
-import Privacy from '../../../assets/icons/privacy.svg';
-import Profile from '../../../assets/icons/account.svg';
-import Repository from '../../../assets/icons/code.svg';
-import Settings from '../../../assets/icons/settings.svg';
-import Terms from '../../../assets/icons/terms.svg';
-import Tx from '../../../assets/icons/tx.svg';
-import Web from '../../../assets/icons/link.svg';
+import Home from '../../../assets/icons/glyphs/home.svg';
+import Portfolio from '../../../assets/icons/glyphs/balance.svg';
+import Privacy from '../../../assets/icons/glyphs/privacy.svg';
+import Profile from '../../../assets/icons/glyphs/account.svg';
+import Repository from '../../../assets/icons/glyphs/code.svg';
+import Settings from '../../../assets/icons/glyphs/settings.svg';
+import Terms from '../../../assets/icons/glyphs/terms.svg';
+import Web from '../../../assets/icons/glyphs/link.svg';
+
+import Tx from '../../../assets/icons/logos/tx.svg';
 
 import './_sidemenu.scss';
 

@@ -5,15 +5,15 @@ import clns from 'classnames';
 
 import { Section, SubSection } from '../../common/Sections';
 
-import Address from '../../../assets/icons/address.svg';
-import DateTime from '../../../assets/icons/date.svg';
-import Failed from '../../../assets/icons/error.svg';
-import Hash from '../../../assets/icons/hash.svg';
-import Pending from '../../../assets/icons/pending.svg';
-import Source from '../../../assets/icons/source.svg';
-import Status from '../../../assets/icons/status.svg';
-import Success from '../../../assets/icons/success.svg';
-import Type from '../../../assets/icons/transaction.svg';
+import Address from '../../../assets/icons/glyphs/address.svg';
+import DateTime from '../../../assets/icons/glyphs/date.svg';
+import Failed from '../../../assets/icons/glyphs/error.svg';
+import Hash from '../../../assets/icons/glyphs/hash.svg';
+import Pending from '../../../assets/icons/glyphs/pending.svg';
+import Source from '../../../assets/icons/glyphs/source.svg';
+import Status from '../../../assets/icons/glyphs/status.svg';
+import Success from '../../../assets/icons/glyphs/success.svg';
+import Type from '../../../assets/icons/glyphs/transaction.svg';
 
 const SourceSection = ({ address, className, id, status, timestamp, type }) => {
 	const formattedDate = Day(parseInt(timestamp, 10) * 1000).format(

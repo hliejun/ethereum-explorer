@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import About from '../../../assets/icons/about.svg';
+import About from '../../../assets/icons/glyphs/about.svg';
 
 import './_itemrow.scss';
 

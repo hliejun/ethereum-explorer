@@ -1,9 +1,9 @@
-import China from '../../../assets/icons/china.svg';
-import Japan from '../../../assets/icons/japan.svg';
-import Korea from '../../../assets/icons/korea.svg';
-import Singapore from '../../../assets/icons/singapore.svg';
-import UnitedKingdom from '../../../assets/icons/uk.svg';
-import UnitedStates from '../../../assets/icons/us.svg';
+import China from '../../../assets/icons/flags/china.svg';
+import Japan from '../../../assets/icons/flags/japan.svg';
+import Korea from '../../../assets/icons/flags/korea.svg';
+import Singapore from '../../../assets/icons/flags/singapore.svg';
+import UnitedKingdom from '../../../assets/icons/flags/uk.svg';
+import UnitedStates from '../../../assets/icons/flags/us.svg';
 
 export const countryIcons = {
 	CNY: China,

@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Ascending from '../../../assets/icons/ascending.svg';
-import Sortable from '../../../assets/icons/sortable.svg';
+import Ascending from '../../../assets/icons/glyphs/ascending.svg';
+import Sortable from '../../../assets/icons/glyphs/sortable.svg';
 
 import './_header.scss';
 

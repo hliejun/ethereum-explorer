@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import Construction from '../../common/Construction';
 
-import ProfileIcon from '../../../assets/icons/account.svg';
+import ProfileIcon from '../../../assets/icons/glyphs/account.svg';
 
 import './_profile.scss';
 

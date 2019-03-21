@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import Construction from '../../common/Construction';
 
-import HomeIcon from '../../../assets/icons/home.svg';
+import HomeIcon from '../../../assets/icons/glyphs/home.svg';
 
 import './_home.scss';
 

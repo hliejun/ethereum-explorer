@@ -56,10 +56,10 @@ import SortForm from './SortForm';
 import Table from '../../common/Table';
 import TransactionDashboard from './TransactionDashboard';
 
-import EmptyIcon from '../../../assets/icons/empty.svg';
-import ErrorIcon from '../../../assets/icons/server.svg';
-import Filter from '../../../assets/icons/filter.svg';
-import Sort from '../../../assets/icons/sort.svg';
+import EmptyIcon from '../../../assets/icons/glyphs/empty.svg';
+import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
+import Filter from '../../../assets/icons/glyphs/filter.svg';
+import Sort from '../../../assets/icons/glyphs/sort.svg';
 
 import './_portfolio.scss';
 

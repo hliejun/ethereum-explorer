@@ -6,8 +6,8 @@ import clns from 'classnames';
 
 import Currency, { symbols } from '../../common/Currency';
 
-import Receive from '../../../assets/icons/receive.svg';
-import Send from '../../../assets/icons/send.svg';
+import Receive from '../../../assets/icons/glyphs/receive.svg';
+import Send from '../../../assets/icons/glyphs/send.svg';
 
 import './_transactionlistitem.scss';
 

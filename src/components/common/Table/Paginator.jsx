@@ -2,10 +2,10 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import First from '../../../assets/icons/first.svg';
-import Last from '../../../assets/icons/last.svg';
-import Next from '../../../assets/icons/next.svg';
-import Prev from '../../../assets/icons/prev.svg';
+import First from '../../../assets/icons/glyphs/first.svg';
+import Last from '../../../assets/icons/glyphs/last.svg';
+import Next from '../../../assets/icons/glyphs/next.svg';
+import Prev from '../../../assets/icons/glyphs/prev.svg';
 
 import './_paginator.scss';
 

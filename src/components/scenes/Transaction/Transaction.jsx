@@ -34,8 +34,8 @@ import Jumbotron from '../../common/Jumbotron';
 import Placeholder from '../../common/Placeholder';
 import SourceSection from './SourceSection';
 
-import Copy from '../../../assets/icons/copy.svg';
-import ErrorIcon from '../../../assets/icons/server.svg';
+import Copy from '../../../assets/icons/glyphs/copy.svg';
+import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 
 import './_transaction.scss';
 

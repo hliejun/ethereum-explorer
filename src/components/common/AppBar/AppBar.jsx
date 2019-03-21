@@ -6,8 +6,8 @@ import clns from 'classnames';
 import Modal from '../Modal';
 import SideMenu from './SideMenu';
 
-import Back from '../../../assets/icons/back.svg';
-import Menu from '../../../assets/icons/menu.svg';
+import Back from '../../../assets/icons/glyphs/back.svg';
+import Menu from '../../../assets/icons/glyphs/menu.svg';
 
 import './_appbar.scss';
 

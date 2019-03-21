@@ -5,9 +5,9 @@ import { Form, Input } from '../../common/Form';
 import { symbols } from '../../common/Currency';
 import Dashboard from '../../common/Dashboard';
 
-import Balance from '../../../assets/icons/balance.svg';
-import Receive from '../../../assets/icons/receive.svg';
-import Send from '../../../assets/icons/send.svg';
+import Balance from '../../../assets/icons/glyphs/balance.svg';
+import Receive from '../../../assets/icons/glyphs/receive.svg';
+import Send from '../../../assets/icons/glyphs/send.svg';
 
 import './_transactiondashboard.scss';
 

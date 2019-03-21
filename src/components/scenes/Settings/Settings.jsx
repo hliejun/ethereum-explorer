@@ -27,9 +27,9 @@ import { symbols } from '../../common/Currency';
 import { ControlledForm, Input, Select } from '../../common/Form';
 import { Section, SubSection } from '../../common/Sections';
 
-import AppIcon from '../../../assets/icons/application.svg';
-import Reset from '../../../assets/icons/reset.svg';
-import UserIcon from '../../../assets/icons/avatar.svg';
+import AppIcon from '../../../assets/icons/glyphs/application.svg';
+import Reset from '../../../assets/icons/glyphs/reset.svg';
+import UserIcon from '../../../assets/icons/glyphs/avatar.svg';
 
 import './_settings.scss';
 

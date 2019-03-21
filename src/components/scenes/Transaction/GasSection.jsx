@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { Section } from '../../common/Sections';
 import ItemRow from '../../common/ItemRow';
 
-import Gas from '../../../assets/icons/gas.svg';
-import Limit from '../../../assets/icons/limit.svg';
-import Fee from '../../../assets/icons/currency.svg';
-import Price from '../../../assets/icons/crypto.svg';
-import Total from '../../../assets/icons/total.svg';
-import Usage from '../../../assets/icons/usage.svg';
+import Gas from '../../../assets/icons/glyphs/gas.svg';
+import Limit from '../../../assets/icons/glyphs/limit.svg';
+import Fee from '../../../assets/icons/glyphs/currency.svg';
+import Price from '../../../assets/icons/glyphs/crypto.svg';
+import Total from '../../../assets/icons/glyphs/total.svg';
+import Usage from '../../../assets/icons/glyphs/usage.svg';
 
 const GasSection = ({ className, cumulativeUsed, fee, limit, price, used }) => (
 	<Section

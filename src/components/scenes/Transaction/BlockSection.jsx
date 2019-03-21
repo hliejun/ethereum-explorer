@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { Section, SubSection } from '../../common/Sections';
 
-import Block from '../../../assets/icons/block.svg';
-import Confirmation from '../../../assets/icons/confirmation.svg';
-import Hash from '../../../assets/icons/hash.svg';
-import Height from '../../../assets/icons/height.svg';
+import Block from '../../../assets/icons/glyphs/block.svg';
+import Confirmation from '../../../assets/icons/glyphs/confirmation.svg';
+import Hash from '../../../assets/icons/glyphs/hash.svg';
+import Height from '../../../assets/icons/glyphs/height.svg';
 
 const BlockSection = ({ className, confirmations, height, id }) => (
 	<Section
