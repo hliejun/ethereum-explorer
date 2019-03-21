@@ -46,3 +46,10 @@
     width: 100%;
   }
 }
+
+// Mobile
+@media only screen and (max-width: 767px) {
+  .settings__section {
+    margin: 2em;
+  }
+}

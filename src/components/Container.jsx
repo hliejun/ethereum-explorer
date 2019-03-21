@@ -15,7 +15,7 @@ import Settings from './scenes/Settings';
 import Transaction from './scenes/Transaction';
 
 import AppBar from './common/AppBar';
-import Modal from './common/Modal';
+import Notification from './common/Notification';
 
 const attach = Page => options => props => <Page {...options} {...props} />;
 
@@ -123,26 +123,13 @@ const Container = ({ isDarkMode, match }) => {
 				<Route render={attach(Missing)(appControl)} />
 			</Switch>
 			{isNotifying && (
-				<button
-					className="portfolio__modal-portal"
-					onClick={() => setIsNotifying(!isNotifying)}
-					type="button"
-				>
-					<Modal>
-						<div className="notification">
-							<div className="notification__header">
-								<span className="notification__title">{notifTitle}</span>
-								<span className="notification__subtitle">{notifSubtitle}</span>
-							</div>
-							<span className="notification__description">
-								{notifDescription}
-							</span>
-							<button className="notification__confirmation" type="button">
-								<span>{notifConfirmText}</span>
-							</button>
-						</div>
-					</Modal>
-				</button>
+				<Notification
+					description={notifDescription}
+					dismissText={notifConfirmText}
+					onDismiss={() => setIsNotifying(!isNotifying)}
+					subtitle={notifSubtitle}
+					title={notifTitle}
+				/>
 			)}
 		</div>
 	);
