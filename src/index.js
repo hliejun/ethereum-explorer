@@ -7,6 +7,7 @@ import store from './redux/store';
 
 import './assets/styles.scss';
 
+// Load font faces
 WebFont.load({
 	google: {
 		families: [
@@ -17,11 +18,11 @@ WebFont.load({
 	}
 });
 
+// Flag surface type for hover handling
 const isTouchEnabled =
   'ontouchstart' in window ||
   navigator.maxTouchPoints > 0 ||
   navigator.msMaxTouchPoints > 0;
-
 if (!isTouchEnabled) {
 	document.documentElement.classList.add('no-touch');
 }

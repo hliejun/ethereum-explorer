@@ -4,16 +4,20 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = env => {
+	// Select .env file
 	const currentPath = path.join(__dirname);
 	const basePath = `${currentPath}/.env`;
 	const envPath = `${basePath}.${env.ENVIRONMENT}`;
 	const finalPath = fs.existsSync(envPath) ? envPath : basePath;
 	const fileEnv = dotenv.config({ path: finalPath }).parsed;
+
+	// Map environment variables
 	const keys = Object.keys(fileEnv).reduce((acc, next) => {
 		acc[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
 		return acc;
 	}, {});
 
+	// Configure webpack
 	return {
 		entry: './src/index.js',
 		mode: 'development',

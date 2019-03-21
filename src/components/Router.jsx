@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 const RouterContext = React.createContext({});
 
+// Provide Router context such as location and history to routed pages
 const Router = ({ children }) => (
 	<BrowserRouter>
 		<Route>

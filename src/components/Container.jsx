@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import throttle from 'lodash.throttle';
 
@@ -20,33 +20,24 @@ import {
 import AppBar from './common/AppBar';
 import Notification from './common/Notification';
 
+// Attach passthrough app controls by making pages into render props
 const attach = Page => options => props => <Page {...options} {...props} />;
 
 const initialState = {
 	isMobile: false,
+	notifConfirmText: 'Okay',
 	pageOptions: [],
 	pageSubtitle: null,
 	pageTitle: 'Tx Ethereum Explorer',
-	useBackLink: false,
-	notifConfirmText: 'OKAY'
+	useBackLink: false
 };
 
 const Container = ({ isDarkMode, match }) => {
+	// App bar controls
 	const [useBackLink, setUseBackLink] = useState(initialState.useBackLink);
 	const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
 	const [pageSubtitle, setPageSubtitle] = useState(initialState.pageSubtitle);
 	const [pageOptions, setPageOptions] = useState(initialState.pageOptions);
-
-	const [isMobile, setIsMobile] = useState(false);
-
-	const [isNotifying, setIsNotifying] = useState(false);
-	const [notifTitle, setNotifTitle] = useState(null);
-	const [notifSubtitle, setNotifSubtitle] = useState(null);
-	const [notifDescription, setNotifDescription] = useState(null);
-	const [notifConfirmText, setNotifConfirmText] = useState(
-		initialState.notifConfirmText
-	);
-
 	const resetAppBar = () => {
 		setUseBackLink(initialState.useBackLink);
 		setPageTitle(initialState.pageTitle);
@@ -54,6 +45,23 @@ const Container = ({ isDarkMode, match }) => {
 		setPageOptions(initialState.pageOptions);
 	};
 
+	// Surface/device flag (callback throttled for performance)
+	const [isMobile, setIsMobile] = useState(false);
+	const updateDimensions = throttle(() => {
+		const currentlyIsMobile = window.innerWidth < 768;
+		if (currentlyIsMobile !== isMobile) {
+			setIsMobile(currentlyIsMobile);
+		}
+	}, 500);
+
+	// Notification controls
+	const [isNotifying, setIsNotifying] = useState(false);
+	const [notifTitle, setNotifTitle] = useState(null);
+	const [notifSubtitle, setNotifSubtitle] = useState(null);
+	const [notifDescription, setNotifDescription] = useState(null);
+	const [notifConfirmText, setNotifConfirmText] = useState(
+		initialState.notifConfirmText
+	);
 	const notify = (title, subtitle, description, confirmText) => {
 		setNotifTitle(title || null);
 		setNotifSubtitle(subtitle || null);
@@ -62,6 +70,7 @@ const Container = ({ isDarkMode, match }) => {
 		setIsNotifying(true);
 	};
 
+	// Aggregated app controls callbacks for children to use
 	const appControl = {
 		isMobile,
 		notify,
@@ -72,13 +81,7 @@ const Container = ({ isDarkMode, match }) => {
 		setTitle: setPageTitle
 	};
 
-	const updateDimensions = throttle(() => {
-		const currentlyIsMobile = window.innerWidth < 768;
-		if (currentlyIsMobile !== isMobile) {
-			setIsMobile(currentlyIsMobile);
-		}
-	}, 800);
-
+	// Side-effect: Listen to window resizing
 	useEffect(() => {
 		updateDimensions();
 		window.addEventListener('resize', updateDimensions);
@@ -88,6 +91,7 @@ const Container = ({ isDarkMode, match }) => {
 		};
 	}, [window, updateDimensions]);
 
+	// Side-effect: Listen to theme props change to edit CSS vars
 	useEffect(() => {
 		const theme = isDarkMode ? 'dark' : 'light';
 		setTheme(theme);
