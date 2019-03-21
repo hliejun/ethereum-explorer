@@ -102,12 +102,12 @@ const Container = ({ isDarkMode, match }) => {
 				<Route exact path={`${match.url}/`} render={attach(Home)(appControl)} />
 				<Route
 					exact
-					path={`${match.url}/profile/:mode?/:item?`}
+					path={`${match.url}/profile`}
 					render={attach(Profile)(appControl)}
 				/>
 				<Route
 					exact
-					path={`${match.url}/settings/:mode?/:item?`}
+					path={`${match.url}/settings`}
 					render={attach(Settings)(appControl)}
 				/>
 				<Route
