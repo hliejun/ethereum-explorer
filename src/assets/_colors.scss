@@ -1,37 +1,5 @@
 @import 'css-vars';
 
-// Light
-$inverted-background--light: #607d8b;
-$inverted-background-rgb--light: 96, 125, 139;
-$inverted-secondary-text--light: #cfd8dc;
-$inverted-text--light: #eceff1;
-$primary-active--light: #4b626d;
-$primary-active-rgb--light: 75, 98, 109;
-$primary-background--light: #eceff1;
-$primary-highlight--light: #5c6bc0;
-$primary-text--light: #263238;
-$secondary-active--light: #4150a8;
-$secondary-background--light: #ffffff;
-$secondary-hover--light: #a6aedc;
-$secondary-text--light: #607d8b;
-$secondary-text-rgb--light: 96, 125, 139;
-
-// Dark
-$inverted-background--dark: #cfd8dc;
-$inverted-background-rgb--dark: 207, 216, 220;
-$inverted-secondary-text--dark: #607d8b;
-$inverted-text--dark: #263238;
-$primary-active--dark: #b2c0c6;
-$primary-active-rgb--dark: 178, 192, 198;
-$primary-background--dark: #263238;
-$primary-highlight--dark: #4db6ac;
-$primary-text--dark: #90a4ae;
-$secondary-active--dark: #3c948b;
-$secondary-background--dark: #37474f;
-$secondary-hover--dark: #95d4ce;
-$secondary-text--dark: #78909c;
-$secondary-text-rgb--dark: 120, 144, 156;
-
 $css-vars-use-native: true;
 
 @include css-vars(
@@ -54,19 +22,18 @@ $css-vars-use-native: true;
 );
 
 // Colors
+$error: #ef5350;
 $highlight-content: #ffffff;
 $primary-shadow: #000000;
-
-$error: #ef5350;
 $success: #4db6ac;
 $warning: #ffa726;
 
+// Derivatives
+$primary-active: rgba(var(--primary-active-rgb), 0.75);
+$primary-hover: rgba(var(--inverted-background-rgb), 0.75);
 $primary-mask: rgba($primary-shadow, 0.5);
 $primary-outline: rgba($primary-shadow, 0.12);
 $secondary-outline: rgba(var(--secondary-text-rgb), 0.26);
-
-$primary-active: rgba(var(--primary-active-rgb), 0.75);
-$primary-hover: rgba(var(--inverted-background-rgb), 0.75);
 
 // Page
 $page-background: var(--primary-background);

@@ -1,6 +1,6 @@
 @import './colors';
 
-/* Material Design */
+// Material Design
 
 @mixin card {
   background: $card-background;
@@ -11,6 +11,7 @@
 }
 
 // Credit: https://gist.github.com/paulmelnikow/7fcfbe4f68e5df7fe326
+
 @mixin elevation($level) {
   @if $level == 1 {
     box-shadow: 0 1px 3px rgba(black, 0.12), 0 1px 2px rgba(black, 0.24);
@@ -69,6 +70,7 @@
 }
 
 // Credit: https://stackoverflow.com/questions/44793453/how-do-i-add-a-top-and-bottom-shadow-while-scrolling-but-only-when-needed
+
 @mixin shadowed-background($background, $shadow) {
   @include overscroll(auto);
   background: linear-gradient($background 30%, rgba($background, 0)),

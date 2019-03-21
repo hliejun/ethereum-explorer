@@ -48,10 +48,6 @@ button,
   @include appearance(button);
 }
 
-::-webkit-scrollbar-track {
-  background-color: $scrollbar-background;
-}
-
 #app-root,
 .container {
   @include flex-direction;
@@ -82,8 +78,12 @@ button,
   }
 
   ::-webkit-scrollbar-thumb {
-    border-radius: 0.25em;
     background-color: $scrollbar-content;
+    border-radius: 0.25em;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: $scrollbar-background;
   }
 
   body {
