@@ -61,7 +61,7 @@ const getTableViewModel = (code, rate) => ({ id, source, value }) => ({
 			<div className="transaction-table-item__amount">
 				<span className="transaction-table-item__amount-item">
 					{rate
-						? `${symbols[code] || '$'}${parseFloat(amount) * rate}`
+						? `${symbols[code] || '$'}${(parseFloat(amount) * rate).toFixed(2)}`
 						: `${symbols.ETH}${parseFloat(amount)}`}
 				</span>
 				{rate && (
