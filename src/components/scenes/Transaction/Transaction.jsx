@@ -25,7 +25,7 @@ import {
 	loadingTransactionHolderState
 } from './_constants';
 
-import { copyData, formatTransaction } from './_helper';
+import { copyData, formatObject } from './_helper';
 
 import BlockSection from './BlockSection';
 import Currency, { symbols } from '../../common/Currency';
@@ -75,6 +75,7 @@ const Transaction = ({
 	className,
 	history,
 	isLoading,
+	notify,
 	rates,
 	reset,
 	setBackLink: updateBacklink,
@@ -86,8 +87,14 @@ const Transaction = ({
 	updateTransactions
 }) => {
 	const [showId /* , setShowId */] = useState(true);
-
-	const handleCopy = copyData(formatTransaction(transaction));
+	const onCopyComplete = () =>
+		notify(
+			'Notification',
+			'Copy to Clipboard',
+			'The details for this transaction has been copied to your clipboard!',
+			'DISMISS'
+		);
+	const handleCopy = copyData(formatObject, transaction, onCopyComplete);
 	const options = [{ handler: handleCopy, icon: Copy, key: 'copy' }];
 	const title = 'Transaction Details';
 	const subtitle = transaction ? `ID: ${transaction.id}` : null;
@@ -200,6 +207,7 @@ Transaction.propTypes = {
 	authToken: PropTypes.string,
 	className: PropTypes.string,
 	isLoading: PropTypes.objectOf(PropTypes.bool).isRequired,
+	notify: PropTypes.func.isRequired,
 	rates: PropTypes.objectOf(PropTypes.number),
 	reset: PropTypes.func.isRequired,
 	setBackLink: PropTypes.func.isRequired,

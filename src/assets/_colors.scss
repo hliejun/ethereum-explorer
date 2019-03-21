@@ -79,6 +79,15 @@ $scrollbar-content: var(--primary-text);
 $card-background: var(--secondary-background);
 $card-content: var(--primary-text);
 
+// Notification
+$notification-button-background-active: var(--secondary-active);
+$notification-button-background-hover: var(--secondary-hover);
+$notification-button-background: var(--primary-highlight);
+$notification-button-border: var(--secondary-text);
+$notification-button-content: $highlight-content;
+$notification-content: var(--primary-text);
+$notification-hint: var(--secondary-text);
+
 // App Bar
 $app-bar-background-wide: var(--primary-background);
 $app-bar-background: var(--secondary-background);
@@ -110,6 +119,7 @@ $form-label: var(--secondary-text);
 // Fields
 $field-border: var(--primary-highlight);
 $field-content: var(--primary-text);
+$field-hint: var(--secondary-text);
 $field-input-hover: var(--secondary-hover);
 $field-input-mark: $highlight-content;
 $field-input-selected: var(--primary-highlight);

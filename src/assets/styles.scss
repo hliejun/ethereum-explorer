@@ -69,6 +69,68 @@ button,
   min-width: inherit;
 }
 
+.notification {
+  @include card;
+  @include centralize;
+  @include elevation(3);
+  margin: 0;
+  max-height: 80%;
+  width: 80%;
+  padding: 2em 2em 1.5em;
+}
+
+.notification__header {
+  @include ellipsize-content('span');
+  @include flex-direction;
+  @include use-flex;
+}
+
+.notification__title {
+  color: $notification-content;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.notification__subtitle {
+  @include flex-shrink(1);
+  color: $notification-hint;
+  min-height: 0;
+}
+
+.notification__description {
+  color: $notification-content;
+  display: block;
+  margin: 0.5em 0;
+}
+
+.notification__confirmation {
+  @include default-transition;
+  @include no-select;
+  @include setup-button;
+  background-color: $notification-button-background;
+  border-radius: 0.25em;
+  border: 1px solid $notification-button-border;
+  color: $notification-button-content;
+  float: right;
+  font-size: 0.9em;
+  font-weight: 500;
+  margin: 0.5em;
+  padding: 0.6em 0.8em;
+  text-transform: uppercase;
+}
+
+.notification__confirmation:last-child {
+  margin-right: 0;
+}
+
+.no-touch .notification__confirmation:hover {
+  background-color: $notification-button-background-hover;
+}
+
+.notification__confirmation:active {
+  background-color: $notification-button-background-active;
+}
+
 .page {
   @include flex-direction;
   @include flex-grow;
@@ -82,11 +144,28 @@ button,
     padding-left: 10vw !important;
     padding-right: 10vw !important;
   }
+  .notification {
+    min-width: 22.5vw;
+  }
 }
 
 // Desktop / Tablet
 @media only screen and (min-width: 768px) {
   body {
     padding: 1em;
+  }
+}
+
+// Desktop / Tablet Landscape
+@media only screen and (min-width: 768px) and (orientation: landscape) {
+  .notification {
+    max-width: 400px;
+  }
+}
+
+// Mobile Landscape
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .notification {
+    width: 90%;
   }
 }

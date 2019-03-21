@@ -14,7 +14,7 @@ import Usage from '../../../assets/icons/usage.svg';
 const GasSection = ({ className, cumulativeUsed, fee, limit, price, used }) => (
 	<Section
 		className={className}
-		footer="Higher gas price increases mining speed"
+		footer="Higher gas price increases mining speed."
 		icon={Gas}
 		title="Gas Details"
 	>

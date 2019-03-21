@@ -261,6 +261,10 @@
   color: $field-content;
 }
 
+.field__input--textarea::placeholder {
+  color: $field-hint;
+}
+
 // Mobile Landscape
 @media only screen and (max-width: 767px) and (orientation: landscape) {
   .field--select:after {

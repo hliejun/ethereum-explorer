@@ -15,6 +15,7 @@ import Settings from './scenes/Settings';
 import Transaction from './scenes/Transaction';
 
 import AppBar from './common/AppBar';
+import Modal from './common/Modal';
 
 const attach = Page => options => props => <Page {...options} {...props} />;
 
@@ -23,7 +24,8 @@ const initialState = {
 	pageOptions: [],
 	pageSubtitle: null,
 	pageTitle: 'Tx Ethereum Explorer',
-	useBackLink: false
+	useBackLink: false,
+	notifConfirmText: 'OKAY'
 };
 
 const Container = ({ isDarkMode, match }) => {
@@ -31,7 +33,16 @@ const Container = ({ isDarkMode, match }) => {
 	const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
 	const [pageSubtitle, setPageSubtitle] = useState(initialState.pageSubtitle);
 	const [pageOptions, setPageOptions] = useState(initialState.pageOptions);
+
 	const [isMobile, setIsMobile] = useState(false);
+
+	const [isNotifying, setIsNotifying] = useState(false);
+	const [notifTitle, setNotifTitle] = useState(null);
+	const [notifSubtitle, setNotifSubtitle] = useState(null);
+	const [notifDescription, setNotifDescription] = useState(null);
+	const [notifConfirmText, setNotifConfirmText] = useState(
+		initialState.notifConfirmText
+	);
 
 	const resetAppBar = () => {
 		setUseBackLink(initialState.useBackLink);
@@ -40,8 +51,17 @@ const Container = ({ isDarkMode, match }) => {
 		setPageOptions(initialState.pageOptions);
 	};
 
+	const notify = (title, subtitle, description, confirmText) => {
+		setNotifTitle(title || null);
+		setNotifSubtitle(subtitle || null);
+		setNotifDescription(description || null);
+		setNotifConfirmText(confirmText || initialState.notifConfirmText);
+		setIsNotifying(true);
+	};
+
 	const appControl = {
 		isMobile,
+		notify,
 		reset: resetAppBar,
 		setBackLink: setUseBackLink,
 		setOptions: setPageOptions,
@@ -102,6 +122,28 @@ const Container = ({ isDarkMode, match }) => {
 				/>
 				<Route render={attach(Missing)(appControl)} />
 			</Switch>
+			{isNotifying && (
+				<button
+					className="portfolio__modal-portal"
+					onClick={() => setIsNotifying(!isNotifying)}
+					type="button"
+				>
+					<Modal>
+						<div className="notification">
+							<div className="notification__header">
+								<span className="notification__title">{notifTitle}</span>
+								<span className="notification__subtitle">{notifSubtitle}</span>
+							</div>
+							<span className="notification__description">
+								{notifDescription}
+							</span>
+							<button className="notification__confirmation" type="button">
+								<span>{notifConfirmText}</span>
+							</button>
+						</div>
+					</Modal>
+				</button>
+			)}
 		</div>
 	);
 };
