@@ -2,27 +2,31 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Ascending from '../../../assets/icons/glyphs/ascending.svg';
-import Sortable from '../../../assets/icons/glyphs/sortable.svg';
+import AscendingIcon from '../../../assets/icons/glyphs/ascending.svg';
+import SortableIcon from '../../../assets/icons/glyphs/sortable.svg';
 
 import './_header.scss';
 
 const Header = ({ className, fields, onSort, sort }) => {
 	const { fieldName, order } = sort;
 	const glyphClass = 'table-header__glyph';
+
+	// Render header cells by categories/fields
 	const headerCells = fields.map(field => {
 		const { description, icon: Icon, isSortable, label, name, unit } = field;
 		const { growIndex, maxWidth, minWidth, shrinkIndex, width } = field;
 
-		let SortIcon = Sortable;
+		// Set header sorting icon
+		let SortIcon = SortableIcon;
 		let isRotated = false;
 		if (!isSortable || !sort) {
 			SortIcon = null;
 		} else if (fieldName === name) {
-			SortIcon = Ascending;
+			SortIcon = AscendingIcon;
 			isRotated = order === 'descending';
 		}
 
+		// Enforce table grid settings (same as rows using shared style descriptors)
 		const style = {
 			display: 'flex',
 			flexGrow: growIndex,

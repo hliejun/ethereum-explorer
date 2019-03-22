@@ -5,9 +5,12 @@ import clns from 'classnames';
 import './_row.scss';
 
 const Row = ({ className, fields, item, onClick }) => {
+	// Render row cells by categories/fields
 	const rowCells = fields.map(field => {
 		const { growIndex, maxWidth, minWidth, name, shrinkIndex, width } = field;
 		const { model, view: View } = item[name];
+
+		// Enforce grid system to match table header
 		const style = {
 			display: 'flex',
 			flexGrow: growIndex,
@@ -16,6 +19,8 @@ const Row = ({ className, fields, item, onClick }) => {
 			minWidth,
 			width
 		};
+
+		// Render row cell using render props
 		return (
 			<div className="table-row__cell" key={name} style={style}>
 				<View className="table-row__cell-content" {...model} />
