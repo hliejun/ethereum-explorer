@@ -1,14 +1,14 @@
 @import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-/* Section */
+// Section
 
 .data-section {
   @include card;
   @include elevation(1);
   @include flex-direction;
   @include use-flex;
-  max-height: 999999px; // prevent font boost on Android
+  max-height: 999999px; // Prevent font boost on Android
 }
 
 .data-section__glyph {
@@ -52,7 +52,7 @@
   width: fit-content;
 }
 
-/* Sub-Section */
+// Sub-Section
 
 .data-subsection {
   @include align-items(flex-start);
