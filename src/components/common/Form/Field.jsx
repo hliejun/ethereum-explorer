@@ -15,6 +15,7 @@ const Input = ({
 	value,
 	...passthroughProps
 }) => {
+	// Receive form controls and state using context
 	const { formId, onBlur, onChange, values } = useContext(FormContext);
 	const inputProps = {
 		...passthroughProps,
@@ -25,8 +26,12 @@ const Input = ({
 		onBlur: onBlur(name),
 		type
 	};
+
 	let id;
 	let view;
+
+	// Handle different input types as an input/field factory
+	// Also to enable input theming
 	switch (type) {
 	case 'checkbox':
 		id = `${formId}-checkbox-${name}`;
@@ -156,6 +161,7 @@ const Input = ({
 			</React.Fragment>
 		);
 	}
+
 	return (
 		<label className={clns('field', `field--${type}`, className)} htmlFor={id}>
 			{view}
@@ -214,7 +220,10 @@ const Select = ({
 	name,
 	options
 }) => {
+	// Receive form controls and state using context
 	const { formId, onBlur, onChange, values } = useContext(FormContext);
+
+	// Automatically generate select options based on options list
 	return (
 		<label className="field field--select" htmlFor={name}>
 			{selectLabel && (
@@ -271,9 +280,14 @@ Select.defaultProps = {
 };
 
 const Message = ({ className, name, render }) => {
+	// Receive form controls and state using context
 	const { messages, values } = useContext(FormContext);
+
+	// Read validation messages from form context
 	const message = messages[name];
 	const value = values[name];
+
+	// Use render props to render message with form context
 	return render({
 		className: clns('field--message', className),
 		message,

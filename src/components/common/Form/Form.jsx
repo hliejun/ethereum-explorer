@@ -23,10 +23,12 @@ const Form = ({
 	validate,
 	...passthroughProps
 }) => {
+	// Form state controls (state is lifted to parent for ControlledForm)
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [messages, setMessages] = useState({});
 	const [values, setValues] = useState(defaultValues);
 
+	// Provide updated form and field name that changed to subscribed callbacks
 	const onChange = fieldName => nextValue => {
 		const updatedValues = {
 			...values,
@@ -38,6 +40,7 @@ const Form = ({
 		}
 	};
 
+	// Provide validation messages to subscribers
 	const onBlur = fieldName => () => {
 		if (!validate) {
 			return;
@@ -50,6 +53,7 @@ const Form = ({
 		setMessages(updatedMessages);
 	};
 
+	// Set values to default on reset, and provide subscribers with default values
 	const onReset = event => {
 		event.preventDefault();
 		setMessages({});
@@ -60,6 +64,7 @@ const Form = ({
 		}
 	};
 
+	// Trigger submit action with sanitised form data
 	const onSubmit = event => {
 		event.preventDefault();
 		const currentMessages = { ...messages };
@@ -79,6 +84,7 @@ const Form = ({
 		values
 	};
 
+	// Provide form context to functional children
 	return (
 		<form
 			{...passthroughProps}

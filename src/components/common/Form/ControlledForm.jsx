@@ -20,6 +20,7 @@ const ControlledForm = ({
 	values,
 	...passthroughProps
 }) => {
+	// Provide change handler with updated form and field that changed
 	const onChange = fieldName => nextValue => {
 		const updatedValues = {
 			...values,
@@ -28,6 +29,7 @@ const ControlledForm = ({
 		handleChange(updatedValues, fieldName);
 	};
 
+	// Validate and provide validation messages (if any)
 	const onBlur = fieldName => () => {
 		if (!validate) {
 			return;
@@ -42,6 +44,7 @@ const ControlledForm = ({
 		}
 	};
 
+	// Request to set data back to defaults
 	const onReset = event => {
 		event.preventDefault();
 		if (handleReset) {
@@ -49,6 +52,7 @@ const ControlledForm = ({
 		}
 	};
 
+	// Sanitise form and ensure no errors before requesting submission
 	const onSubmit = event => {
 		event.preventDefault();
 		const currentMessages = { ...messages };
@@ -68,6 +72,7 @@ const ControlledForm = ({
 		values
 	};
 
+	// Provide form context to functional children
 	return (
 		<form
 			{...passthroughProps}

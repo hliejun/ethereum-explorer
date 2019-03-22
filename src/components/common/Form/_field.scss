@@ -1,7 +1,7 @@
 @import '../../../assets/colors';
 @import '../../../assets/mixins';
 
-/* Input Type */
+// Input Type
 
 .field:not(.field--toggle) {
   @include align-items;
@@ -31,7 +31,7 @@
   margin-right: 0.25em;
 }
 
-/* Select Type */
+// Select Type
 
 .field--select {
   min-width: 10em;
@@ -71,7 +71,7 @@
   width: 100%;
 }
 
-/* Checkbox Type */
+// Checkbox Type
 
 // Credit: https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 
@@ -131,7 +131,7 @@
   width: 0.3em;
 }
 
-/* Toggle Switch Type */
+// Toggle Switch Type
 
 .field--toggle {
   @include align-items;
@@ -200,7 +200,7 @@
   @include transform(translateX(1em));
 }
 
-/* Radio Type */
+// Radio Type
 
 .field--radio {
   @include centralize-content('.field__input-dot:after');
@@ -250,7 +250,8 @@
   border-radius: 50%;
 }
 
-/* Textarea Type */
+// Textarea Type
+
 .field__input--textarea {
   @include appearance(none);
   background-color: transparent;
