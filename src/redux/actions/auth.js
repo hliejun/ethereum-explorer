@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { AUTH } from './types';
 
-/* Get Auth Token */
+// Fetch auth token
 
 const getAuthTokenStarted = () => ({
 	type: AUTH.SESSION_TOKEN_STARTED
@@ -45,7 +45,7 @@ const getAuthToken = token => {
 	};
 };
 
-/* Clear Auth Token */
+// Sync actions
 
 const clearAuthToken = () => ({
 	type: AUTH.SESSION_TOKEN_CLEAR

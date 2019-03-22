@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import combinedReducer from './reducers';
 import storage from './storage';
 
+// Add logging middleware for dev environment
 const middlewares = [thunk];
 const { logger } =
   process.env.NODE_ENV === 'development'
@@ -14,6 +15,7 @@ if (logger) {
 	middlewares.push(logger);
 }
 
+// Load persistent data from session and local storage
 const persistedSessionState = storage.session.loadState();
 const persistedLocalState = storage.local.loadState();
 
@@ -27,10 +29,54 @@ const store = createStore(
 	composeEnhancers(applyMiddleware(...middlewares))
 );
 
-// TODO: Selectively destructure and persist data (different storage types)
+// Listen to store changes and persist data
 store.subscribe(() => {
-	const { ...data } = store.getState();
-	storage.local.saveState(data);
+	const {
+		authReducer,
+		ethereumReducer,
+		settingsReducer,
+		userReducer
+	} = store.getState();
+	const { balance, currency, transactions } = ethereumReducer;
+
+	// Persistent fields
+	const { value } = balance;
+	const { base, lastUpdated: currencyLastUpdated, rates } = currency;
+	const { byIds, list } = transactions;
+	const { lastUpdated: authLastUpdated, sessionAuth } = authReducer;
+	const { apiKey, currency: preferredCurrency, nightMode } = settingsReducer;
+	const { address } = userReducer.ethAccount;
+
+	storage.local.saveState({
+		authReducer: {
+			lastUpdated: authLastUpdated,
+			sessionAuth
+		},
+		ethereumReducer: {
+			balance: {
+				value
+			},
+			currency: {
+				base,
+				lastUpdated: currencyLastUpdated,
+				rates
+			},
+			transactions: {
+				byIds,
+				list
+			}
+		},
+		settingsReducer: {
+			apiKey,
+			currency: preferredCurrency,
+			nightMode
+		},
+		userReducer: {
+			ethAccount: {
+				address
+			}
+		}
+	});
 });
 
 export default store;

@@ -19,6 +19,7 @@ const authReducer = (state = initialState, action) => {
 		const { authToken, timestamp } = action.payload;
 		return {
 			...state,
+			error: null,
 			isLoading: false,
 			lastUpdated: timestamp,
 			sessionAuth: authToken
@@ -26,9 +27,6 @@ const authReducer = (state = initialState, action) => {
 	}
 	case AUTH.SESSION_TOKEN_ERROR: {
 		const { error } = action.payload;
-
-		// TODO: Parse error
-
 		return {
 			...state,
 			error,

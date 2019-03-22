@@ -7,30 +7,32 @@ import {
 	pageSize
 } from '../../components/scenes/Portfolio/_constants';
 
-/* Props Data */
+const DEFAULT_CURRENCY = 'USD';
+
+// Props data
 
 const getQuery = (_, props) => props.location;
 
 const getId = (_, props) => props.match.params.id;
 
-/* Auth Data */
+// Auth data
 
 export const getAuthToken = ({ authReducer }) => authReducer.sessionAuth;
 
-/* Settings Data */
+// Settings data
 
 export const getApiKey = ({ settingsReducer }) => settingsReducer.apiKey;
 
 export const getCode = ({ settingsReducer }) =>
-	settingsReducer.currency || 'USD';
+	settingsReducer.currency || DEFAULT_CURRENCY;
 
 export const getTheme = ({ settingsReducer }) => settingsReducer.nightMode;
 
-/* User Data */
+// User data
 
 export const getAddress = ({ userReducer }) => userReducer.ethAccount.address;
 
-/* Ethereum Data */
+// Ethereum data
 
 const getBaseCode = ({ ethereumReducer }) => ethereumReducer.currency.base;
 
@@ -142,7 +144,7 @@ export const getLoadStates = ({ ethereumReducer }) => ({
 	transactions: ethereumReducer.transactions.isLoading
 });
 
-/* Composed */
+// Composite selectors
 
 export const getLocalisation = createSelector(
 	[getCode, getRates],

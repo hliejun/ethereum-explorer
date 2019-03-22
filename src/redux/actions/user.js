@@ -1,15 +1,11 @@
 import { USER } from './types';
 
-/* Change Address */
-
 const setEthAddress = address => ({
 	type: USER.SET_ADDRESS,
 	payload: {
 		address
 	}
 });
-
-/* Clear User Data */
 
 const clearEthAddress = () => ({
 	type: USER.CLEAR_ADDRESS

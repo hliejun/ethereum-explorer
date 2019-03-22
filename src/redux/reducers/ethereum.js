@@ -38,6 +38,7 @@ const ethereumReducer = (state = initialState, action) => {
 			...state,
 			balance: {
 				...state.balance,
+				error: null,
 				isLoading: false,
 				value: balance
 			}
@@ -45,9 +46,6 @@ const ethereumReducer = (state = initialState, action) => {
 	}
 	case ETHEREUM.UPDATE_BALANCE_ERROR: {
 		const { error } = action.payload;
-
-		// TODO: Parse error
-
 		return {
 			...state,
 			balance: {
@@ -88,6 +86,7 @@ const ethereumReducer = (state = initialState, action) => {
 			transactions: {
 				...state.transactions,
 				byIds: updatedTransactions,
+				error: null,
 				isLoading: false,
 				list: transactionsList
 			}
@@ -95,9 +94,6 @@ const ethereumReducer = (state = initialState, action) => {
 	}
 	case ETHEREUM.UPDATE_TRANSACTIONS_ERROR: {
 		const { error } = action.payload;
-
-		// TODO: Parse error
-
 		return {
 			...state,
 			transactions: {
@@ -133,6 +129,7 @@ const ethereumReducer = (state = initialState, action) => {
 			currency: {
 				...state.currency,
 				base,
+				error: null,
 				isLoading: false,
 				lastUpdated: timestamp,
 				rates: {
@@ -144,9 +141,6 @@ const ethereumReducer = (state = initialState, action) => {
 	}
 	case ETHEREUM.UPDATE_CURRENCY_RATES_ERROR: {
 		const { error } = action.payload;
-
-		// TODO: Parse error
-
 		return {
 			...state,
 			currency: {

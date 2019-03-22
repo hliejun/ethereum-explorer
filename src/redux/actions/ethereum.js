@@ -2,7 +2,17 @@ import axios from 'axios';
 
 import { ETHEREUM } from './types';
 
-/* Get Account Balance */
+// Sync actions
+
+const clearBalance = () => ({
+	type: ETHEREUM.CLEAR_BALANCE
+});
+
+const clearTransactions = () => ({
+	type: ETHEREUM.CLEAR_TRANSACTIONS
+});
+
+// Fetch ethereum account balance
 
 const getBalanceStarted = () => ({
 	type: ETHEREUM.UPDATE_BALANCE_STARTED
@@ -45,13 +55,7 @@ const getBalance = (token, address) => {
 	};
 };
 
-/* Clear Balance */
-
-const clearBalance = () => ({
-	type: ETHEREUM.CLEAR_BALANCE
-});
-
-/* Get Transactions */
+// Fetch transactions history
 
 const getTransactionsStarted = () => ({
 	type: ETHEREUM.UPDATE_TRANSACTIONS_STARTED
@@ -94,14 +98,6 @@ const getTransactions = (token, address) => {
 	};
 };
 
-/* Clear Transactions */
-
-const clearTransactions = () => ({
-	type: ETHEREUM.CLEAR_TRANSACTIONS
-});
-
-/* Clean Load Transactions */
-
 const reloadTransactions = (token, address) => {
 	return dispatch => {
 		dispatch(getTransactionsStarted());
@@ -126,7 +122,7 @@ const reloadTransactions = (token, address) => {
 	};
 };
 
-/* Get Currency Rates */
+// Fetch currency rates
 
 const getCurrencyRatesStarted = () => ({
 	type: ETHEREUM.UPDATE_CURRENCY_RATES_STARTED
@@ -148,7 +144,6 @@ const getCurrencyRatesFailure = error => ({
 	}
 });
 
-// TODO: Conditionally fetch (based on timestamp)
 const getCurrencyRates = (token, symbols) => {
 	return dispatch => {
 		dispatch(getCurrencyRatesStarted());
