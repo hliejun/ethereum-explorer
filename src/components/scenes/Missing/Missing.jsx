@@ -4,7 +4,7 @@ import Construction from '../../common/Construction';
 
 import './_missing.scss';
 
-const Home = ({ history, reset, setTitle }) => {
+const Missing = ({ history, reset, setTitle }) => {
 	const title = 'Page Not Found';
 
 	useEffect(() => {
@@ -37,4 +37,4 @@ const Home = ({ history, reset, setTitle }) => {
 	);
 };
 
-export default Home;
+export default Missing;

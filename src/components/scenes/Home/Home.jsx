@@ -4,8 +4,6 @@ import Construction from '../../common/Construction';
 
 import HomeIcon from '../../../assets/icons/glyphs/home.svg';
 
-import './_home.scss';
-
 const Home = ({ reset, setSubtitle, setTitle }) => {
 	const title = 'Home';
 	const subtitle = 'Under Construction';
@@ -17,6 +15,7 @@ const Home = ({ reset, setSubtitle, setTitle }) => {
 			reset();
 		};
 	}, [title, subtitle]);
+
 	return (
 		<div className="page home">
 			<Construction className="home__under-construction" icon={HomeIcon} />

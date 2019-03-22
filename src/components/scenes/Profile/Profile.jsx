@@ -4,8 +4,6 @@ import Construction from '../../common/Construction';
 
 import ProfileIcon from '../../../assets/icons/glyphs/account.svg';
 
-import './_profile.scss';
-
 const Profile = ({ reset, setSubtitle, setTitle }) => {
 	const title = 'Profile';
 	const subtitle = 'Under Construction';
@@ -17,6 +15,7 @@ const Profile = ({ reset, setSubtitle, setTitle }) => {
 			reset();
 		};
 	}, [title, subtitle]);
+
 	return (
 		<div className="page profile">
 			<Construction
