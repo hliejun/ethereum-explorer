@@ -1,22 +1,45 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import { stopScrollPropagation } from '../eventHandling';
 
-import Home from '../../../assets/icons/glyphs/home.svg';
-import Portfolio from '../../../assets/icons/glyphs/balance.svg';
-import Privacy from '../../../assets/icons/glyphs/privacy.svg';
-import Profile from '../../../assets/icons/glyphs/account.svg';
-import Repository from '../../../assets/icons/glyphs/code.svg';
-import Settings from '../../../assets/icons/glyphs/settings.svg';
-import Terms from '../../../assets/icons/glyphs/terms.svg';
-import Web from '../../../assets/icons/glyphs/link.svg';
-
-import Tx from '../../../assets/icons/logos/tx.svg';
+import HomeIcon from '../../../assets/icons/glyphs/home.svg';
+import PortfolioIcon from '../../../assets/icons/glyphs/balance.svg';
+import PrivacyIcon from '../../../assets/icons/glyphs/privacy.svg';
+import ProfileIcon from '../../../assets/icons/glyphs/account.svg';
+import RepositoryIcon from '../../../assets/icons/glyphs/code.svg';
+import SettingsIcon from '../../../assets/icons/glyphs/settings.svg';
+import TermsIcon from '../../../assets/icons/glyphs/terms.svg';
+import TxIcon from '../../../assets/icons/logos/tx.svg';
+import WebIcon from '../../../assets/icons/glyphs/link.svg';
 
 import './_sidemenu.scss';
+
+const APP_TITLE = 'TX ETHEREUM EXPLORER';
+const MENU_ITEMS = {
+	HOME: { icon: HomeIcon, label: 'Home', link: '/app' },
+	PORTFOLIO: {
+		icon: PortfolioIcon,
+		label: 'Portfolio',
+		link: '/app/portfolio'
+	},
+	PRIVACY: { icon: PrivacyIcon, label: 'Privacy', link: '/app/privacy' },
+	PROFILE: { icon: ProfileIcon, label: 'Profile', link: '/app/profile' },
+	REPOSITORY: {
+		icon: RepositoryIcon,
+		label: 'Repository',
+		link: 'https://github.com/hliejun'
+	},
+	SETTINGS: { icon: SettingsIcon, label: 'Settings', link: '/app/settings' },
+	TERMS: { icon: TermsIcon, label: 'Terms of Service', link: '/app/terms' },
+	WEBSITE: {
+		icon: WebIcon,
+		label: '@hliejun',
+		link: 'https://hliejun.github.io'
+	}
+};
 
 const MenuHeader = ({ className, icon: Icon, link, onClick, title }) => (
 	<div
@@ -99,17 +122,8 @@ const LinkedMenuItem = withRouter(
 );
 
 LinkedMenuItem.propTypes = {
-	history: PropTypes.shape({
-		push: PropTypes.func.isRequired
-	}),
 	link: PropTypes.string.isRequired,
 	onClick: PropTypes.func.isRequired
-};
-
-LinkedMenuItem.defaultProps = {
-	history: {
-		push: () => {}
-	}
 };
 
 const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
@@ -127,64 +141,35 @@ const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
 			ref={ref}
 			role="presentation"
 		>
-			<MenuHeader
-				icon={Tx}
-				link="/app"
-				onClick={close}
-				title="TX ETHEREUM EXPLORER"
-			/>
+			<MenuHeader icon={TxIcon} link="/app" onClick={close} title={APP_TITLE} />
 			<div className="side-menu__sections">
 				<MenuSection>
-					<LinkedMenuItem
-						icon={Home}
-						label="Home"
-						link="/app"
-						onClick={close}
-					/>
-					<LinkedMenuItem
-						icon={Portfolio}
-						label="Portfolio"
-						link="/app/portfolio"
-						onClick={close}
-					/>
-					<LinkedMenuItem
-						icon={Profile}
-						label="Profile"
-						link="/app/profile"
-						onClick={close}
-					/>
+					<LinkedMenuItem {...MENU_ITEMS.HOME} onClick={close} />
+					<LinkedMenuItem {...MENU_ITEMS.PORTFOLIO} onClick={close} />
+					<LinkedMenuItem {...MENU_ITEMS.PROFILE} onClick={close} />
 				</MenuSection>
 				<MenuSection label="MEDIA">
 					<MenuItem
-						icon={Repository}
-						label="Repository"
-						onClick={newTab('https://github.com/hliejun')}
+						{...MENU_ITEMS.REPOSITORY}
+						onClick={newTab(MENU_ITEMS.REPOSITORY.link)}
 					/>
 					<MenuItem
-						icon={Web}
-						label="@hliejun"
-						onClick={newTab('https://hliejun.github.io')}
+						{...MENU_ITEMS.WEBSITE}
+						onClick={newTab(MENU_ITEMS.WEBSITE.link)}
 					/>
 				</MenuSection>
 				<MenuSection label="LEGAL">
 					<MenuItem
-						icon={Privacy}
-						label="Privacy"
-						onClick={newTab('https://www.google.com')}
+						{...MENU_ITEMS.PRIVACY}
+						onClick={newTab(MENU_ITEMS.PRIVACY.link)}
 					/>
 					<MenuItem
-						icon={Terms}
-						label="Terms of Service"
-						onClick={newTab('https://www.google.com')}
+						{...MENU_ITEMS.TERMS}
+						onClick={newTab(MENU_ITEMS.TERMS.link)}
 					/>
 				</MenuSection>
 				<MenuSection label="APP">
-					<LinkedMenuItem
-						icon={Settings}
-						label="Settings"
-						link="/app/settings"
-						onClick={close}
-					/>
+					<LinkedMenuItem {...MENU_ITEMS.SETTINGS} onClick={close} />
 				</MenuSection>
 			</div>
 		</div>

@@ -6,13 +6,15 @@ import clns from 'classnames';
 import Modal from '../Modal';
 import SideMenu from './SideMenu';
 
-import Back from '../../../assets/icons/glyphs/back.svg';
-import Menu from '../../../assets/icons/glyphs/menu.svg';
+import BackIcon from '../../../assets/icons/glyphs/back.svg';
+import MenuIcon from '../../../assets/icons/glyphs/menu.svg';
 
 import './_appbar.scss';
 
+const DEFAULT_BACK_LINK = '/app/portfolio';
+
 const LeftButton = ({ goBack, toggleMenu, useBackLink }) => {
-	const Glyph = useBackLink ? Back : Menu;
+	const Glyph = useBackLink ? BackIcon : MenuIcon;
 	return (
 		<button
 			className={clns('app-bar__button', {
@@ -63,8 +65,8 @@ const HeaderText = ({ subtitle, title }) => (
 );
 
 HeaderText.propTypes = {
-	title: PropTypes.string.isRequired,
-	subtitle: PropTypes.string
+	subtitle: PropTypes.string,
+	title: PropTypes.string.isRequired
 };
 
 HeaderText.defaultProps = {
@@ -98,16 +100,18 @@ PageOptions.propTypes = {
 
 const AppBar = withRouter(
 	({ className, history, options, subtitle, title, useBackLink }) => {
+		// App bar menu controls
 		const [showMenu, setShowMenu] = useState(false);
 		const toggleMenu = () => setShowMenu(!showMenu);
+
 		return (
 			<div className={clns('app-bar', 'app-bar--normal', className)}>
 				<LeftButton
-					goBack={() => history.push('/app/portfolio')}
+					goBack={() => history.push(DEFAULT_BACK_LINK)}
 					toggleMenu={toggleMenu}
 					useBackLink={useBackLink}
 				/>
-				<HeaderText title={title} subtitle={subtitle} />
+				<HeaderText subtitle={subtitle} title={title} />
 				<PageOptions options={options} />
 				{showMenu && <SideMenuModal toggleMenu={toggleMenu} />}
 			</div>
@@ -117,9 +121,6 @@ const AppBar = withRouter(
 
 AppBar.propTypes = {
 	className: PropTypes.string,
-	history: PropTypes.shape({
-		push: PropTypes.func.isRequired
-	}),
 	options: PageOptions.propTypes.options,
 	subtitle: PropTypes.string,
 	title: PropTypes.string.isRequired,
@@ -128,9 +129,6 @@ AppBar.propTypes = {
 
 AppBar.defaultProps = {
 	className: null,
-	history: {
-		push: () => {}
-	},
 	subtitle: null
 };
 
