@@ -1,3 +1,5 @@
+// Calculate user-specified offset by units
+
 const deriveOffset = (offset, unit, fontSize) =>
 	unit === 'rem' || unit === 'em' ? offset * fontSize : offset;
 
@@ -6,6 +8,8 @@ export const getWaypointOffset = (unit, fontSize) => (offset, padding) => {
 	const waypointOffset = deriveOffset(unitOffset, unit, fontSize);
 	return waypointOffset;
 };
+
+// Check waypoint positions in view
 
 export const isBottomInView = element => {
 	if (!element) {
@@ -24,6 +28,8 @@ export const isTopInView = element => {
 	const height = window.innerHeight || document.documentElement.clientHeight;
 	return rect.bottom >= height;
 };
+
+// Scroll to top of document
 
 export const scrollToTop = () => {
 	const topPosition =

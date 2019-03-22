@@ -15,13 +15,16 @@ import Loader from '../Loader';
 
 import './_list.scss';
 
+// Refrain from updating if no changes to props and states
 class List extends React.PureComponent {
 	constructor(props) {
 		super(props);
 
+		// Set debounced function references
 		this.debouncedToggleLoad = debounce(this.toggleLoad, 20);
 		this.debouncedToggleJump = debounce(this.toggleJump, 300);
 
+		// Set references for list paddings
 		this.topPadding = React.createRef();
 		this.bottomPadding = React.createRef();
 
@@ -34,13 +37,17 @@ class List extends React.PureComponent {
 	}
 
 	componentWillUnmount() {
+		// Clear debounce queue before unmounting
 		this.debouncedToggleLoad.flush();
+		this.debouncedToggleJump.flush();
 	}
 
   getListItems = () => {
   	const result = [];
   	const { dataMap, pageMap } = this.props;
   	const { bufferEnd, bufferStart } = this.state;
+
+  	// Get items within buffer range from data map
   	let index;
   	for (index = bufferStart; index <= bufferEnd; index += 1) {
   		const pageContent = pageMap[index - 1];
@@ -50,10 +57,15 @@ class List extends React.PureComponent {
   			});
   		}
   	}
+
   	return result;
   };
 
-  // TODO: Try to use a debounce and reduce all consecutive calls to one
+  /**
+   * NOTE:
+   * Debounced calls could be used to reduce buffer shifts into
+   * single batch update and prevent janking and long buffer times
+   * */
 
   bufferShiftPrev = () => {
   	const { pageBufferSize } = this.props;
@@ -91,6 +103,7 @@ class List extends React.PureComponent {
   	});
   };
 
+  // Show or hide loader when buffering pages in a lazy list
   toggleLoad = () => {
   	const { isBuffering } = this.state;
   	const isBufferEdgeVisible =
@@ -103,6 +116,7 @@ class List extends React.PureComponent {
   	}
   };
 
+  // Show or hide scroll-to-top button when changing scroll position
   toggleJump = () => {
   	const { isJumpVisible } = this.state;
   	const topPosition =
@@ -138,16 +152,24 @@ class List extends React.PureComponent {
   	} = this.props;
   	const { bufferEnd, bufferStart, isBuffering, isJumpVisible } = this.state;
 
+  	// Prepare models to render
   	const pagesCount = pageMap.length;
   	const listObjects = this.getListItems();
 
+  	/**
+     * NOTE:
+     * Offset and padding can be more precisely calculated
+     * by measuring sibling components in parent
+     * */
+
+  	// Calculate paddings
   	const prevItemsCount = (bufferStart - 1) * pageSize;
   	const topPadding = unitBufferHeight * prevItemsCount;
-
   	const lastBufferPageIndex = bufferEnd;
   	const nextItemsCount = (pagesCount - lastBufferPageIndex) * pageSize;
   	const bottomPadding = unitBufferHeight * nextItemsCount;
 
+  	// Calculate dynamic waypoint offset (to compensate padding)
   	const calculateOffset = getWaypointOffset(unit, fontSize);
   	const waypointTopOffset = calculateOffset(topOffset, topPadding);
   	const waypointBottomOffset = calculateOffset(bottomOffset, bottomPadding);
