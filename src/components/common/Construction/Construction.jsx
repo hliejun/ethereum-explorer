@@ -27,13 +27,13 @@ Construction.defaultProps = {
 	className: null,
 	icon: null,
 	children: null,
-	title: 'Work In Progress',
 	subtitle: (
     <>
       This page is under construction. <br />
       Please check back later.
     </>
-	)
+	),
+	title: 'Work In Progress'
 };
 
 export default Construction;
