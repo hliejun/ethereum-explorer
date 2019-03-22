@@ -4,7 +4,7 @@ import Day from 'dayjs';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Currency, { symbols } from '../../common/Currency';
+import Currency, { CURRENCY_SYMBOLS } from '../../common/Currency';
 
 import Receive from '../../../assets/icons/glyphs/receive.svg';
 import Send from '../../../assets/icons/glyphs/send.svg';
@@ -153,7 +153,7 @@ const ListItem = memo(
 
 ListItem.propTypes = {
 	className: PropTypes.string,
-	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	code: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
 	onClick: PropTypes.func.isRequired,
 	rate: PropTypes.number,
 	source: PropTypes.shape({

@@ -40,7 +40,7 @@ import {
 	pageSize
 } from './_constants';
 
-import { symbols } from '../../common/Currency';
+import { CURRENCY_SYMBOLS } from '../../common/Currency';
 import { trim, untrim } from './helper';
 
 import { getTableViewModel, getTableFields } from './TransactionTableModel';
@@ -96,7 +96,7 @@ class Portfolio extends React.PureComponent {
 		setSubtitle(subtitle);
 		setOptions(this.options);
 		if (authToken && !rate && !isLoading.currency) {
-			updateRates(authToken, Object.keys(symbols));
+			updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
 		}
 		if (authToken && address && !isLoading.balance) {
 			updateBalance(authToken, address);
@@ -134,7 +134,7 @@ class Portfolio extends React.PureComponent {
   	if (balance == null) {
   		setSubtitle(null);
   	} else {
-  		const symbol = symbols[code] || '$';
+  		const symbol = CURRENCY_SYMBOLS[code] || '$';
   		const balanceDisplay =
         waypoint.currentPosition === Waypoint.inside
         	? null
@@ -231,7 +231,7 @@ class Portfolio extends React.PureComponent {
   			isLoading={isLoading}
   			onRefresh={() => {
   				if (!rate && !isLoading.currency) {
-  					updateRates(authToken, Object.keys(symbols));
+  					updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
   				}
   				updateBalance(authToken, address);
   			}}
@@ -285,7 +285,7 @@ class Portfolio extends React.PureComponent {
   			isLoading={isLoading}
   			onRefresh={() => {
   				if (!rate && !isLoading.currency) {
-  					updateRates(authToken, Object.keys(symbols));
+  					updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
   				}
   				updateTransactions(authToken, address);
   			}}
@@ -499,7 +499,7 @@ Portfolio.propTypes = {
 	authToken: PropTypes.string,
 	balance: PropTypes.number,
 	className: PropTypes.string,
-	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	code: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
 	errors: PropTypes.objectOf(PropTypes.string).isRequired,
 	isLoading: PropTypes.objectOf(PropTypes.bool).isRequired,
 	isMobile: PropTypes.bool.isRequired,

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Currency, { symbols } from '../Currency';
+import Currency, { CURRENCY_SYMBOLS } from '../Currency';
 
 import './_dashboard.scss';
 
@@ -29,7 +29,7 @@ Section.propTypes = {
 	amount: PropTypes.number.isRequired,
 	classLabel: PropTypes.string.isRequired,
 	className: PropTypes.string,
-	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	code: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
 	label: PropTypes.string.isRequired
 };
 
@@ -64,7 +64,7 @@ SubSection.propTypes = {
 	amount: PropTypes.number.isRequired,
 	classLabel: PropTypes.string.isRequired,
 	className: PropTypes.string,
-	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	code: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
 	icon: PropTypes.elementType,
 	label: PropTypes.string.isRequired
 };

@@ -1,41 +1,54 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { Section, SubSection } from '../../common/Sections';
 
-import Block from '../../../assets/icons/glyphs/block.svg';
-import Confirmation from '../../../assets/icons/glyphs/confirmation.svg';
-import Hash from '../../../assets/icons/glyphs/hash.svg';
-import Height from '../../../assets/icons/glyphs/height.svg';
+import BlockIcon from '../../../assets/icons/glyphs/block.svg';
+import ConfirmationIcon from '../../../assets/icons/glyphs/confirmation.svg';
+import HashIcon from '../../../assets/icons/glyphs/hash.svg';
+import HeightIcon from '../../../assets/icons/glyphs/height.svg';
+
+const BLOCK_SECTION_DATA = {
+	footer: 'More confirmations, better secured transactions.',
+	icon: BlockIcon,
+	title: 'Block Data'
+};
+
+const BLOCK_SUBSECTIONS_DATA = {
+	confirmations: {
+		description: 'Number of blocks burying this transaction',
+		icon: ConfirmationIcon,
+		title: 'Confirmations'
+	},
+	height: {
+		description: 'Number of blocks from genesis block',
+		icon: HeightIcon,
+		title: 'Number/Height'
+	},
+	id: {
+		description: 'Unique block identifier',
+		icon: HashIcon,
+		title: 'Block Hash'
+	}
+};
 
 const BlockSection = ({ className, confirmations, height, id }) => (
-	<Section
-		className={className}
-		footer="More confirmations, better secured transactions."
-		icon={Block}
-		title="Block Data"
-	>
+	<Section className={className} {...BLOCK_SECTION_DATA}>
 		<SubSection
 			className="block__sub-section block__sub-section--id"
-			description="Unique block identifier"
-			icon={Hash}
-			title="Block Hash"
+			{...BLOCK_SUBSECTIONS_DATA.id}
 		>
 			<span>{id}</span>
 		</SubSection>
 		<SubSection
 			className="block__sub-section block__sub-section--height"
-			description="Number of blocks from genesis block"
-			icon={Height}
-			title="Number/Height"
+			{...BLOCK_SUBSECTIONS_DATA.height}
 		>
 			<span>{height}</span>
 		</SubSection>
 		<SubSection
 			className="block__sub-section block__sub-section--confirmations"
-			description="Number of blocks burying this transaction"
-			icon={Confirmation}
-			title="Confirmations"
+			{...BLOCK_SUBSECTIONS_DATA.confirmations}
 		>
 			{confirmations}
 		</SubSection>
@@ -53,4 +66,4 @@ BlockSection.defaultProps = {
 	className: null
 };
 
-export default BlockSection;
+export default memo(BlockSection);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
@@ -17,33 +17,44 @@ import {
 	reloadTransactions as fetchTransactions
 } from '../../../redux/actions/ethereum';
 
-import {
-	countryIcons,
-	errorAddressHolderState,
-	errorKeyHolderState,
-	errorTransactionHolderState,
-	loadingTransactionHolderState
-} from './_constants';
-
 import { copyData, formatObject } from './_helper';
 
+import {
+	COUNTRY_ICONS,
+	PLACEHOLDER_ADDRESS_ERROR,
+	PLACEHOLDER_KEY_ERROR,
+	PLACEHOLDER_TRANSACTION_ERROR,
+	PLACEHOLDER_TRANSACTION_LOADING
+} from './_constants';
+
 import BlockSection from './BlockSection';
-import Currency, { symbols } from '../../common/Currency';
+import Currency, { CURRENCY_SYMBOLS } from '../../common/Currency';
 import GasSection from './GasSection';
 import Jumbotron from '../../common/Jumbotron';
 import Placeholder from '../../common/Placeholder';
 import SourceSection from './SourceSection';
 
-import Copy from '../../../assets/icons/glyphs/copy.svg';
+import CopyIcon from '../../../assets/icons/glyphs/copy.svg';
 import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 
 import './_transaction.scss';
+
+const TRANSACTION_TITLE = 'Transaction Details';
+const TRANSACTION_JUMBOTRON_SUBTITLE = 'Transacted Ether';
+const TRANSACTION_ZERO_ETH_INFO = 'This is a zero-value data transaction.';
+
+const USE_BACKLINK = true;
+const CLIPBOARD_NOTIFICATION = {
+	description:
+    'The details for this transaction has been copied to your clipboard!',
+	subtitle: 'Copy to Clipboard'
+};
 
 const LocalValues = ({ rates, value }) => {
 	const { ETH, ...localRates } = rates;
 	return Object.keys(localRates).map(code => {
 		const rate = rates[code];
-		const Icon = countryIcons[code];
+		const Icon = COUNTRY_ICONS[code];
 		return (
 			<div
 				className={clns(
@@ -86,85 +97,79 @@ const Transaction = ({
 	updateRates,
 	updateTransactions
 }) => {
-	const [showId /* , setShowId */] = useState(true);
-	const onCopyComplete = () =>
-		notify(
-			'Notification',
-			'Copy to Clipboard',
-			'The details for this transaction has been copied to your clipboard!',
-			'DISMISS'
-		);
+	const onCopyComplete = () => notify(CLIPBOARD_NOTIFICATION);
 	const handleCopy = copyData(formatObject, transaction, onCopyComplete);
-	const options = [{ handler: handleCopy, icon: Copy, key: 'copy' }];
-	const title = 'Transaction Details';
+	const options = [{ handler: handleCopy, icon: CopyIcon, key: 'copy' }];
 	const subtitle = transaction ? `ID: ${transaction.id}` : null;
 
+	// Setup AppBar controls
 	useEffect(() => {
-		updateSubtitle(showId ? subtitle : null);
-		updateBacklink(true);
+		updateSubtitle(subtitle);
+		updateBacklink(USE_BACKLINK);
 		updateOptions(options);
-		updateTitle(title);
-		if (!rates && !isLoading.currency) {
-			updateRates(authToken, Object.keys(symbols));
-		}
+		updateTitle(TRANSACTION_TITLE);
 		return () => {
 			reset();
 		};
-	}, [showId, subtitle]);
+	}, [subtitle]);
 
+	// Update rates
+	useEffect(() => {
+		if (!rates && !isLoading.currency) {
+			updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
+		}
+	}, [authToken]);
+
+	// Scroll to top
 	useEffect(() => {
 		if (window) {
 			window.scroll(0, 0);
 		}
 	}, [window]);
 
-	// TODO: Display error messages
-	const getPlaceholder = (state, key) => (
-		<Placeholder
-			className={`transaction__placeholder transaction__placeholder--${key}`}
-			errorIcon={ErrorIcon}
-			hasError
-			onRefresh={() => history.push('/app/settings')}
-			{...state}
-		/>
-	);
-
+	// Setup placeholder
+	let placeholderState = null;
+	let key = 'transaction';
+	let actionHandler = () => history.push('/app/settings');
 	if (!apiKey) {
-		return (
-			<div className={clns('page', 'transaction', className)}>
-				{getPlaceholder(errorKeyHolderState, 'key')}
-			</div>
-		);
+		placeholderState = PLACEHOLDER_KEY_ERROR;
+		key = 'key';
+	} else if (!address) {
+		placeholderState = PLACEHOLDER_ADDRESS_ERROR;
+		key = 'address';
+	} else if (!transaction && isLoading.transactions) {
+		placeholderState = PLACEHOLDER_TRANSACTION_LOADING;
+	} else if (!transaction) {
+		placeholderState = PLACEHOLDER_TRANSACTION_ERROR;
+		actionHandler = () => updateTransactions(authToken, address);
 	}
 
-	if (!address) {
-		return (
-			<div className={clns('page', 'transaction', className)}>
-				{getPlaceholder(errorAddressHolderState, 'address')}
-			</div>
-		);
-	}
+	/**
+   * NOTE:
+   * Error messages for placeholder should be
+   * dynamically determined by redux props
+   */
 
-	let state = errorTransactionHolderState;
-	if (isLoading.transactions) {
-		state = loadingTransactionHolderState;
-	}
-
-	if (!transaction) {
+	// Use placeholder if cannot load data
+	if (placeholderState) {
 		return (
 			<div className={clns('page', 'transaction', className)}>
 				<Placeholder
-					className="transaction__placeholder transaction__placeholder--transaction"
+					className={clns(
+						'transaction__placeholder',
+						`transaction__placeholder--${key}`
+					)}
 					errorIcon={ErrorIcon}
 					hasError
 					isLoading={isLoading.transactions}
-					onRefresh={() => updateTransactions(authToken, address)}
-					{...state}
+					onRefresh={actionHandler}
+					{...placeholderState}
 				/>
 			</div>
 		);
 	}
 
+	// Prepare render data
 	const { block, gas, id, source, status, value } = transaction;
 	const parsedValue = parseFloat(value) || 0;
 
@@ -173,11 +178,16 @@ const Transaction = ({
 			<div className="transaction__header">
 				<Jumbotron
 					className="transaction__values"
-					subtitle="Transacted Ether"
+					subtitle={TRANSACTION_JUMBOTRON_SUBTITLE}
 					title={<Currency amount={parsedValue} code="ETH" />}
 				>
 					{rates && parsedValue !== 0 && Object.keys(rates).length > 0 && (
 						<LocalValues rates={rates} value={parsedValue} />
+					)}
+					{parsedValue === 0 && (
+						<span className="transaction__info-text">
+							{TRANSACTION_ZERO_ETH_INFO}
+						</span>
 					)}
 				</Jumbotron>
 			</div>
@@ -201,6 +211,29 @@ const Transaction = ({
 	);
 };
 
+const transactionType = PropTypes.shape({
+	block: PropTypes.shape({
+		confirmations: PropTypes.string.isRequired,
+		height: PropTypes.string.isRequired,
+		id: PropTypes.string.isRequired
+	}),
+	gas: PropTypes.shape({
+		cumulativeUsed: PropTypes.string.isRequired,
+		fee: PropTypes.string.isRequired,
+		limit: PropTypes.string.isRequired,
+		price: PropTypes.string.isRequired,
+		used: PropTypes.string.isRequired
+	}),
+	id: PropTypes.string.isRequired,
+	source: PropTypes.shape({
+		address: PropTypes.string.isRequired,
+		timestamp: PropTypes.string.isRequired,
+		type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
+	}).isRequired,
+	status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
+	value: PropTypes.string.isRequired
+});
+
 Transaction.propTypes = {
 	address: PropTypes.string,
 	apiKey: PropTypes.string,
@@ -214,28 +247,7 @@ Transaction.propTypes = {
 	setOptions: PropTypes.func.isRequired,
 	setSubtitle: PropTypes.func.isRequired,
 	setTitle: PropTypes.func.isRequired,
-	transaction: PropTypes.shape({
-		block: PropTypes.shape({
-			confirmations: PropTypes.string.isRequired,
-			height: PropTypes.string.isRequired,
-			id: PropTypes.string.isRequired
-		}),
-		gas: PropTypes.shape({
-			cumulativeUsed: PropTypes.string.isRequired,
-			fee: PropTypes.string.isRequired,
-			limit: PropTypes.string.isRequired,
-			price: PropTypes.string.isRequired,
-			used: PropTypes.string.isRequired
-		}),
-		id: PropTypes.string.isRequired,
-		source: PropTypes.shape({
-			address: PropTypes.string.isRequired,
-			timestamp: PropTypes.string.isRequired,
-			type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
-		}).isRequired,
-		status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
-		value: PropTypes.string.isRequired
-	}),
+	transaction: transactionType,
 	updateRates: PropTypes.func.isRequired,
 	updateTransactions: PropTypes.func.isRequired
 };

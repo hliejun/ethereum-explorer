@@ -1,4 +1,4 @@
-import Currency, { symbols } from './Currency';
+import Currency, { CURRENCY_SYMBOLS } from './Currency';
 
-export { symbols };
+export { CURRENCY_SYMBOLS };
 export default Currency;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Form, Input } from '../../common/Form';
-import { symbols } from '../../common/Currency';
+import { CURRENCY_SYMBOLS } from '../../common/Currency';
 import Dashboard from '../../common/Dashboard';
 
 import Balance from '../../../assets/icons/glyphs/balance.svg';
@@ -95,7 +95,7 @@ const TransactionDashboard = ({
 TransactionDashboard.propTypes = {
 	balance: PropTypes.number.isRequired,
 	className: PropTypes.string,
-	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	code: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
 	placeholder: PropTypes.node.isRequired,
 	rate: PropTypes.number,
 	received: PropTypes.number.isRequired,

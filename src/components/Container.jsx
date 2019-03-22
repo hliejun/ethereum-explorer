@@ -25,7 +25,8 @@ const attach = Page => options => props => <Page {...options} {...props} />;
 
 const initialState = {
 	isMobile: false,
-	notifConfirmText: 'Okay',
+	notifConfirmText: 'Dismiss',
+	notifTitle: 'Notification',
 	pageOptions: [],
 	pageSubtitle: null,
 	pageTitle: 'Tx Ethereum Explorer',
@@ -56,14 +57,14 @@ const Container = ({ isDarkMode, match }) => {
 
 	// Notification controls
 	const [isNotifying, setIsNotifying] = useState(false);
-	const [notifTitle, setNotifTitle] = useState(null);
+	const [notifTitle, setNotifTitle] = useState(initialState.notifTitle);
 	const [notifSubtitle, setNotifSubtitle] = useState(null);
 	const [notifDescription, setNotifDescription] = useState(null);
 	const [notifConfirmText, setNotifConfirmText] = useState(
 		initialState.notifConfirmText
 	);
-	const notify = (title, subtitle, description, confirmText) => {
-		setNotifTitle(title || null);
+	const notify = ({ confirmText, description, subtitle, title }) => {
+		setNotifTitle(title || initialState.notifTitle);
 		setNotifSubtitle(subtitle || null);
 		setNotifDescription(description || null);
 		setNotifConfirmText(confirmText || initialState.notifConfirmText);
@@ -85,7 +86,7 @@ const Container = ({ isDarkMode, match }) => {
 	useEffect(() => {
 		updateDimensions();
 		window.addEventListener('resize', updateDimensions);
-		return function cleanup() {
+		return () => {
 			updateDimensions.flush();
 			window.removeEventListener('resize', updateDimensions);
 		};

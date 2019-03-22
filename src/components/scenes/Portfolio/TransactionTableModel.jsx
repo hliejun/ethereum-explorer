@@ -1,7 +1,7 @@
 import React from 'react';
 import Day from 'dayjs';
 
-import { symbols } from '../../common/Currency';
+import { CURRENCY_SYMBOLS } from '../../common/Currency';
 
 import './_transactiontableitem.scss';
 
@@ -61,12 +61,14 @@ const getTableViewModel = (code, rate) => ({ id, source, value }) => ({
 			<div className="transaction-table-item__amount">
 				<span className="transaction-table-item__amount-item">
 					{rate
-						? `${symbols[code] || '$'}${(parseFloat(amount) * rate).toFixed(2)}`
-						: `${symbols.ETH}${parseFloat(amount)}`}
+						? `${CURRENCY_SYMBOLS[code] || '$'}${(
+							parseFloat(amount) * rate
+						).toFixed(2)}`
+						: `${CURRENCY_SYMBOLS.ETH}${parseFloat(amount)}`}
 				</span>
 				{rate && (
 					<span className="transaction-table-item__amount-item transaction-table-item__amount-item--ethereum monotype">
-						{`${symbols.ETH}${amount}`}
+						{`${CURRENCY_SYMBOLS.ETH}${amount}`}
 					</span>
 				)}
 			</div>

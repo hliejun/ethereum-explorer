@@ -22,7 +22,7 @@ import {
 
 import { clearEthAddress, setEthAddress } from '../../../redux/actions/user';
 
-import { symbols } from '../../common/Currency';
+import { CURRENCY_SYMBOLS } from '../../common/Currency';
 
 import { ControlledForm, Input, Select } from '../../common/Form';
 import { Section, SubSection } from '../../common/Sections';
@@ -33,8 +33,57 @@ import UserIcon from '../../../assets/icons/glyphs/avatar.svg';
 
 import './_settings.scss';
 
+const SETTINGS_TITLE = 'Transaction Details';
+
 const API_KEY_LENGTH = 64;
 const ETH_ADDRESS_LENGTH = 42;
+
+const ADDRESS_INPUT_PLACEHOLDER = 'Enter your Ethereum address...';
+const API_KEY_INPUT_PLACEHOLDER = 'Enter your API key...';
+const CURRENCY_INPUT_OPTIONS = [
+	{ label: 'British Pound', value: 'GBP' },
+	{ label: 'Chinese Yuan', value: 'CNY' },
+	{ label: 'Japanese Yen', value: 'JPY' },
+	{ label: 'Korean Won', value: 'KRW' },
+	{ label: 'Singapore Dollars', value: 'SGD' },
+	{ label: 'U.S Dollars', value: 'USD' }
+];
+
+const SETTINGS_SECTIONS_DATA = {
+	app: {
+		description: 'Credentials, view behaviours and customisations, etc.',
+		footer: '* Conversion rates are hidden when unavailable',
+		icon: AppIcon,
+		title: 'Application Settings'
+	},
+	user: {
+		description: 'User account and profile options, etc.',
+		icon: UserIcon,
+		title: 'User Settings'
+	}
+};
+
+const APP_SUBSECTIONS_DATA = {
+	currency: {
+		description: 'Conversion rate for localising Ethereum',
+		title: 'Preferred Currency *'
+	},
+	key: {
+		description: 'Usage key for controlled API endpoint access',
+		title: 'API Key'
+	},
+	theme: {
+		description: 'Dark style for low-light environment',
+		title: 'Use Dark Mode'
+	}
+};
+
+const USER_SUBSECTIONS_DATA = {
+	address: {
+		description: 'Designated cryptocurrency account hash',
+		title: 'Ethereum Address'
+	}
+};
 
 /**
  * NOTE:
@@ -96,16 +145,15 @@ const Settings = ({
 	};
 
 	const options = [{ handler: clearSettings, icon: ResetIcon, key: 'reset' }];
-	const title = 'Transaction Details';
 
 	// Setup AppBar for this page
 	useEffect(() => {
 		updateOptions(options);
-		updateTitle(title);
+		updateTitle(SETTINGS_TITLE);
 		return () => {
 			reset();
 		};
-	}, [options.length, title]);
+	}, [options.length]);
 
 	// Always start from top (do not persist scroll state)
 	useEffect(() => {
@@ -126,47 +174,34 @@ const Settings = ({
 					<React.Fragment>
 						<Section
 							className="settings__section settings__section--app"
-							description="Credentials, view behaviours and customisations, etc."
-							footer="* Conversion rates are hidden when unavailable"
-							icon={AppIcon}
-							title="Application Settings"
+							{...SETTINGS_SECTIONS_DATA.app}
 						>
 							<SubSection
 								className="settings__subsection settings__subsection--key"
-								description="Usage key for controlled API endpoint access"
-								title="API Key"
+								{...APP_SUBSECTIONS_DATA.key}
 							>
 								<Input
 									className="settings__field--key"
 									maxLength={API_KEY_LENGTH}
 									name="apiKey"
-									placeholder="Enter your API key..."
+									placeholder={API_KEY_INPUT_PLACEHOLDER}
 									type="textarea"
 									value={apiKey}
 								/>
 							</SubSection>
 							<SubSection
 								className="settings__subsection settings__subsection--currency"
-								description="Conversion rate for localising Ethereum"
-								title="Preferred Currency *"
+								{...APP_SUBSECTIONS_DATA.currency}
 							>
 								<Select
 									className="settings__field--currency"
 									name="currency"
-									options={[
-										{ label: 'British Pound', value: 'GBP' },
-										{ label: 'Chinese Yuan', value: 'CNY' },
-										{ label: 'Japanese Yen', value: 'JPY' },
-										{ label: 'Korean Won', value: 'KRW' },
-										{ label: 'Singapore Dollars', value: 'SGD' },
-										{ label: 'U.S Dollars', value: 'USD' }
-									]}
+									options={CURRENCY_INPUT_OPTIONS}
 								/>
 							</SubSection>
 							<SubSection
 								className="settings__subsection settings__subsection--theme"
-								description="Dark style for low-light environment"
-								title="Use Dark Mode"
+								{...APP_SUBSECTIONS_DATA.theme}
 							>
 								<Input
 									className="settings__field--theme"
@@ -178,20 +213,17 @@ const Settings = ({
 						</Section>
 						<Section
 							className="settings__section settings__section--user"
-							description="User account and profile options, etc."
-							icon={UserIcon}
-							title="User Settings"
+							{...SETTINGS_SECTIONS_DATA.user}
 						>
 							<SubSection
 								className="settings__subsection settings__subsection--address"
-								description="Designated cryptocurrency account hash"
-								title="Ethereum Address"
+								{...USER_SUBSECTIONS_DATA.address}
 							>
 								<Input
 									className="settings__field--address"
 									maxLength={ETH_ADDRESS_LENGTH}
 									name="address"
-									placeholder="Enter your Ethereum address..."
+									placeholder={ADDRESS_INPUT_PLACEHOLDER}
 									type="textarea"
 									value={address}
 								/>
@@ -210,7 +242,7 @@ Settings.propTypes = {
 	authToken: PropTypes.string,
 	className: PropTypes.string,
 	clearSettings: PropTypes.func.isRequired,
-	currency: PropTypes.oneOf(Object.keys(symbols)).isRequired,
+	currency: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
 	isDarkMode: PropTypes.bool.isRequired,
 	reset: PropTypes.func.isRequired,
 	setOptions: PropTypes.func.isRequired,

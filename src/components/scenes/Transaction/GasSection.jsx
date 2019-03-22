@@ -1,57 +1,76 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { Section } from '../../common/Sections';
 import ItemRow from '../../common/ItemRow';
 
-import Gas from '../../../assets/icons/glyphs/gas.svg';
-import Limit from '../../../assets/icons/glyphs/limit.svg';
-import Fee from '../../../assets/icons/glyphs/currency.svg';
-import Price from '../../../assets/icons/glyphs/crypto.svg';
-import Total from '../../../assets/icons/glyphs/total.svg';
-import Usage from '../../../assets/icons/glyphs/usage.svg';
+import FeeIcon from '../../../assets/icons/glyphs/currency.svg';
+import GasIcon from '../../../assets/icons/glyphs/gas.svg';
+import LimitIcon from '../../../assets/icons/glyphs/limit.svg';
+import PriceIcon from '../../../assets/icons/glyphs/crypto.svg';
+import TotalIcon from '../../../assets/icons/glyphs/total.svg';
+import UsageIcon from '../../../assets/icons/glyphs/usage.svg';
+
+const GAS_SECTION_DATA = {
+	footer: 'Higher gas price increases mining speed.',
+	icon: GasIcon,
+	title: 'Gas Details'
+};
+
+const GAS_SUBSECTIONS_DATA = {
+	cumulative: {
+		description: 'Total accumulated gas used for this block (inclusive)',
+		icon: TotalIcon,
+		label: 'Cumulative used'
+	},
+	fee: {
+		description: 'Fee for this transaction (ETH)',
+		icon: FeeIcon,
+		label: 'Fee'
+	},
+	limit: {
+		description: 'Limit placed on gas used',
+		icon: LimitIcon,
+		label: 'Limit'
+	},
+	price: {
+		description: 'Price per unit gas used (ETH)',
+		icon: PriceIcon,
+		label: 'Price'
+	},
+	used: {
+		description: 'Gas used for this transaction',
+		icon: UsageIcon,
+		label: 'Used'
+	}
+};
 
 const GasSection = ({ className, cumulativeUsed, fee, limit, price, used }) => (
-	<Section
-		className={className}
-		footer="Higher gas price increases mining speed."
-		icon={Gas}
-		title="Gas Details"
-	>
+	<Section className={className} {...GAS_SECTION_DATA}>
 		<ItemRow
 			className="gas__row gas__row--fee"
-			description="Fee for this transaction (ETH)"
-			icon={Fee}
-			label="Fee"
 			value={fee}
+			{...GAS_SUBSECTIONS_DATA.fee}
 		/>
 		<ItemRow
-			className="gas__row gas__row--value"
-			description="Limit placed on gas used"
-			icon={Limit}
-			label="Limit"
+			className="gas__row gas__row--limit"
 			value={limit}
+			{...GAS_SUBSECTIONS_DATA.limit}
 		/>
 		<ItemRow
 			className="gas__row gas__row--price"
-			description="Price per unit gas used (ETH)"
-			icon={Price}
-			label="Price"
 			value={price}
+			{...GAS_SUBSECTIONS_DATA.price}
 		/>
 		<ItemRow
 			className="gas__row gas__row--used"
-			description="Gas used for this transaction"
-			icon={Usage}
-			label="Used"
 			value={used}
+			{...GAS_SUBSECTIONS_DATA.used}
 		/>
 		<ItemRow
 			className="gas__row gas__row--cumulative"
-			description="Total accumulated gas used for this block (inclusive)"
-			icon={Total}
-			label="Cumulative used"
 			value={cumulativeUsed}
+			{...GAS_SUBSECTIONS_DATA.cumulative}
 		/>
 	</Section>
 );
@@ -69,4 +88,4 @@ GasSection.defaultProps = {
 	className: null
 };
 
-export default GasSection;
+export default memo(GasSection);
