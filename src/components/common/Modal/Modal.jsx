@@ -10,7 +10,7 @@ const MODAL_ACTIVE_CLASS = 'modal-open';
 
 const modalRoot = document.getElementById('modal-root');
 
-class Modal extends React {
+class Modal extends React.PureComponent {
 	componentDidMount() {
 		document.body.classList.add(MODAL_ACTIVE_CLASS);
 	}
