@@ -4,7 +4,7 @@ import clns from 'classnames';
 
 import './_currency.scss';
 
-export const symbols = {
+const SYMBOLS = {
 	CNY: '¥',
 	ETH: 'Ξ',
 	GBP: '£',
@@ -15,12 +15,16 @@ export const symbols = {
 };
 
 const Currency = ({ amount, className, code }) => {
+	// Parse amount into numerical formats
 	const parsedAmount = parseFloat(amount);
 	const isNumber = !Number.isNaN(parsedAmount);
 	const absoluteAmount = isNumber ? Math.abs(parsedAmount) : amount;
 	const roundedAmount = parseFloat(absoluteAmount).toFixed(2) || absoluteAmount;
-	const symbol = symbols[code] || '$';
+
+	// Decorate amount with currency code and sign
+	const symbol = SYMBOLS[code] || '$';
 	const sign = isNumber && parsedAmount < 0 ? '—' : '';
+
 	return (
 		<div className={clns('currency', className)}>
 			<span className="currency__code monotype">{code}</span>
@@ -34,11 +38,12 @@ const Currency = ({ amount, className, code }) => {
 Currency.propTypes = {
 	amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 	className: PropTypes.string,
-	code: PropTypes.oneOf(Object.keys(symbols)).isRequired
+	code: PropTypes.oneOf(Object.keys(SYMBOLS)).isRequired
 };
 
 Currency.defaultProps = {
 	className: null
 };
 
+export { SYMBOLS as symbols };
 export default memo(Currency);
