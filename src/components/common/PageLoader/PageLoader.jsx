@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 
 import Placeholder from '../Placeholder';
 
+// Import pages on-demand
 const Portfolio = lazy(() => import('../../scenes/Portfolio'));
 const Settings = lazy(() => import('../../scenes/Settings'));
 const Transaction = lazy(() => import('../../scenes/Transaction'));

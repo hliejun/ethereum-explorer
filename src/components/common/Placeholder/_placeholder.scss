@@ -2,9 +2,9 @@
 @import '../../../assets/mixins';
 
 .placeholder {
+  @include align-items;
   @include card;
   @include elevation(1);
-  @include align-items;
   @include flex-direction;
   @include flex-grow;
   @include justify-content;
@@ -20,8 +20,6 @@
 .placeholder__loader {
   margin: -1em;
 }
-
-// Font color, button hover and active
 
 .placeholder__text {
   @include align-items;

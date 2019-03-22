@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import About from '../../../assets/icons/glyphs/about.svg';
+import AboutIcon from '../../../assets/icons/glyphs/about.svg';
 
 import './_itemrow.scss';
 
@@ -16,7 +16,7 @@ const ItemRow = ({ className, description, icon: Icon, label, value }) => (
 		</div>
 		{description && (
 			<div className="item-row__description">
-				<About className="item-row__glyph item-row__glyph--description" />
+				<AboutIcon className="item-row__glyph item-row__glyph--description" />
 				<span className="item-row__description-text">{description}</span>
 			</div>
 		)}
