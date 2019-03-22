@@ -28,10 +28,20 @@ import { ControlledForm, Input, Select } from '../../common/Form';
 import { Section, SubSection } from '../../common/Sections';
 
 import AppIcon from '../../../assets/icons/glyphs/application.svg';
-import Reset from '../../../assets/icons/glyphs/reset.svg';
+import ResetIcon from '../../../assets/icons/glyphs/reset.svg';
 import UserIcon from '../../../assets/icons/glyphs/avatar.svg';
 
 import './_settings.scss';
+
+const API_KEY_LENGTH = 64;
+const ETH_ADDRESS_LENGTH = 42;
+
+/**
+ * NOTE:
+ * API key and Ethereum address inputs can be validated
+ * with error messages for clearer communication of
+ * input constraints instead of silently failing
+ */
 
 const Settings = ({
 	address,
@@ -50,6 +60,7 @@ const Settings = ({
 	updateCurrency,
 	updateNightMode
 }) => {
+	// Input change management (syncing with Redux store)
 	const updateSettings = (values, fieldName) => {
 		switch (fieldName) {
 		case 'address':
@@ -70,7 +81,11 @@ const Settings = ({
 		case 'apiKey':
 			if (values.apiKey !== apiKey) {
 				updateApiKey(values.apiKey);
-				if (!authToken && values.apiKey && values.apiKey.length === 64) {
+				if (
+					!authToken &&
+            values.apiKey &&
+            values.apiKey.length === API_KEY_LENGTH
+				) {
 					updateAuthToken(values.apiKey);
 				}
 			}
@@ -80,9 +95,10 @@ const Settings = ({
 		}
 	};
 
-	const options = [{ handler: clearSettings, icon: Reset, key: 'reset' }];
+	const options = [{ handler: clearSettings, icon: ResetIcon, key: 'reset' }];
 	const title = 'Transaction Details';
 
+	// Setup AppBar for this page
 	useEffect(() => {
 		updateOptions(options);
 		updateTitle(title);
@@ -91,6 +107,7 @@ const Settings = ({
 		};
 	}, [options.length, title]);
 
+	// Always start from top (do not persist scroll state)
 	useEffect(() => {
 		if (window) {
 			window.scroll(0, 0);
@@ -121,7 +138,7 @@ const Settings = ({
 							>
 								<Input
 									className="settings__field--key"
-									maxLength={64}
+									maxLength={API_KEY_LENGTH}
 									name="apiKey"
 									placeholder="Enter your API key..."
 									type="textarea"
@@ -172,7 +189,7 @@ const Settings = ({
 							>
 								<Input
 									className="settings__field--address"
-									maxLength={42}
+									maxLength={ETH_ADDRESS_LENGTH}
 									name="address"
 									placeholder="Enter your Ethereum address..."
 									type="textarea"
