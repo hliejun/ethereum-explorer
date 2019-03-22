@@ -14,10 +14,10 @@ const Loader = ({ className, isLoading }) => (
 				className="path"
 				cx="50"
 				cy="50"
-				r="20"
 				fill="none"
-				strokeWidth="3"
+				r="20"
 				strokeMiterlimit="10"
+				strokeWidth="3"
 			/>
 		</svg>
 	</div>
