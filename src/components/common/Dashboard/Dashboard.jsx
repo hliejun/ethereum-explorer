@@ -6,7 +6,9 @@ import Currency, { symbols } from '../Currency';
 
 import './_dashboard.scss';
 
-const Section = ({ amount, classLabel, className, code, label }) => (
+/* eslint-disable react/no-multi-comp */
+
+const Section = memo(({ amount, classLabel, className, code, label }) => (
 	<div
 		className={clns(
 			'dashboard__section',
@@ -21,10 +23,10 @@ const Section = ({ amount, classLabel, className, code, label }) => (
 			code={code}
 		/>
 	</div>
-);
+));
 
 Section.propTypes = {
-	amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+	amount: PropTypes.number.isRequired,
 	classLabel: PropTypes.string.isRequired,
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
@@ -35,36 +37,31 @@ Section.defaultProps = {
 	className: null
 };
 
-const SubSection = ({
-	amount,
-	classLabel,
-	className,
-	code,
-	icon: Icon,
-	label
-}) => (
-	<div
-		className={clns(
-			'dashboard__sub-section',
-			`dashboard__sub-section--${classLabel}`,
-			className
-		)}
-	>
-		<div className="dashboard__sub-section-header">
-			{Icon && <Icon className="dashboard__sub-section-glyph" />}
-			<span className="dashboard__sub-section-label monotype">{label}</span>
+const SubSection = memo(
+	({ amount, classLabel, className, code, icon: Icon, label }) => (
+		<div
+			className={clns(
+				'dashboard__sub-section',
+				`dashboard__sub-section--${classLabel}`,
+				className
+			)}
+		>
+			<div className="dashboard__sub-section-header">
+				{Icon && <Icon className="dashboard__sub-section-glyph" />}
+				<span className="dashboard__sub-section-label monotype">{label}</span>
+			</div>
+			<div className="dashboard__sub-section-separator" />
+			<Currency
+				amount={amount}
+				className="dashboard__sub-section-currency"
+				code={code}
+			/>
 		</div>
-		<div className="dashboard__sub-section-separator" />
-		<Currency
-			amount={amount}
-			className="dashboard__sub-section-currency"
-			code={code}
-		/>
-	</div>
+	)
 );
 
 SubSection.propTypes = {
-	amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+	amount: PropTypes.number.isRequired,
 	classLabel: PropTypes.string.isRequired,
 	className: PropTypes.string,
 	code: PropTypes.oneOf(Object.keys(symbols)).isRequired,
@@ -108,5 +105,7 @@ Dashboard.defaultProps = {
 	footer: null,
 	separator: null
 };
+
+/* eslint-enable react/no-multi-comp */
 
 export default memo(Dashboard);
