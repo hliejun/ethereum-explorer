@@ -6,24 +6,29 @@ import { stopScroll } from '../eventHandling';
 
 import './_modal.scss';
 
+const MODAL_ACTIVE_CLASS = 'modal-open';
+
 const modalRoot = document.getElementById('modal-root');
 
-class Modal extends React.PureComponent {
+class Modal extends React {
 	componentDidMount() {
-		document.body.classList.add('modal-open');
+		document.body.classList.add(MODAL_ACTIVE_CLASS);
 	}
 
 	componentWillUnmount() {
-		document.body.classList.remove('modal-open');
+		document.body.classList.remove(MODAL_ACTIVE_CLASS);
 	}
 
 	render() {
+		// Provide ref handle for parent components
 		const { children, forwardedRef } = this.props;
 		const modal = (
 			<div className="modal" ref={forwardedRef}>
 				{children}
 			</div>
 		);
+
+		// Render modal into portal in a separate root element
 		return ReactDOM.createPortal(modal, modalRoot);
 	}
 }
@@ -32,6 +37,7 @@ Modal.propTypes = {
 	children: PropTypes.node.isRequired
 };
 
+// Stop underlying div/body from scrolling when modal is active
 export default stopScroll(
 	// eslint-disable-next-line react/no-multi-comp
 	React.forwardRef((props, ref) => <Modal {...props} forwardedRef={ref} />)
