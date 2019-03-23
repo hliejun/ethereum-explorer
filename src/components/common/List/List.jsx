@@ -17,7 +17,7 @@ import {
 	LIST_DEFAULT_FONT_SIZE,
 	LIST_FOOTER_SUBTITLE,
 	LIST_FOOTER_TITLE,
-	LIST_ITEM_DEFAULT_HEIGHT,
+	LIST_DEFAULT_ITEM_HEIGHT,
 	LIST_JUMPER_TEXT
 } from '../../../constants';
 
@@ -276,7 +276,7 @@ List.defaultProps = {
 	placeholder: null,
 	topOffset: 0,
 	unit: 'px',
-	unitBufferHeight: LIST_ITEM_DEFAULT_HEIGHT
+	unitBufferHeight: LIST_DEFAULT_ITEM_HEIGHT
 };
 
 export default List;

@@ -9,7 +9,7 @@ import SideMenu from './SideMenu';
 import BackIcon from '../../../assets/icons/glyphs/back.svg';
 import MenuIcon from '../../../assets/icons/glyphs/menu.svg';
 
-import { DEFAULT_BACK_LINK } from '../../../constants';
+import { APP_DEFAULT_BACKLINK } from '../../../constants';
 
 import './_appbar.scss';
 
@@ -107,7 +107,7 @@ const AppBar = withRouter(
 		return (
 			<div className={clns('app-bar', 'app-bar--normal', className)}>
 				<LeftButton
-					goBack={() => history.push(DEFAULT_BACK_LINK)}
+					goBack={() => history.push(APP_DEFAULT_BACKLINK)}
 					toggleMenu={toggleMenu}
 					useBackLink={useBackLink}
 				/>

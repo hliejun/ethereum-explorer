@@ -41,9 +41,9 @@ import SortIcon from '../../../assets/icons/glyphs/sort.svg';
 
 import {
 	CURRENCY_SYMBOLS,
-	DEFAULT_FILTERS,
-	DEFAULT_FILTERS_SORT,
-	DEFAULT_SORT,
+	FILTER_DEFAULT,
+	COMBINED_DEFAULT,
+	SORT_DEFAULT,
 	FILTER_FORM_SUBTITLE,
 	FILTER_FORM_TITLE,
 	FORM_VALIDATION,
@@ -301,9 +301,9 @@ class Portfolio extends React.PureComponent {
   renderFilterForm = formData => (
   	<FilterForm
   		className="portfolio__modal-form"
-  		defaultValues={DEFAULT_FILTERS}
+  		defaultValues={FILTER_DEFAULT}
   		onChange={this.setFormData}
-  		onReset={this.resetData(DEFAULT_FILTERS)}
+  		onReset={this.resetData(FILTER_DEFAULT)}
   		onSubmit={values => {
   			this.setFormData(values);
   			this.toggleFilterModal();
@@ -315,9 +315,9 @@ class Portfolio extends React.PureComponent {
   renderSortForm = formData => (
   	<SortForm
   		className="portfolio__modal-form"
-  		defaultValues={DEFAULT_SORT}
+  		defaultValues={SORT_DEFAULT}
   		onChange={this.setFormData}
-  		onReset={this.resetData(DEFAULT_SORT)}
+  		onReset={this.resetData(SORT_DEFAULT)}
   		onSubmit={values => {
   			this.setFormData(values);
   			this.toggleSortModal();
@@ -329,9 +329,9 @@ class Portfolio extends React.PureComponent {
   renderCombinedForm = formData => (
   	<CombinedForm
   		className="portfolio__combined-form"
-  		defaultValues={DEFAULT_FILTERS_SORT}
+  		defaultValues={COMBINED_DEFAULT}
   		onChange={this.setFormData}
-  		onReset={this.resetData(DEFAULT_FILTERS_SORT)}
+  		onReset={this.resetData(COMBINED_DEFAULT)}
   		values={formData}
   	/>
   );

@@ -3,7 +3,11 @@ import qs from 'query-string';
 
 import { filter, sort, untrim } from './helper';
 
-import { DEFAULT_CURRENCY, FORM_VALIDATION, PAGE_SIZE } from '../../constants';
+import {
+	CURRENCY_DEFAULT,
+	FORM_VALIDATION,
+	VIEWER_PAGE_SIZE
+} from '../../constants';
 
 // Props data
 
@@ -20,7 +24,7 @@ export const getAuthToken = ({ authReducer }) => authReducer.sessionAuth;
 export const getApiKey = ({ settingsReducer }) => settingsReducer.apiKey;
 
 export const getCode = ({ settingsReducer }) =>
-	settingsReducer.currency || DEFAULT_CURRENCY;
+	settingsReducer.currency || CURRENCY_DEFAULT;
 
 export const getTheme = ({ settingsReducer }) => settingsReducer.nightMode;
 
@@ -82,8 +86,11 @@ export const getPagination = createSelector(
 		const sortedIds = sort(filteredIds, items, sortField, sortOrder);
 		let index;
 		const result = [];
-		for (index = 0; index < sortedIds.length; index += PAGE_SIZE) {
-			const pageTransactionIds = sortedIds.slice(index, index + PAGE_SIZE);
+		for (index = 0; index < sortedIds.length; index += VIEWER_PAGE_SIZE) {
+			const pageTransactionIds = sortedIds.slice(
+				index,
+				index + VIEWER_PAGE_SIZE
+			);
 			result.push(pageTransactionIds);
 		}
 		return result;

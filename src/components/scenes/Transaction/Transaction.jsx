@@ -30,7 +30,7 @@ import CopyIcon from '../../../assets/icons/glyphs/copy.svg';
 import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 
 import {
-	CLIPBOARD_NOTIFICATION,
+	NOTIFICATION_CLIPBOARD,
 	COUNTRY_ICONS,
 	CURRENCY_SYMBOLS,
 	PLACEHOLDER_ADDRESS_ERROR,
@@ -92,7 +92,7 @@ const Transaction = ({
 	updateRates,
 	updateTransactions
 }) => {
-	const onCopyComplete = () => notify(CLIPBOARD_NOTIFICATION);
+	const onCopyComplete = () => notify(NOTIFICATION_CLIPBOARD);
 	const handleCopy = copyData(formatObject, transaction, onCopyComplete);
 	const options = [{ handler: handleCopy, icon: CopyIcon, key: 'copy' }];
 	const subtitle = transaction ? `ID: ${transaction.id}` : null;

@@ -12,7 +12,7 @@ import EmptyIcon from '../../../assets/icons/glyphs/empty.svg';
 import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 
 import {
-	BUFFER_SIZE,
+	LIST_BUFFER_SIZE,
 	CURRENCY_SYMBOLS,
 	FORM_VALIDATION,
 	LIST_DEFAULT_FONT_SIZE,
@@ -21,7 +21,7 @@ import {
 	LIST_OFFSET_TOP,
 	LIST_PLACEHOLDER_TITLE,
 	LIST_ROW_HEIGHT,
-	PAGE_SIZE,
+	VIEWER_PAGE_SIZE,
 	PLACEHOLDER_TRANSACTIONS_EMPTY,
 	PLACEHOLDER_TRANSACTIONS_ERROR,
 	PLACEHOLDER_TRANSACTIONS_LOADING,
@@ -88,9 +88,9 @@ const TransactionsList = ({
 			dataMap={transactions}
 			fontSize={LIST_DEFAULT_FONT_SIZE}
 			key={listKey}
-			pageBufferSize={BUFFER_SIZE}
+			pageBufferSize={LIST_BUFFER_SIZE}
 			pageMap={pagination}
-			pageSize={PAGE_SIZE}
+			pageSize={VIEWER_PAGE_SIZE}
 			placeholder={placeholder}
 			rate={rate}
 			render={TransactionListItem}

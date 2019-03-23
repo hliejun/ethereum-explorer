@@ -28,13 +28,13 @@ import { Section, SubSection } from '../../common/Sections';
 import ResetIcon from '../../../assets/icons/glyphs/reset.svg';
 
 import {
-	ADDRESS_INPUT_PLACEHOLDER,
-	API_KEY_INPUT_PLACEHOLDER,
-	API_KEY_LENGTH,
+	SETTINGS_INPUT_PLACEHOLDER_ADDRESS,
+	SETTINGS_INPUT_PLACEHOLDER_API_KEY,
+	SETTINGS_LENGTH_API_KEY,
 	APP_SUBSECTIONS_DATA,
-	CURRENCY_INPUT_OPTIONS,
+	CURRENCY_OPTIONS,
 	CURRENCY_SYMBOLS,
-	ETH_ADDRESS_LENGTH,
+	SETTINGS_LENGTH_ETH_ADDRESS,
 	SETTINGS_SECTIONS_DATA,
 	SETTINGS_TITLE,
 	USER_SUBSECTIONS_DATA
@@ -90,7 +90,7 @@ const Settings = ({
 				if (
 					!authToken &&
             values.apiKey &&
-            values.apiKey.length === API_KEY_LENGTH
+            values.apiKey.length === SETTINGS_LENGTH_API_KEY
 				) {
 					updateAuthToken(values.apiKey);
 				}
@@ -139,9 +139,9 @@ const Settings = ({
 							>
 								<Input
 									className="settings__field--key"
-									maxLength={API_KEY_LENGTH}
+									maxLength={SETTINGS_LENGTH_API_KEY}
 									name="apiKey"
-									placeholder={API_KEY_INPUT_PLACEHOLDER}
+									placeholder={SETTINGS_INPUT_PLACEHOLDER_API_KEY}
 									type="textarea"
 									value={apiKey}
 								/>
@@ -153,7 +153,7 @@ const Settings = ({
 								<Select
 									className="settings__field--currency"
 									name="currency"
-									options={CURRENCY_INPUT_OPTIONS}
+									options={CURRENCY_OPTIONS}
 								/>
 							</SubSection>
 							<SubSection
@@ -178,9 +178,9 @@ const Settings = ({
 							>
 								<Input
 									className="settings__field--address"
-									maxLength={ETH_ADDRESS_LENGTH}
+									maxLength={SETTINGS_LENGTH_ETH_ADDRESS}
 									name="address"
-									placeholder={ADDRESS_INPUT_PLACEHOLDER}
+									placeholder={SETTINGS_INPUT_PLACEHOLDER_ADDRESS}
 									type="textarea"
 									value={address}
 								/>
