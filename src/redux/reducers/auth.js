@@ -1,6 +1,6 @@
 import { AUTH } from '../actions/types';
 
-const initialState = {
+export const initialState = {
 	error: null,
 	isLoading: false,
 	lastUpdated: null,

@@ -3,31 +3,40 @@ import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import { ControlledForm, Input, Select } from '../../common/Form';
-import { sortCategories } from './_constants';
 import { stopScroll } from '../../common/eventHandling';
 
+import { SORT_CATEGORIES } from './_constants';
+
 import './_transactionform.scss';
+
+const SORT_FORM_LABELS = {
+	ascending: 'Ascending',
+	descending: 'Descending',
+	reset: 'Reset',
+	sort: 'Sort By:',
+	submit: 'Done'
+};
 
 const SortFields = ({ category, name }) => (
 	<React.Fragment>
 		<Select
 			className="transaction-sort-form__sort-category"
-			label="Sort By:"
+			label={SORT_FORM_LABELS.sort}
 			name={name}
-			options={sortCategories}
+			options={SORT_CATEGORIES}
 		/>
 		<fieldset name={category}>
 			<legend>{`${category} Sort Order: `}</legend>
 			<Input
 				className="transaction-filter-form__filter-option"
-				label="Ascending"
+				label={SORT_FORM_LABELS.ascending}
 				name="order"
 				type="radio"
 				value="ascending"
 			/>
 			<Input
 				className="transaction-filter-form__filter-option"
-				label="Descending"
+				label={SORT_FORM_LABELS.descending}
 				name="order"
 				type="radio"
 				value="descending"
@@ -48,19 +57,19 @@ const SortForm = React.forwardRef(({ className, ...passthroughProps }, ref) => (
 		forwardedRef={ref}
 		id="sort-form"
 	>
-		{({ values, isSubmitting }) => (
+		{({ isSubmitting, values }) => (
 			<React.Fragment>
 				<SortFields category={values.sort} name="sort" />
 				<div className="transaction-form__actions">
 					<button className="transaction-form__button" type="reset">
-						<span>Reset</span>
+						<span>{SORT_FORM_LABELS.reset}</span>
 					</button>
 					<button
 						className="transaction-form__button transaction-form__button--main"
 						disabled={isSubmitting}
 						type="submit"
 					>
-						<span>Done</span>
+						<span>{SORT_FORM_LABELS.submit}</span>
 					</button>
 				</div>
 			</React.Fragment>

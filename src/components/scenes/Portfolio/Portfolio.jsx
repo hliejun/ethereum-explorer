@@ -18,6 +18,8 @@ import {
 	getSimpleTransactions
 } from '../../../redux/selectors';
 
+import { trim, untrim } from '../../../redux/selectors/helper';
+
 import {
 	getBalance as fetchBalance,
 	getCurrencyRates as fetchCurrencyRates,
@@ -25,52 +27,55 @@ import {
 } from '../../../redux/actions/ethereum';
 
 import {
-	bufferSize,
-	defaultFilterData,
-	defaultFormData,
-	defaultSortData,
-	emptyTransactionsHolderState,
-	errorAddressHolderState,
-	errorBalanceHolderState,
-	errorKeyHolderState,
-	errorTransactionsHolderState,
-	formValidation,
-	loadingBalanceHolderState,
-	loadingTransactionsHolderState,
-	pageSize
+	DEFAULT_FILTERS,
+	DEFAULT_FILTERS_SORT,
+	DEFAULT_SORT,
+	PLACEHOLDER_ADDRESS_ERROR,
+	PLACEHOLDER_KEY_ERROR,
+	FORM_VALIDATION
 } from './_constants';
 
 import { CURRENCY_SYMBOLS } from '../../common/Currency';
-import { trim, untrim } from './helper';
-
-import { getTableViewModel, getTableFields } from './TransactionTableModel';
-import TransactionListItem from './TransactionListItem';
 
 import CombinedForm from './CombinedForm';
 import FilterForm from './FilterForm';
-import List from '../../common/List';
 import Modal from '../../common/Modal';
 import Placeholder from '../../common/Placeholder';
 import PortfolioModal from './PortfolioModal';
 import SortForm from './SortForm';
-import Table from '../../common/Table';
 import TransactionDashboard from './TransactionDashboard';
+import TransactionsViewer from './TransactionsViewer';
 
-import EmptyIcon from '../../../assets/icons/glyphs/empty.svg';
 import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
-import Filter from '../../../assets/icons/glyphs/filter.svg';
-import Sort from '../../../assets/icons/glyphs/sort.svg';
+import FilterIcon from '../../../assets/icons/glyphs/filter.svg';
+import SortIcon from '../../../assets/icons/glyphs/sort.svg';
 
 import './_portfolio.scss';
+
+const FILTER_FORM_TITLE = 'Filter Transactions';
+const FILTER_FORM_SUBTITLE =
+  'Select a field category and its relevant tags to selectively display transaction results.';
+
+const SORT_FORM_TITLE = 'Sort Transactions';
+const SORT_FORM_SUBTITLE =
+  'Select a sortable field category and sort order to reorder the transaction results.';
+
+const PORTFOLIO_SECTION_LABELS = {
+	history: 'Transaction History',
+	options: 'View Options'
+};
 
 class Portfolio extends React.PureComponent {
 	constructor(props) {
 		super(props);
+
+		// AppBar constants
 		this.options = [
-			{ handler: this.toggleFilterModal, icon: Filter, key: 'filter' },
-			{ handler: this.toggleSortModal, icon: Sort, key: 'sort' }
+			{ handler: this.toggleFilterModal, icon: FilterIcon, key: 'filter' },
+			{ handler: this.toggleSortModal, icon: SortIcon, key: 'sort' }
 		];
 		this.title = 'Portfolio';
+
 		this.state = {
 			showFilterModal: false,
 			showSortModal: false,
@@ -79,22 +84,17 @@ class Portfolio extends React.PureComponent {
 	}
 
 	componentDidMount() {
-		const {
-			address,
-			authToken,
-			isLoading,
-			rate,
-			setOptions,
-			setSubtitle,
-			setTitle,
-			updateBalance,
-			updateRates,
-			updateTransactions
-		} = this.props;
+		const { address, authToken } = this.props;
+		const { updateBalance, updateRates, updateTransactions } = this.props;
+		const { isLoading, rate, setOptions, setSubtitle, setTitle } = this.props;
+
+		// Setup AppBar
 		const { subtitle } = this.state;
 		setTitle(this.title);
 		setSubtitle(subtitle);
 		setOptions(this.options);
+
+		// Fetch/update data
 		if (authToken && !rate && !isLoading.currency) {
 			updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
 		}
@@ -107,11 +107,12 @@ class Portfolio extends React.PureComponent {
 	}
 
 	componentWillUnmount() {
+		// Restore AppBar
 		const { reset } = this.props;
 		reset();
 	}
 
-	/* State Modifiers */
+	// Modal toggles
 
   toggleFilterModal = () => {
   	this.setState(({ showFilterModal, showSortModal }) => ({
@@ -127,7 +128,7 @@ class Portfolio extends React.PureComponent {
   	}));
   };
 
-  /* Effects */
+  // AppBar effects
 
   toggleBalance = waypoint => {
   	const { balance, code, setSubtitle } = this.props;
@@ -143,21 +144,31 @@ class Portfolio extends React.PureComponent {
   	}
   };
 
+  // Transactions query effects
+
   setFormData = values => {
   	const { history, location } = this.props;
+
+  	// Always return to first page on query change
   	const data = { ...values, page: 1 };
+
+  	// Update url with query string
   	history.push({
   		...location,
-  		search: qs.stringify(trim(data, formValidation))
+  		search: qs.stringify(trim(data, FORM_VALIDATION))
   	});
   };
 
   setSort = (fieldName, order) => {
   	const { history, location } = this.props;
+
+  	// Get previous query
   	const { page, ...prevData } = untrim(
   		qs.parse(location.search),
-  		formValidation
+  		FORM_VALIDATION
   	);
+
+  	// Update only sort-related changes
   	const data = {
   		...prevData,
   		sort: fieldName,
@@ -167,33 +178,43 @@ class Portfolio extends React.PureComponent {
         	? 'descending'
         	: 'ascending')
   	};
+
+  	// Update url with query string
   	history.push({
   		...location,
-  		search: qs.stringify(trim(data, formValidation))
+  		search: qs.stringify(trim(data, FORM_VALIDATION))
   	});
   };
 
   resetData = defaultData => () => {
   	const { history, location } = this.props;
+
+  	// Reset query fields with known defaults
   	const prevData = qs.parse(location.search);
   	const data = { ...prevData, ...defaultData, page: 1 };
+
+  	// Update url with query string
   	history.push({
   		...location,
-  		search: qs.stringify(trim(data, formValidation))
+  		search: qs.stringify(trim(data, FORM_VALIDATION))
   	});
   };
 
   updatePage = page => {
   	const { history, location } = this.props;
+
+  	// Update page query
   	const prevData = qs.parse(location.search);
   	const data = { ...prevData, page };
+
+  	// Update url with query string
   	history.push({
   		...location,
-  		search: qs.stringify(trim(data, formValidation))
+  		search: qs.stringify(trim(data, FORM_VALIDATION))
   	});
   };
 
-  /* Rendering */
+  // Views
 
   renderErrorPlaceholder = (state, key) => {
   	const { history } = this.props;
@@ -208,168 +229,61 @@ class Portfolio extends React.PureComponent {
   	);
   };
 
-  // TODO: Display error message from errors state props object
-  renderBalancePlaceholder = () => {
-  	const {
-  		address,
-  		authToken,
-  		isLoading: loading,
-  		rate,
-  		updateBalance,
-  		updateRates
-  	} = this.props;
-  	const isLoading = loading.balance;
-  	let state = errorBalanceHolderState;
-  	if (isLoading) {
-  		state = loadingBalanceHolderState;
-  	}
-  	return (
-  		<Placeholder
-  			className="portfolio__placeholder portfolio__placeholder--balance"
-  			errorIcon={ErrorIcon}
-  			hasError
-  			isLoading={isLoading}
-  			onRefresh={() => {
-  				if (!rate && !isLoading.currency) {
-  					updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
-  				}
-  				updateBalance(authToken, address);
-  			}}
-  			{...state}
-  		/>
-  	);
-  };
-
   renderDashboard = () => {
-  	const { balance, code, rate, received, sent, subtotal } = this.props;
+  	const { code, isLoading, rate } = this.props;
+  	const { balance, received, sent, subtotal } = this.props;
+  	const { address, authToken, updateBalance, updateRates } = this.props;
+
+  	// Fetch actions if data is stale
+  	const updateBalanceAndRates = () => {
+  		if (!rate && !isLoading.currency) {
+  			updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
+  		}
+  		updateBalance(authToken, address);
+  	};
+
   	return (
   		<TransactionDashboard
   			balance={parseFloat(balance)}
   			className="portfolio__dashboard"
-  			code={code}
-  			placeholder={this.renderBalancePlaceholder()}
+  			isLoading={isLoading.balance}
+  			localCode={code}
+  			onRefresh={updateBalanceAndRates}
   			rate={rate}
   			received={parseFloat(received)}
   			sent={parseFloat(sent)}
-  			total={parseFloat(subtotal)}
+  			subtotal={parseFloat(subtotal)}
   		/>
   	);
   };
 
-  // TODO: Display error message from errors state props object
-  renderTransactionsPlaceholder = () => {
-  	const {
-  		address,
-  		authToken,
-  		errors,
-  		isLoading: loading,
-  		rate,
-  		updateRates,
-  		updateTransactions
-  	} = this.props;
-  	const error = errors.transactions;
-  	const hasError = error != null && Object.keys(error).length > 0;
-  	const isLoading = loading.transactions;
-  	let placeholderState = emptyTransactionsHolderState;
-  	if (isLoading) {
-  		placeholderState = loadingTransactionsHolderState;
-  	} else if (hasError) {
-  		placeholderState = errorTransactionsHolderState;
-  	}
-  	return (
-  		<Placeholder
-  			className="portfolio__placeholder portfolio__placeholder--transactions"
-  			emptyIcon={EmptyIcon}
-  			errorIcon={ErrorIcon}
-  			hasError={hasError}
-  			isLoading={isLoading}
-  			onRefresh={() => {
-  				if (!rate && !isLoading.currency) {
-  					updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
-  				}
-  				updateTransactions(authToken, address);
-  			}}
-  			{...placeholderState}
-  		/>
-  	);
-  };
+  renderTransactions = () => {
+  	const { history, location } = this.props;
+  	const { errors, isLoading, isMobile } = this.props;
+  	const { code, rate, pagination, transactions } = this.props;
+  	const { address, authToken, updateRates, updateTransactions } = this.props;
 
-  renderList = () => {
-  	const {
-  		code,
-  		isMobile,
-  		location,
-  		pagination,
-  		rate,
-  		transactions
-  	} = this.props;
-
-  	const { page, ...formData } = untrim(
-  		qs.parse(location.search),
-  		formValidation
-  	);
-
-  	const {
-  		filter: filterField,
-  		incoming,
-  		order,
-  		outgoing,
-  		sort: sortField
-  	} = formData;
+  	// Fetch actions if data is stale
+  	const updateTransactionsAndRates = () => {
+  		if (!rate && !isLoading.currency) {
+  			updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
+  		}
+  		updateTransactions(authToken, address);
+  	};
 
   	return (
-  		<List
-  			bottomOffset={0}
-  			className="portfolio__transaction-list"
+  		<TransactionsViewer
   			code={code}
-  			dataMap={transactions}
-  			fontSize={isMobile ? 14 : 16}
-  			key={`${sortField}-${order}-${filterField}-${incoming}-${outgoing}`}
-  			pageBufferSize={bufferSize}
-  			pageMap={pagination}
-  			pageSize={pageSize}
-  			placeholder={this.renderTransactionsPlaceholder()}
-  			rate={rate}
-  			render={TransactionListItem}
-  			topOffset={6.25}
-  			unit="rem"
-  			unitBufferHeight={8.5}
-  		/>
-  	);
-  };
-
-  renderTable = () => {
-  	const {
-  		code,
-  		history,
-  		location,
-  		pagination,
-  		rate,
-  		transactions
-  	} = this.props;
-
-  	const { page: currentTablePage, ...formData } = untrim(
-  		qs.parse(location.search),
-  		formValidation
-  	);
-
-  	const pageList = pagination[currentTablePage - 1];
-  	const withId = id => ({ id, ...transactions[id] });
-  	const pageItems = pageList == null ? [] : pageList.map(withId);
-
-  	return (
-  		<Table
-  			className="portfolio__transaction-table"
-  			currentPage={parseInt(currentTablePage, 10)}
-  			fields={getTableFields(code)}
-  			lastPage={Math.max(1, pagination.length)}
-  			onPageChange={this.updatePage}
-  			onSelectRow={id => history.push(`/app/transaction/${id}`)}
-  			onSort={this.setSort}
-  			pageItems={pageItems}
-  			parser={getTableViewModel(code, rate)}
-  			placeholder={this.renderTransactionsPlaceholder()}
-  			sort={{ fieldName: formData.sort, order: formData.order }}
+  			hasError={!!errors.transactions}
+  			history={history}
+  			isLoading={isLoading.transactions}
+  			isMobile={isMobile}
+  			location={location}
+  			onRefresh={updateTransactionsAndRates}
+  			pagination={pagination}
+  			setSort={this.setSort}
+  			transactions={transactions}
+  			updatePage={this.updatePage}
   		/>
   	);
   };
@@ -395,9 +309,9 @@ class Portfolio extends React.PureComponent {
   renderFilterForm = formData => (
   	<FilterForm
   		className="portfolio__modal-form"
-  		defaultValues={defaultFilterData}
+  		defaultValues={DEFAULT_FILTERS}
   		onChange={this.setFormData}
-  		onReset={this.resetData(defaultFilterData)}
+  		onReset={this.resetData(DEFAULT_FILTERS)}
   		onSubmit={values => {
   			this.setFormData(values);
   			this.toggleFilterModal();
@@ -409,9 +323,9 @@ class Portfolio extends React.PureComponent {
   renderSortForm = formData => (
   	<SortForm
   		className="portfolio__modal-form"
-  		defaultValues={defaultSortData}
+  		defaultValues={DEFAULT_SORT}
   		onChange={this.setFormData}
-  		onReset={this.resetData(defaultSortData)}
+  		onReset={this.resetData(DEFAULT_SORT)}
   		onSubmit={values => {
   			this.setFormData(values);
   			this.toggleSortModal();
@@ -423,9 +337,9 @@ class Portfolio extends React.PureComponent {
   renderCombinedForm = formData => (
   	<CombinedForm
   		className="portfolio__combined-form"
-  		defaultValues={defaultFormData}
+  		defaultValues={DEFAULT_FILTERS_SORT}
   		onChange={this.setFormData}
-  		onReset={this.resetData(defaultFormData)}
+  		onReset={this.resetData(DEFAULT_FILTERS_SORT)}
   		values={formData}
   	/>
   );
@@ -433,65 +347,80 @@ class Portfolio extends React.PureComponent {
   render() {
   	const { address, apiKey, className, isMobile, location } = this.props;
   	const { showFilterModal, showSortModal } = this.state;
+
+  	// Get transactions query state
   	const { page, ...formData } = untrim(
   		qs.parse(location.search),
-  		formValidation
+  		FORM_VALIDATION
   	);
 
+  	// Get placeholder state
+  	let placeholderState = null;
+  	let key = 'key';
   	if (!apiKey) {
-  		return (
-  			<div className={clns('page', 'portfolio', className)}>
-  				{this.renderErrorPlaceholder(errorKeyHolderState, 'key')}
-  			</div>
-  		);
-  	}
-
-  	if (!address) {
-  		return (
-  			<div className={clns('page', 'portfolio', className)}>
-  				{this.renderErrorPlaceholder(errorAddressHolderState, 'address')}
-  			</div>
-  		);
+  		placeholderState = PLACEHOLDER_KEY_ERROR;
+  	} else if (!address) {
+  		placeholderState = PLACEHOLDER_ADDRESS_ERROR;
+  		key = 'address';
   	}
 
   	return (
   		<div className={clns('page', 'portfolio', className)}>
-  			<div className="portfolio__body">
-  				<div className="portfolio__section portfolio__section--left">
-  					<Waypoint onPositionChange={this.toggleBalance} />
-  					{this.renderDashboard()}
-  					{!isMobile && (
-  						<React.Fragment>
-  							<span className="portfolio__section-label">View Options</span>
-  							{this.renderCombinedForm(formData)}
-  						</React.Fragment>
-  					)}
-  				</div>
-  				<div className="portfolio__section portfolio__section--right">
-  					<span className="portfolio__section-label">
-              Transaction History
-  					</span>
-  					{isMobile ? this.renderList() : this.renderTable()}
-  				</div>
-  			</div>
-  			{showFilterModal &&
-          this.renderFormModal(
-          	'Filter Transactions',
-          	'Select a field category and its relevant tags to selectively display transaction results.',
-          	this.renderFilterForm(formData),
-          	this.toggleFilterModal
-          )}
-  			{showSortModal &&
-          this.renderFormModal(
-          	'Sort Transactions',
-          	'Select a sortable field category and sort order to reorder the transaction results.',
-          	this.renderSortForm(formData),
-          	this.toggleSortModal
-          )}
+  			{placeholderState ? (
+  				this.renderErrorPlaceholder(placeholderState, key)
+  			) : (
+  				<React.Fragment>
+  					<div className="portfolio__body">
+  						<div className="portfolio__section portfolio__section--left">
+  							<Waypoint onPositionChange={this.toggleBalance} />
+  							{this.renderDashboard()}
+  							{!isMobile && (
+  								<React.Fragment>
+  									<span className="portfolio__section-label">
+  										{PORTFOLIO_SECTION_LABELS.options}
+  									</span>
+  									{this.renderCombinedForm(formData)}
+  								</React.Fragment>
+  							)}
+  						</div>
+  						<div className="portfolio__section portfolio__section--right">
+  							<span className="portfolio__section-label">
+  								{PORTFOLIO_SECTION_LABELS.history}
+  							</span>
+  							{this.renderTransactions()}
+  						</div>
+  					</div>
+  					{showFilterModal &&
+              this.renderFormModal(
+              	FILTER_FORM_TITLE,
+              	FILTER_FORM_SUBTITLE,
+              	this.renderFilterForm(formData),
+              	this.toggleFilterModal
+              )}
+  					{showSortModal &&
+              this.renderFormModal(
+              	SORT_FORM_TITLE,
+              	SORT_FORM_SUBTITLE,
+              	this.renderSortForm(formData),
+              	this.toggleSortModal
+              )}
+  				</React.Fragment>
+  			)}
   		</div>
   	);
   }
 }
+
+const simplifiedTransactionType = PropTypes.shape({
+	id: PropTypes.string.isRequired,
+	source: PropTypes.shape({
+		address: PropTypes.string.isRequired,
+		timestamp: PropTypes.string.isRequired,
+		type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
+	}).isRequired,
+	status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
+	value: PropTypes.string.isRequired
+});
 
 Portfolio.propTypes = {
 	address: PropTypes.string,
@@ -512,18 +441,7 @@ Portfolio.propTypes = {
 	setSubtitle: PropTypes.func.isRequired,
 	setTitle: PropTypes.func.isRequired,
 	subtotal: PropTypes.number.isRequired,
-	transactions: PropTypes.objectOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			source: PropTypes.shape({
-				address: PropTypes.string.isRequired,
-				timestamp: PropTypes.string.isRequired,
-				type: PropTypes.oneOf(['incoming', 'outgoing']).isRequired
-			}).isRequired,
-			status: PropTypes.oneOf(['failed', 'pending', 'success']).isRequired,
-			value: PropTypes.string.isRequired
-		})
-	).isRequired,
+	transactions: PropTypes.objectOf(simplifiedTransactionType).isRequired,
 	updateBalance: PropTypes.func.isRequired,
 	updateRates: PropTypes.func.isRequired,
 	updateTransactions: PropTypes.func.isRequired

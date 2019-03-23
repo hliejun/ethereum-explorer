@@ -6,16 +6,25 @@ import clns from 'classnames';
 
 import Currency, { CURRENCY_SYMBOLS } from '../../common/Currency';
 
-import Receive from '../../../assets/icons/glyphs/receive.svg';
-import Send from '../../../assets/icons/glyphs/send.svg';
+import ReceiveIcon from '../../../assets/icons/glyphs/receive.svg';
+import SendIcon from '../../../assets/icons/glyphs/send.svg';
 
 import './_transactionlistitem.scss';
+
+const DATE_FORMAT_SHORT = 'D/M h:mmA';
+const DATE_FORMAT_LONG = 'D/M/YY h:mmA';
+
+const LIST_ITEM_LABELS = {
+	incoming: 'RECEIVED FROM',
+	outgoing: 'SENT TO',
+	source: 'SOURCE AMOUNT'
+};
 
 /* eslint-disable react/no-multi-comp */
 
 const Overline = memo(({ className, type }) => {
 	const isOutgoing = type === 'outgoing';
-	const Icon = isOutgoing ? Send : Receive;
+	const Icon = isOutgoing ? SendIcon : ReceiveIcon;
 	return (
 		<div className={clns('overline', className)}>
 			<Icon className="overline__glyph" />
@@ -36,7 +45,7 @@ Overline.defaultProps = {
 const Meta = memo(({ className, timestamp }) => {
 	const date = Day(parseInt(timestamp, 10) * 1000);
 	const isSameYear = Day().isSame(date, 'year');
-	const dateFormat = isSameYear ? 'D/M h:mmA' : 'D/M/YY h:mmA';
+	const dateFormat = isSameYear ? DATE_FORMAT_SHORT : DATE_FORMAT_LONG;
 	return (
 		<span className={clns('meta', className)}>{date.format(dateFormat)}</span>
 	);
@@ -51,27 +60,24 @@ Meta.defaultProps = {
 	className: null
 };
 
-const SourceSection = memo(({ amount, className }) => {
-	const label = 'SOURCE AMOUNT';
-	return (
-		<div
-			className={clns(
-				'transaction-list-item__section',
-				'transaction-list-item__section--source',
-				className
-			)}
-		>
-			<span className="transaction-list-item__info-label monotype">
-				{label}
-			</span>
-			<Currency
-				amount={amount}
-				className="transaction-list-item__ethereum"
-				code="ETH"
-			/>
-		</div>
-	);
-});
+const SourceSection = memo(({ amount, className }) => (
+	<div
+		className={clns(
+			'transaction-list-item__section',
+			'transaction-list-item__section--source',
+			className
+		)}
+	>
+		<span className="transaction-list-item__info-label monotype">
+			{LIST_ITEM_LABELS.source}
+		</span>
+		<Currency
+			amount={amount}
+			className="transaction-list-item__ethereum"
+			code="ETH"
+		/>
+	</div>
+));
 
 SourceSection.propTypes = {
 	amount: PropTypes.string.isRequired,
@@ -82,24 +88,22 @@ SourceSection.defaultProps = {
 	className: null
 };
 
-const AddressSection = memo(({ address, className, type }) => {
-	const isOutgoing = type === 'outgoing';
-	const label = isOutgoing ? 'SENT TO' : 'RECEIVED FROM';
-	return (
-		<div
-			className={clns(
-				'transaction-list-item__section',
-				'transaction-list-item__section--address',
-				className
-			)}
-		>
-			<span className="transaction-list-item__info-label monotype">
-				{label}
-			</span>
-			<span className="transaction-list-item__address monotype">{address}</span>
-		</div>
-	);
-});
+const AddressSection = memo(({ address, className, type }) => (
+	<div
+		className={clns(
+			'transaction-list-item__section',
+			'transaction-list-item__section--address',
+			className
+		)}
+	>
+		<span className="transaction-list-item__info-label monotype">
+			{type === 'outgoing'
+				? LIST_ITEM_LABELS.outgoing
+				: LIST_ITEM_LABELS.incoming}
+		</span>
+		<span className="transaction-list-item__address monotype">{address}</span>
+	</div>
+));
 
 AddressSection.propTypes = {
 	address: PropTypes.string.isRequired,

@@ -72,10 +72,12 @@
     @include flex-wrap;
     @include use-flex;
   }
+
   .transaction-form .field--select {
     @include flex-grow(0);
     margin: 0 2em 0 0 !important;
   }
+
   .transaction-form fieldset {
     @include flex-grow;
   }

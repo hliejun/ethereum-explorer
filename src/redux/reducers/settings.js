@@ -1,6 +1,6 @@
 import { SETTINGS } from '../actions/types';
 
-const initialState = {
+export const initialState = {
 	apiKey: '',
 	currency: null,
 	nightMode: false

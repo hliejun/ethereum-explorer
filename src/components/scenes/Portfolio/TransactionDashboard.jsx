@@ -1,64 +1,107 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, Input } from '../../common/Form';
 import { CURRENCY_SYMBOLS } from '../../common/Currency';
+import { Form, Input } from '../../common/Form';
 import Dashboard from '../../common/Dashboard';
+import Placeholder from '../../common/Placeholder';
 
-import Balance from '../../../assets/icons/glyphs/balance.svg';
-import Receive from '../../../assets/icons/glyphs/receive.svg';
-import Send from '../../../assets/icons/glyphs/send.svg';
+import {
+	PLACEHOLDER_BALANCE_ERROR,
+	PLACEHOLDER_BALANCE_LOADING
+} from './_constants';
+
+import BalanceIcon from '../../../assets/icons/glyphs/balance.svg';
+import ReceiveIcon from '../../../assets/icons/glyphs/receive.svg';
+import SendIcon from '../../../assets/icons/glyphs/send.svg';
+
+import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 
 import './_transactiondashboard.scss';
+
+const DASHBOARD_LABELS = {
+	balance: 'Balance',
+	local: 'Localise:',
+	nett: 'SUBTOTAL',
+	received: 'INCOMING',
+	sent: 'OUTGOING'
+};
+
+/**
+ * NOTE:
+ * Error messages for placeholder should be
+ * dynamically determined by redux props
+ */
+
+const BalancePlaceholder = ({ isLoading, onRefresh }) => {
+	let state = PLACEHOLDER_BALANCE_ERROR;
+	if (isLoading) {
+		state = PLACEHOLDER_BALANCE_LOADING;
+	}
+	return (
+		<Placeholder
+			className="portfolio__placeholder portfolio__placeholder--balance"
+			errorIcon={ErrorIcon}
+			hasError
+			isLoading={isLoading}
+			onRefresh={onRefresh}
+			{...state}
+		/>
+	);
+};
 
 const TransactionDashboard = ({
 	balance,
 	className,
-	code: localCode,
-	placeholder,
+	isLoading,
+	localCode,
+	onRefresh,
 	rate,
 	received,
 	sent,
-	total
+	subtotal
 }) => {
+	// Setup currency localisation
 	const [isLocal, setIsLocal] = useState(false);
-
 	const code = isLocal && rate ? localCode : 'ETH';
 
+	// Calculate and display balance
 	const mainItem = {
 		amount: isLocal && rate ? balance * rate : balance,
 		classLabel: 'balance',
 		code,
-		label: 'Balance'
+		label: DASHBOARD_LABELS.balance
 	};
 
+	// Calculate and display successful transactions history summary
 	const subItems = [
 		{
 			amount: isLocal && rate ? received * rate : received,
 			classLabel: 'received',
 			code,
-			icon: Receive,
+			icon: ReceiveIcon,
 			key: 'received',
-			label: 'INCOMING'
+			label: DASHBOARD_LABELS.received
 		},
 		{
 			amount: isLocal && rate ? sent * rate : sent,
 			classLabel: 'sent',
 			code,
-			icon: Send,
+			icon: SendIcon,
 			key: 'sent',
-			label: 'OUTGOING'
+			label: DASHBOARD_LABELS.sent
 		},
 		{
-			amount: isLocal && rate ? total * rate : total,
+			amount: isLocal && rate ? subtotal * rate : subtotal,
 			classLabel: 'nett',
 			code,
-			icon: Balance,
+			icon: BalanceIcon,
 			key: 'nett',
-			label: 'SUBTOTAL'
+			label: DASHBOARD_LABELS.nett
 		}
 	];
 
+	// Display localisation toggle
 	const overline = (
 		<Form
 			defaultValues={{ local: false }}
@@ -70,7 +113,7 @@ const TransactionDashboard = ({
 					className="transaction-dashboard__toggle monotype"
 					disabled={!rate}
 					key="local"
-					label="Localise:"
+					label={DASHBOARD_LABELS.local}
 					name="local"
 					type="toggle"
 				/>
@@ -78,8 +121,7 @@ const TransactionDashboard = ({
 		</Form>
 	);
 
-	// if balance not available, switch to placeholder
-	// (add props and props check for placeholder)
+	// Selectively display dashboard or placeholder based on balance availability
 	return balance ? (
 		<Dashboard
 			className={className}
@@ -88,19 +130,20 @@ const TransactionDashboard = ({
 			subItems={subItems}
 		/>
 	) : (
-		placeholder
+		<BalancePlaceholder isLoading={isLoading} onRefresh={onRefresh} />
 	);
 };
 
 TransactionDashboard.propTypes = {
 	balance: PropTypes.number.isRequired,
 	className: PropTypes.string,
-	code: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
-	placeholder: PropTypes.node.isRequired,
+	isLoading: PropTypes.bool.isRequired,
+	localCode: PropTypes.oneOf(Object.keys(CURRENCY_SYMBOLS)).isRequired,
+	onRefresh: PropTypes.func.isRequired,
 	rate: PropTypes.number,
 	received: PropTypes.number.isRequired,
 	sent: PropTypes.number.isRequired,
-	total: PropTypes.number.isRequired
+	subtotal: PropTypes.number.isRequired
 };
 
 TransactionDashboard.defaultProps = {

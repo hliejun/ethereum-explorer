@@ -1,19 +1,19 @@
-export const pageSize = 20;
+export const PAGE_SIZE = 20;
 
-export const bufferSize = 10;
+export const BUFFER_SIZE = 10;
 
-export const filterCategories = [{ label: 'Type', value: 'type' }];
+export const FILTER_CATEGORIES = [{ label: 'Type', value: 'type' }];
 
-export const filterTags = {
+export const FILTER_TAGS = {
 	type: ['incoming', 'outgoing']
 };
 
-export const sortCategories = [
+export const SORT_CATEGORIES = [
 	{ label: 'Date', value: 'date' },
 	{ label: 'Amount', value: 'amount' }
 ];
 
-export const formValidation = {
+export const FORM_VALIDATION = {
 	filter: { default: 'type', regex: /^(?:type)$/ },
 	incoming: { default: 'true', regex: /^(?:true|false)$/ },
 	order: { default: 'descending', regex: /^(?:ascending|descending)$/ },
@@ -22,30 +22,30 @@ export const formValidation = {
 	sort: { default: 'date', regex: /^(?:date|amount)$/ }
 };
 
-export const defaultFilterData = {
-	filter: formValidation.filter.default,
-	incoming: formValidation.incoming.default,
-	outgoing: formValidation.outgoing.default
+export const DEFAULT_FILTERS = {
+	filter: FORM_VALIDATION.filter.default,
+	incoming: FORM_VALIDATION.incoming.default,
+	outgoing: FORM_VALIDATION.outgoing.default
 };
 
-export const defaultSortData = {
-	order: formValidation.order.default,
-	sort: formValidation.sort.default
+export const DEFAULT_SORT = {
+	order: FORM_VALIDATION.order.default,
+	sort: FORM_VALIDATION.sort.default
 };
 
-export const defaultFormData = {
-	...defaultFilterData,
-	...defaultSortData
+export const DEFAULT_FILTERS_SORT = {
+	...DEFAULT_FILTERS,
+	...DEFAULT_SORT
 };
 
-export const errorAddressHolderState = {
+export const PLACEHOLDER_ADDRESS_ERROR = {
 	description: 'You have yet to designate an ethereum address.',
 	refreshText: 'Go to Settings',
 	status: 'error',
 	title: 'No Ethereum Address'
 };
 
-export const errorBalanceHolderState = {
+export const PLACEHOLDER_BALANCE_ERROR = {
 	description:
     'Please ensure that you have provided a valid ethereum address and API key.',
 	refreshText: 'Try Again',
@@ -53,7 +53,7 @@ export const errorBalanceHolderState = {
 	title: 'Problem Loading Balance'
 };
 
-export const errorKeyHolderState = {
+export const PLACEHOLDER_KEY_ERROR = {
 	description:
     'You will need an API key to explore blocks. Please obtain it from @hliejun.',
 	refreshText: 'Go to Settings',
@@ -61,13 +61,13 @@ export const errorKeyHolderState = {
 	title: 'No API Key'
 };
 
-export const loadingBalanceHolderState = {
+export const PLACEHOLDER_BALANCE_LOADING = {
 	description: 'Fetching your balance, please wait...',
 	status: 'loading',
 	title: 'Loading Balance'
 };
 
-export const emptyTransactionsHolderState = {
+export const PLACEHOLDER_TRANSACTIONS_EMPTY = {
 	description:
     'You currently do not have any historical transactions in this filter.',
 	refreshText: 'Reload',
@@ -75,7 +75,7 @@ export const emptyTransactionsHolderState = {
 	title: 'No Transactions Found'
 };
 
-export const errorTransactionsHolderState = {
+export const PLACEHOLDER_TRANSACTIONS_ERROR = {
 	description:
     'Please ensure that you have provided a valid ethereum address and API key.',
 	refreshText: 'Try Again',
@@ -83,7 +83,7 @@ export const errorTransactionsHolderState = {
 	title: 'Problem Loading Transactions'
 };
 
-export const loadingTransactionsHolderState = {
+export const PLACEHOLDER_TRANSACTIONS_LOADING = {
 	description: 'Fetching your transactions history, please wait...',
 	status: 'loading',
 	title: 'Loading Transactions'

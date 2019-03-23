@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect';
 import qs from 'query-string';
 
-import { filter, sort, untrim } from '../../components/scenes/Portfolio/helper';
+import { filter, sort, untrim } from './helper';
+
 import {
-	formValidation,
-	pageSize
+	FORM_VALIDATION,
+	PAGE_SIZE
 } from '../../components/scenes/Portfolio/_constants';
 
 const DEFAULT_CURRENCY = 'USD';
@@ -74,7 +75,7 @@ export const getPagination = createSelector(
 	(list, items, query) => {
 		const { page, ...formData } = untrim(
 			qs.parse(query.search),
-			formValidation
+			FORM_VALIDATION
 		);
 		const {
 			filter: filterField,
@@ -86,8 +87,8 @@ export const getPagination = createSelector(
 		const sortedIds = sort(filteredIds, items, sortField, sortOrder);
 		let index;
 		const result = [];
-		for (index = 0; index < sortedIds.length; index += pageSize) {
-			const pageTransactionIds = sortedIds.slice(index, index + pageSize);
+		for (index = 0; index < sortedIds.length; index += PAGE_SIZE) {
+			const pageTransactionIds = sortedIds.slice(index, index + PAGE_SIZE);
 			result.push(pageTransactionIds);
 		}
 		return result;

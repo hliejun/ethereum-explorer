@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { stopScroll } from '../../common/eventHandling';
 
+// Event interception to prevent:
+//  - scrolling of underlying div and
+//  - nullifying of checkbox click events
 const PortfolioModal = React.forwardRef(({ children }, ref) => (
 	<div className="portfolio__modal-container" ref={ref}>
 		<div

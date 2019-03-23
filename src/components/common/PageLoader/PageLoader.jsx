@@ -8,7 +8,7 @@ const Settings = lazy(() => import('../../scenes/Settings'));
 const Transaction = lazy(() => import('../../scenes/Transaction'));
 
 const commonProps = {
-	className: 'page-placeholder',
+	className: 'page__placeholder',
 	description: 'Loading page, please wait...',
 	isLoading: true
 };

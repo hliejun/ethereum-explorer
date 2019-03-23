@@ -1,6 +1,6 @@
 import { USER } from '../actions/types';
 
-const initialState = {
+export const initialState = {
 	ethAccount: {
 		address: '',
 		error: null,

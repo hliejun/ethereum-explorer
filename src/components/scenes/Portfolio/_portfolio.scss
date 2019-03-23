@@ -89,9 +89,11 @@
   .portfolio__modal {
     min-width: 22.5vw;
   }
+
   .portfolio__section--left {
     max-width: 22.5vw;
   }
+
   .portfolio__section--right {
     margin-left: 2em;
   }
@@ -102,14 +104,17 @@
   .portfolio__body {
     @include flex-direction(row);
   }
+
   .portfolio__modal,
   .portfolio__section--left {
     max-width: 400px;
   }
+
   .portfolio__section--right {
     height: calc(100vh - 8em);
     min-width: 30rem;
   }
+
   .portfolio__section-label {
     font-size: 1.2em;
     margin: 1em;
@@ -124,15 +129,19 @@
     @include flex-shrink(1);
     @include use-flex;
   }
+
   .portfolio__section-label {
     margin: 1.5em 2em 0.5em;
   }
+
   .portfolio__dashboard {
     margin: 2em 2em 0.5em;
   }
+
   .portfolio__placeholder--balance {
     margin: 2em 2em 0;
   }
+
   .portfolio__placeholder--transactions {
     margin: 0;
   }

@@ -1,6 +1,6 @@
 import { ETHEREUM } from '../actions/types';
 
-const initialState = {
+export const initialState = {
 	balance: {
 		error: null,
 		isLoading: false,

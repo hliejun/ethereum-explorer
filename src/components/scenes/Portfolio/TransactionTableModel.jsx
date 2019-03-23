@@ -5,29 +5,49 @@ import { CURRENCY_SYMBOLS } from '../../common/Currency';
 
 import './_transactiontableitem.scss';
 
+const DATE_FORMAT_LONG = 'DD/MM/YY h:mmA';
+
+const TABLE_FIELDS_LABEL = {
+	address: {
+		description:
+      'The other party\'s ethereum address associated with a transaction.',
+		label: 'Address'
+	},
+	amount: {
+		description:
+      'The credit/debit transacted in both currency and ethereum unit.',
+		label: 'Amount'
+	},
+	date: {
+		description: 'The date (DD/MM/YY) and time of a transaction.',
+		label: 'Date'
+	},
+	type: {
+		description:
+      'Whether a transaction is incoming (receiving) or outgoing (sending).',
+		label: 'Type'
+	}
+};
+
+// Table column cell factory descriptor
 const getTableFields = code => [
 	{
-		description: 'The date (DD/MM/YY) and time of a transaction.',
+		...TABLE_FIELDS_LABEL.date,
 		isSortable: true,
-		label: 'Date',
 		minWidth: '12rem',
 		name: 'date',
 		width: '20%'
 	},
 	{
-		description:
-      'Whether a transaction is incoming (receiving) or outgoing (sending).',
+		...TABLE_FIELDS_LABEL.type,
 		isSortable: false,
-		label: 'Type',
 		minWidth: '10rem',
 		name: 'type',
 		width: '15%'
 	},
 	{
-		description:
-      'The credit/debit transacted in both currency and ethereum unit.',
+		...TABLE_FIELDS_LABEL.amount,
 		isSortable: true,
-		label: 'Amount',
 		minWidth: '0',
 		name: 'amount',
 		shrinkIndex: 0.1,
@@ -35,10 +55,8 @@ const getTableFields = code => [
 		width: '30%'
 	},
 	{
-		description:
-      'The other party\'s ethereum address associated with a transaction.',
+		...TABLE_FIELDS_LABEL.address,
 		isSortable: false,
-		label: 'Address',
 		minWidth: '0',
 		name: 'address',
 		shrinkIndex: 1,
@@ -46,6 +64,7 @@ const getTableFields = code => [
 	}
 ];
 
+// Table row cell factory descriptor
 const getTableViewModel = (code, rate) => ({ id, source, value }) => ({
 	address: {
 		model: {
@@ -80,7 +99,7 @@ const getTableViewModel = (code, rate) => ({ id, source, value }) => ({
 		},
 		view: ({ timestamp }) => {
 			const date = Day(parseInt(timestamp, 10) * 1000);
-			return <span>{date.format('DD/MM/YY h:mmA')}</span>;
+			return <span>{date.format(DATE_FORMAT_LONG)}</span>;
 		}
 	},
 	id,

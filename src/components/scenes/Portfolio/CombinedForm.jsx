@@ -8,6 +8,10 @@ import { SortFields } from './SortForm';
 
 import './_transactionform.scss';
 
+const CONTROL_FORM_LABELS = {
+	reset: 'Reset'
+};
+
 const CombinedForm = React.forwardRef(
 	({ className, ...passthroughProps }, ref) => (
 		<ControlledForm
@@ -32,7 +36,7 @@ const CombinedForm = React.forwardRef(
 					</div>
 					<div className="transaction-form__actions">
 						<button className="transaction-form__button" type="reset">
-							<span>Reset</span>
+							<span>{CONTROL_FORM_LABELS.reset}</span>
 						</button>
 					</div>
 				</React.Fragment>

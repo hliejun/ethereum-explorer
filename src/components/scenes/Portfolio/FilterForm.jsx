@@ -3,23 +3,31 @@ import PropTypes from 'prop-types';
 import clns from 'classnames';
 
 import { ControlledForm, Input, Select } from '../../common/Form';
-import { filterCategories, filterTags } from './_constants';
 import { stopScroll } from '../../common/eventHandling';
 
+import { FILTER_CATEGORIES, FILTER_TAGS } from './_constants';
+
 import './_transactionform.scss';
+
+const FILTER_FORM_LABELS = {
+	filter: 'Filter By:',
+	options: 'Filter Options:',
+	reset: 'Reset',
+	submit: 'Done'
+};
 
 const FilterFields = ({ category, name }) => (
 	<React.Fragment>
 		<Select
 			className="transaction-filter-form__filter-category"
-			label="Filter By:"
+			label={FILTER_FORM_LABELS.filter}
 			name={name}
-			options={filterCategories}
+			options={FILTER_CATEGORIES}
 		/>
-		{category != null && filterTags[category] != null && (
+		{category != null && FILTER_TAGS[category] != null && (
 			<fieldset name={category}>
-				<legend>{`${category} Filter Options: `}</legend>
-				{filterTags[category].map(tag => (
+				<legend>{`${category} ${FILTER_FORM_LABELS.options} `}</legend>
+				{FILTER_TAGS[category].map(tag => (
 					<Input
 						className="transaction-filter-form__filter-option"
 						label={tag}
@@ -58,14 +66,14 @@ const FilterForm = React.forwardRef(
 						<FilterFields category={category} name={name} />
 						<div className="transaction-form__actions">
 							<button className="transaction-form__button" type="reset">
-								<span>Reset</span>
+								<span>{FILTER_FORM_LABELS.reset}</span>
 							</button>
 							<button
 								className="transaction-form__button transaction-form__button--main"
 								disabled={isSubmitting}
 								type="submit"
 							>
-								<span>Done</span>
+								<span>{FILTER_FORM_LABELS.submit}</span>
 							</button>
 						</div>
 					</React.Fragment>
