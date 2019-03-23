@@ -4,21 +4,19 @@ import Day from 'dayjs';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Currency, { CURRENCY_SYMBOLS } from '../../common/Currency';
+import Currency from '../../common/Currency';
 
 import ReceiveIcon from '../../../assets/icons/glyphs/receive.svg';
 import SendIcon from '../../../assets/icons/glyphs/send.svg';
 
+import {
+	CURRENCY_SYMBOLS,
+	DATE_FORMAT_LONG,
+	DATE_FORMAT_SHORT,
+	LIST_ITEM_LABELS
+} from '../../../constants';
+
 import './_transactionlistitem.scss';
-
-const DATE_FORMAT_SHORT = 'D/M h:mmA';
-const DATE_FORMAT_LONG = 'D/M/YY h:mmA';
-
-const LIST_ITEM_LABELS = {
-	incoming: 'RECEIVED FROM',
-	outgoing: 'SENT TO',
-	source: 'SOURCE AMOUNT'
-};
 
 /* eslint-disable react/no-multi-comp */
 

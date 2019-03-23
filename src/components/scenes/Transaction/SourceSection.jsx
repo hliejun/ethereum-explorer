@@ -5,55 +5,21 @@ import clns from 'classnames';
 
 import { Section, SubSection } from '../../common/Sections';
 
-import AddressIcon from '../../../assets/icons/glyphs/address.svg';
-import DateTimeIcon from '../../../assets/icons/glyphs/date.svg';
 import FailedIcon from '../../../assets/icons/glyphs/error.svg';
-import HashIcon from '../../../assets/icons/glyphs/hash.svg';
 import PendingIcon from '../../../assets/icons/glyphs/pending.svg';
-import SourceIcon from '../../../assets/icons/glyphs/source.svg';
-import StatusIcon from '../../../assets/icons/glyphs/status.svg';
 import SuccessIcon from '../../../assets/icons/glyphs/success.svg';
-import TypeIcon from '../../../assets/icons/glyphs/transaction.svg';
 
-const SOURCE_SECTION_DATA = {
-	footer: 'Strict gas limits could fail transactions.',
-	icon: SourceIcon,
-	title: 'Source Summary'
-};
-
-const SOURCE_SUBSECTIONS_DATA = {
-	address: {
-		description: 'Ethereum account of the receiver/sender',
-		icon: AddressIcon,
-		title: 'Address'
-	},
-	id: {
-		description: 'Unique transaction identifier',
-		icon: HashIcon,
-		title: 'Transaction Hash'
-	},
-	status: {
-		description: 'Mining condition',
-		icon: StatusIcon,
-		title: 'Status'
-	},
-	timestamp: {
-		description: 'Timestamp (DD/MM/YY H:mm)',
-		icon: DateTimeIcon,
-		title: 'Date/Time'
-	},
-	type: {
-		description: 'Whether the transaction is incoming/outgoing',
-		icon: TypeIcon,
-		title: 'Type'
-	}
-};
-
-const DATE_FORMAT = 'DD/MM/YY h:mmA';
+import {
+	DATE_FORMAT_LONG,
+	SOURCE_SECTION_DATA,
+	SOURCE_SUBSECTIONS_DATA
+} from '../../../constants';
 
 const SourceSection = ({ address, className, id, status, timestamp, type }) => {
 	// Format Linux/epoch time
-	const formattedDate = Day(parseInt(timestamp, 10) * 1000).format(DATE_FORMAT);
+	const formattedDate = Day(parseInt(timestamp, 10) * 1000).format(
+		DATE_FORMAT_LONG
+	);
 
 	// Set status tag icon
 	const isIncoming = type === 'incoming';

@@ -28,11 +28,13 @@
   color: $construction-content;
   font-weight: 500;
   margin: 0.5em;
+  text-align: center;
 }
 
 .construction__header-subtitle {
   color: $construction-hint;
   font-size: 0.85em;
+  max-width: 20em;
   text-align: center;
 }
 

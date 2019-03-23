@@ -2,10 +2,17 @@ import React, { useEffect } from 'react';
 
 import Construction from '../../common/Construction';
 
+import {
+	MISSING_REDIRECT_LINK,
+	MISSING_REDIRECT_TEXT,
+	MISSING_SUBTITLE,
+	MISSING_TITLE
+} from '../../../constants';
+
 import './_missing.scss';
 
 const Missing = ({ history, reset, setTitle }) => {
-	const title = 'Page Not Found';
+	const title = MISSING_TITLE;
 
 	useEffect(() => {
 		if (setTitle) {
@@ -22,15 +29,15 @@ const Missing = ({ history, reset, setTitle }) => {
 		<div className="page missing">
 			<Construction
 				className="missing__under-construction"
-				subtitle="The URL you have entered is invalid."
-				title="Page Not Found"
+				subtitle={MISSING_SUBTITLE}
+				title={MISSING_TITLE}
 			>
 				<button
 					className="missing__link"
-					onClick={() => history.push('/app/portfolio')}
+					onClick={() => history.push(MISSING_REDIRECT_LINK)}
 					type="button"
 				>
-          Go to Portfolio
+					{MISSING_REDIRECT_TEXT}
 				</button>
 			</Construction>
 		</div>

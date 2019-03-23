@@ -2,7 +2,9 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import Currency, { CURRENCY_SYMBOLS } from '../Currency';
+import Currency from '../Currency';
+
+import { CURRENCY_SYMBOLS } from '../../../constants';
 
 import './_dashboard.scss';
 

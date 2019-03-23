@@ -4,6 +4,8 @@ import clns from 'classnames';
 
 import Loader from '../Loader';
 
+import { PLACEHOLDER_DEFAULT_BUTTON_TEXT } from '../../../constants';
+
 import './_placeholder.scss';
 
 const Placeholder = ({
@@ -67,7 +69,7 @@ Placeholder.defaultProps = {
 	hasError: false,
 	isLoading: false,
 	onRefresh: null,
-	refreshText: 'Try Again',
+	refreshText: PLACEHOLDER_DEFAULT_BUTTON_TEXT,
 	title: null
 };
 

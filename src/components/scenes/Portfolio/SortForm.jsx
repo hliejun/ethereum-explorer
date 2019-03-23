@@ -5,17 +5,9 @@ import clns from 'classnames';
 import { ControlledForm, Input, Select } from '../../common/Form';
 import { stopScroll } from '../../common/eventHandling';
 
-import { SORT_CATEGORIES } from './_constants';
+import { SORT_CATEGORIES, SORT_FORM_LABELS } from '../../../constants';
 
 import './_transactionform.scss';
-
-const SORT_FORM_LABELS = {
-	ascending: 'Ascending',
-	descending: 'Descending',
-	reset: 'Reset',
-	sort: 'Sort By:',
-	submit: 'Done'
-};
 
 const SortFields = ({ category, name }) => (
 	<React.Fragment>

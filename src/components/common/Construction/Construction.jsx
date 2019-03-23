@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
+import { CONSTRUCTION_DESCRIPTOR } from '../../../constants';
+
 import './_construction.scss';
 
 const Construction = ({ className, children, icon: Icon, subtitle, title }) => (
@@ -27,12 +29,7 @@ Construction.defaultProps = {
 	className: null,
 	icon: null,
 	children: null,
-	subtitle: (
-    <>
-      This page is under construction. <br />
-      Please check back later.
-    </>
-	),
+	subtitle: CONSTRUCTION_DESCRIPTOR,
 	title: 'Work In Progress'
 };
 

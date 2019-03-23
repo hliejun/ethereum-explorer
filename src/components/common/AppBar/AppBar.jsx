@@ -9,9 +9,9 @@ import SideMenu from './SideMenu';
 import BackIcon from '../../../assets/icons/glyphs/back.svg';
 import MenuIcon from '../../../assets/icons/glyphs/menu.svg';
 
-import './_appbar.scss';
+import { DEFAULT_BACK_LINK } from '../../../constants';
 
-const DEFAULT_BACK_LINK = '/app/portfolio';
+import './_appbar.scss';
 
 const LeftButton = ({ goBack, toggleMenu, useBackLink }) => {
 	const Glyph = useBackLink ? BackIcon : MenuIcon;

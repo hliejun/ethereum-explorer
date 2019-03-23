@@ -3,12 +3,7 @@ import qs from 'query-string';
 
 import { filter, sort, untrim } from './helper';
 
-import {
-	FORM_VALIDATION,
-	PAGE_SIZE
-} from '../../components/scenes/Portfolio/_constants';
-
-const DEFAULT_CURRENCY = 'USD';
+import { DEFAULT_CURRENCY, FORM_VALIDATION, PAGE_SIZE } from '../../constants';
 
 // Props data
 

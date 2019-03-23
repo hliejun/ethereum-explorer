@@ -4,6 +4,8 @@ import clns from 'classnames';
 
 import { FormContext } from './Form';
 
+import { SELECT_PLACEHOLDER } from '../../../constants';
+
 import './_field.scss';
 
 const Input = ({
@@ -245,7 +247,7 @@ const Select = ({
 					key="placeholder"
 					value=""
 				>
-          Choose your option
+					{SELECT_PLACEHOLDER}
 				</option>
 				{options &&
           options.map(({ label, value }) => (

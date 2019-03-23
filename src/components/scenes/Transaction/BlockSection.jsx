@@ -3,34 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Section, SubSection } from '../../common/Sections';
 
-import BlockIcon from '../../../assets/icons/glyphs/block.svg';
-import ConfirmationIcon from '../../../assets/icons/glyphs/confirmation.svg';
-import HashIcon from '../../../assets/icons/glyphs/hash.svg';
-import HeightIcon from '../../../assets/icons/glyphs/height.svg';
-
-const BLOCK_SECTION_DATA = {
-	footer: 'More confirmations, better secured transactions.',
-	icon: BlockIcon,
-	title: 'Block Data'
-};
-
-const BLOCK_SUBSECTIONS_DATA = {
-	confirmations: {
-		description: 'Number of blocks burying this transaction',
-		icon: ConfirmationIcon,
-		title: 'Confirmations'
-	},
-	height: {
-		description: 'Number of blocks from genesis block',
-		icon: HeightIcon,
-		title: 'Number/Height'
-	},
-	id: {
-		description: 'Unique block identifier',
-		icon: HashIcon,
-		title: 'Block Hash'
-	}
-};
+import { BLOCK_SECTION_DATA, BLOCK_SUBSECTIONS_DATA } from '../../../constants';
 
 const BlockSection = ({ className, confirmations, height, id }) => (
 	<Section className={className} {...BLOCK_SECTION_DATA}>

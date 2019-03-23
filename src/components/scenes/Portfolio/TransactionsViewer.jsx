@@ -2,42 +2,39 @@ import React, { lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 
-import { CURRENCY_SYMBOLS } from '../../common/Currency';
-import Placeholder from '../../common/Placeholder';
-
 import { getTableViewModel, getTableFields } from './TransactionTableModel';
+import Placeholder from '../../common/Placeholder';
 import TransactionListItem from './TransactionListItem';
 
 import { untrim } from '../../../redux/selectors/helper';
 
-import {
-	BUFFER_SIZE,
-	PLACEHOLDER_TRANSACTIONS_EMPTY,
-	PLACEHOLDER_TRANSACTIONS_ERROR,
-	FORM_VALIDATION,
-	PLACEHOLDER_TRANSACTIONS_LOADING,
-	PAGE_SIZE
-} from './_constants';
-
 import EmptyIcon from '../../../assets/icons/glyphs/empty.svg';
 import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
+
+import {
+	BUFFER_SIZE,
+	CURRENCY_SYMBOLS,
+	FORM_VALIDATION,
+	LIST_DEFAULT_FONT_SIZE,
+	LIST_DIMEN_UNIT,
+	LIST_OFFSET_BOTTOM,
+	LIST_OFFSET_TOP,
+	LIST_PLACEHOLDER_TITLE,
+	LIST_ROW_HEIGHT,
+	PAGE_SIZE,
+	PLACEHOLDER_TRANSACTIONS_EMPTY,
+	PLACEHOLDER_TRANSACTIONS_ERROR,
+	PLACEHOLDER_TRANSACTIONS_LOADING,
+	TABLE_PLACEHOLDER_TITLE,
+	VIEWER_LOADING_SUBTITLE
+} from '../../../constants';
 
 const List = lazy(() => import('../../common/List'));
 const Table = lazy(() => import('../../common/Table'));
 
-const MOBILE_FONT_SIZE = 14;
-
-const LIST_DIMEN_UNIT = 'rem';
-const LIST_OFFSET_BOTTOM = 0;
-const LIST_OFFSET_TOP = 6.25;
-const LIST_PLACEHOLDER_TITLE = 'Transactions List';
-const LIST_ROW_HEIGHT = 8.5;
-
-const TABLE_PLACEHOLDER_TITLE = 'Transactions Table';
-
 const loaderProps = {
 	className: 'transactions-viewer__placeholder',
-	description: 'Loading, please wait...',
+	description: VIEWER_LOADING_SUBTITLE,
 	isLoading: true
 };
 
@@ -89,7 +86,7 @@ const TransactionsList = ({
 			className="portfolio__transaction-list"
 			code={code}
 			dataMap={transactions}
-			fontSize={MOBILE_FONT_SIZE}
+			fontSize={LIST_DEFAULT_FONT_SIZE}
 			key={listKey}
 			pageBufferSize={BUFFER_SIZE}
 			pageMap={pagination}

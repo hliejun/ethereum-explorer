@@ -2,17 +2,9 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clns from 'classnames';
 
-import './_currency.scss';
+import { CURRENCY_SYMBOLS } from '../../../constants';
 
-export const CURRENCY_SYMBOLS = {
-	CNY: '¥',
-	ETH: 'Ξ',
-	GBP: '£',
-	JPY: '¥',
-	KRW: '₩',
-	SGD: '$',
-	USD: '$'
-};
+import './_currency.scss';
 
 const Currency = ({ amount, className, code }) => {
 	// Parse amount into numerical formats

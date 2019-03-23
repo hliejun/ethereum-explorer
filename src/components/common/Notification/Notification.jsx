@@ -4,6 +4,11 @@ import clns from 'classnames';
 
 import Modal from '../Modal';
 
+import {
+	NOTIFICATION_DEFAULT_DISMISS,
+	NOTIFICATION_DEFAULT_TITLE
+} from '../../../constants';
+
 import './_notification.scss';
 
 const Notification = ({
@@ -46,10 +51,10 @@ Notification.propTypes = {
 Notification.defaultProps = {
 	className: null,
 	description: null,
-	dismissText: 'Okay',
+	dismissText: NOTIFICATION_DEFAULT_DISMISS,
 	onDismiss: () => {},
 	subtitle: null,
-	title: 'Notification'
+	title: NOTIFICATION_DEFAULT_TITLE
 };
 
 export default memo(Notification);

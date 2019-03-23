@@ -22,68 +22,25 @@ import {
 
 import { clearEthAddress, setEthAddress } from '../../../redux/actions/user';
 
-import { CURRENCY_SYMBOLS } from '../../common/Currency';
-
 import { ControlledForm, Input, Select } from '../../common/Form';
 import { Section, SubSection } from '../../common/Sections';
 
-import AppIcon from '../../../assets/icons/glyphs/application.svg';
 import ResetIcon from '../../../assets/icons/glyphs/reset.svg';
-import UserIcon from '../../../assets/icons/glyphs/avatar.svg';
+
+import {
+	ADDRESS_INPUT_PLACEHOLDER,
+	API_KEY_INPUT_PLACEHOLDER,
+	API_KEY_LENGTH,
+	APP_SUBSECTIONS_DATA,
+	CURRENCY_INPUT_OPTIONS,
+	CURRENCY_SYMBOLS,
+	ETH_ADDRESS_LENGTH,
+	SETTINGS_SECTIONS_DATA,
+	SETTINGS_TITLE,
+	USER_SUBSECTIONS_DATA
+} from '../../../constants';
 
 import './_settings.scss';
-
-const SETTINGS_TITLE = 'Transaction Details';
-
-const API_KEY_LENGTH = 64;
-const ETH_ADDRESS_LENGTH = 42;
-
-const ADDRESS_INPUT_PLACEHOLDER = 'Enter your Ethereum address...';
-const API_KEY_INPUT_PLACEHOLDER = 'Enter your API key...';
-const CURRENCY_INPUT_OPTIONS = [
-	{ label: 'British Pound', value: 'GBP' },
-	{ label: 'Chinese Yuan', value: 'CNY' },
-	{ label: 'Japanese Yen', value: 'JPY' },
-	{ label: 'Korean Won', value: 'KRW' },
-	{ label: 'Singapore Dollars', value: 'SGD' },
-	{ label: 'U.S Dollars', value: 'USD' }
-];
-
-const SETTINGS_SECTIONS_DATA = {
-	app: {
-		description: 'Credentials, view behaviours and customisations, etc.',
-		footer: '* Conversion rates are hidden when unavailable',
-		icon: AppIcon,
-		title: 'Application Settings'
-	},
-	user: {
-		description: 'User account and profile options, etc.',
-		icon: UserIcon,
-		title: 'User Settings'
-	}
-};
-
-const APP_SUBSECTIONS_DATA = {
-	currency: {
-		description: 'Conversion rate for localising Ethereum',
-		title: 'Preferred Currency *'
-	},
-	key: {
-		description: 'Usage key for controlled API endpoint access',
-		title: 'API Key'
-	},
-	theme: {
-		description: 'Dark style for low-light environment',
-		title: 'Use Dark Mode'
-	}
-};
-
-const USER_SUBSECTIONS_DATA = {
-	address: {
-		description: 'Designated cryptocurrency account hash',
-		title: 'Ethereum Address'
-	}
-};
 
 /**
  * NOTE:

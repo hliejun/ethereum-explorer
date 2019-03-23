@@ -5,41 +5,14 @@ import clns from 'classnames';
 
 import { stopScrollPropagation } from '../eventHandling';
 
-import HomeIcon from '../../../assets/icons/glyphs/home.svg';
-import PortfolioIcon from '../../../assets/icons/glyphs/balance.svg';
-import PrivacyIcon from '../../../assets/icons/glyphs/privacy.svg';
-import ProfileIcon from '../../../assets/icons/glyphs/account.svg';
-import RepositoryIcon from '../../../assets/icons/glyphs/code.svg';
-import SettingsIcon from '../../../assets/icons/glyphs/settings.svg';
-import TermsIcon from '../../../assets/icons/glyphs/terms.svg';
-import TxIcon from '../../../assets/icons/logos/tx.svg';
-import WebIcon from '../../../assets/icons/glyphs/link.svg';
+import {
+	APP_ICON,
+	APP_TITLE,
+	MENU_ITEMS,
+	MENU_LABELS
+} from '../../../constants';
 
 import './_sidemenu.scss';
-
-const APP_TITLE = 'TX ETHEREUM EXPLORER';
-const MENU_ITEMS = {
-	HOME: { icon: HomeIcon, label: 'Home', link: '/app' },
-	PORTFOLIO: {
-		icon: PortfolioIcon,
-		label: 'Portfolio',
-		link: '/app/portfolio'
-	},
-	PRIVACY: { icon: PrivacyIcon, label: 'Privacy', link: '/app/privacy' },
-	PROFILE: { icon: ProfileIcon, label: 'Profile', link: '/app/profile' },
-	REPOSITORY: {
-		icon: RepositoryIcon,
-		label: 'Repository',
-		link: 'https://github.com/hliejun'
-	},
-	SETTINGS: { icon: SettingsIcon, label: 'Settings', link: '/app/settings' },
-	TERMS: { icon: TermsIcon, label: 'Terms of Service', link: '/app/terms' },
-	WEBSITE: {
-		icon: WebIcon,
-		label: '@hliejun',
-		link: 'https://hliejun.github.io'
-	}
-};
 
 const MenuHeader = ({ className, icon: Icon, link, onClick, title }) => (
 	<div
@@ -141,14 +114,19 @@ const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
 			ref={ref}
 			role="presentation"
 		>
-			<MenuHeader icon={TxIcon} link="/app" onClick={close} title={APP_TITLE} />
+			<MenuHeader
+				icon={APP_ICON}
+				link="/app"
+				onClick={close}
+				title={APP_TITLE}
+			/>
 			<div className="side-menu__sections">
 				<MenuSection>
 					<LinkedMenuItem {...MENU_ITEMS.HOME} onClick={close} />
 					<LinkedMenuItem {...MENU_ITEMS.PORTFOLIO} onClick={close} />
 					<LinkedMenuItem {...MENU_ITEMS.PROFILE} onClick={close} />
 				</MenuSection>
-				<MenuSection label="MEDIA">
+				<MenuSection label={MENU_LABELS.media}>
 					<MenuItem
 						{...MENU_ITEMS.REPOSITORY}
 						onClick={newTab(MENU_ITEMS.REPOSITORY.link)}
@@ -158,7 +136,7 @@ const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
 						onClick={newTab(MENU_ITEMS.WEBSITE.link)}
 					/>
 				</MenuSection>
-				<MenuSection label="LEGAL">
+				<MenuSection label={MENU_LABELS.legal}>
 					<MenuItem
 						{...MENU_ITEMS.PRIVACY}
 						onClick={newTab(MENU_ITEMS.PRIVACY.link)}
@@ -168,7 +146,7 @@ const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
 						onClick={newTab(MENU_ITEMS.TERMS.link)}
 					/>
 				</MenuSection>
-				<MenuSection label="APP">
+				<MenuSection label={MENU_LABELS.app}>
 					<LinkedMenuItem {...MENU_ITEMS.SETTINGS} onClick={close} />
 				</MenuSection>
 			</div>

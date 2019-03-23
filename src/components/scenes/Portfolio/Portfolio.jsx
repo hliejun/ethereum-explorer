@@ -26,17 +26,6 @@ import {
 	reloadTransactions as fetchTransactions
 } from '../../../redux/actions/ethereum';
 
-import {
-	DEFAULT_FILTERS,
-	DEFAULT_FILTERS_SORT,
-	DEFAULT_SORT,
-	PLACEHOLDER_ADDRESS_ERROR,
-	PLACEHOLDER_KEY_ERROR,
-	FORM_VALIDATION
-} from './_constants';
-
-import { CURRENCY_SYMBOLS } from '../../common/Currency';
-
 import CombinedForm from './CombinedForm';
 import FilterForm from './FilterForm';
 import Modal from '../../common/Modal';
@@ -50,20 +39,22 @@ import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 import FilterIcon from '../../../assets/icons/glyphs/filter.svg';
 import SortIcon from '../../../assets/icons/glyphs/sort.svg';
 
+import {
+	CURRENCY_SYMBOLS,
+	DEFAULT_FILTERS,
+	DEFAULT_FILTERS_SORT,
+	DEFAULT_SORT,
+	FILTER_FORM_SUBTITLE,
+	FILTER_FORM_TITLE,
+	FORM_VALIDATION,
+	PLACEHOLDER_ADDRESS_ERROR,
+	PLACEHOLDER_KEY_ERROR,
+	PORTFOLIO_SECTION_LABELS,
+	SORT_FORM_SUBTITLE,
+	SORT_FORM_TITLE
+} from '../../../constants';
+
 import './_portfolio.scss';
-
-const FILTER_FORM_TITLE = 'Filter Transactions';
-const FILTER_FORM_SUBTITLE =
-  'Select a field category and its relevant tags to selectively display transaction results.';
-
-const SORT_FORM_TITLE = 'Sort Transactions';
-const SORT_FORM_SUBTITLE =
-  'Select a sortable field category and sort order to reorder the transaction results.';
-
-const PORTFOLIO_SECTION_LABELS = {
-	history: 'Transaction History',
-	options: 'View Options'
-};
 
 class Portfolio extends React.PureComponent {
 	constructor(props) {
@@ -282,6 +273,7 @@ class Portfolio extends React.PureComponent {
   			onRefresh={updateTransactionsAndRates}
   			pagination={pagination}
   			setSort={this.setSort}
+  			rate={rate}
   			transactions={transactions}
   			updatePage={this.updatePage}
   		/>

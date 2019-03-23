@@ -1,5 +1,7 @@
 import { ETHEREUM } from '../actions/types';
 
+import { DEFAULT_CURRENCY } from '../../constants';
+
 export const initialState = {
 	balance: {
 		error: null,
@@ -13,7 +15,7 @@ export const initialState = {
 		list: []
 	},
 	currency: {
-		base: 'USD',
+		base: DEFAULT_CURRENCY,
 		error: null,
 		isLoading: false,
 		lastUpdated: null,

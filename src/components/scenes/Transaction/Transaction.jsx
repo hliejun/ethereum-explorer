@@ -17,38 +17,33 @@ import {
 	reloadTransactions as fetchTransactions
 } from '../../../redux/actions/ethereum';
 
-import { copyData, formatObject } from './_helper';
-
-import {
-	COUNTRY_ICONS,
-	PLACEHOLDER_ADDRESS_ERROR,
-	PLACEHOLDER_KEY_ERROR,
-	PLACEHOLDER_TRANSACTION_ERROR,
-	PLACEHOLDER_TRANSACTION_LOADING
-} from './_constants';
-
 import BlockSection from './BlockSection';
-import Currency, { CURRENCY_SYMBOLS } from '../../common/Currency';
+import Currency from '../../common/Currency';
 import GasSection from './GasSection';
 import Jumbotron from '../../common/Jumbotron';
 import Placeholder from '../../common/Placeholder';
 import SourceSection from './SourceSection';
 
+import { copyData, formatObject } from './_helper';
+
 import CopyIcon from '../../../assets/icons/glyphs/copy.svg';
 import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 
+import {
+	CLIPBOARD_NOTIFICATION,
+	COUNTRY_ICONS,
+	CURRENCY_SYMBOLS,
+	PLACEHOLDER_ADDRESS_ERROR,
+	PLACEHOLDER_KEY_ERROR,
+	PLACEHOLDER_TRANSACTION_ERROR,
+	PLACEHOLDER_TRANSACTION_LOADING,
+	TRANSACTION_JUMBOTRON_SUBTITLE,
+	TRANSACTION_TITLE,
+	TRANSACTION_USE_BACKLINK,
+	TRANSACTION_ZERO_ETH_INFO
+} from '../../../constants';
+
 import './_transaction.scss';
-
-const TRANSACTION_TITLE = 'Transaction Details';
-const TRANSACTION_JUMBOTRON_SUBTITLE = 'Transacted Ether';
-const TRANSACTION_ZERO_ETH_INFO = 'This is a zero-value data transaction.';
-
-const USE_BACKLINK = true;
-const CLIPBOARD_NOTIFICATION = {
-	description:
-    'The details for this transaction has been copied to your clipboard!',
-	subtitle: 'Copy to Clipboard'
-};
 
 const LocalValues = ({ rates, value }) => {
 	const { ETH, ...localRates } = rates;
@@ -105,7 +100,7 @@ const Transaction = ({
 	// Setup AppBar controls
 	useEffect(() => {
 		updateSubtitle(subtitle);
-		updateBacklink(USE_BACKLINK);
+		updateBacklink(TRANSACTION_USE_BACKLINK);
 		updateOptions(options);
 		updateTitle(TRANSACTION_TITLE);
 		return () => {

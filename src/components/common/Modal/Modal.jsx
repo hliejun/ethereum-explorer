@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import { stopScroll } from '../eventHandling';
 
-import './_modal.scss';
+import { MODAL_ACTIVE_CLASS } from '../../../constants';
 
-const MODAL_ACTIVE_CLASS = 'modal-open';
+import './_modal.scss';
 
 const modalRoot = document.getElementById('modal-root');
 

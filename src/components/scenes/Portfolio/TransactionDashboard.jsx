@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { CURRENCY_SYMBOLS } from '../../common/Currency';
 import { Form, Input } from '../../common/Form';
 import Dashboard from '../../common/Dashboard';
 import Placeholder from '../../common/Placeholder';
-
-import {
-	PLACEHOLDER_BALANCE_ERROR,
-	PLACEHOLDER_BALANCE_LOADING
-} from './_constants';
 
 import BalanceIcon from '../../../assets/icons/glyphs/balance.svg';
 import ReceiveIcon from '../../../assets/icons/glyphs/receive.svg';
@@ -17,15 +11,14 @@ import SendIcon from '../../../assets/icons/glyphs/send.svg';
 
 import ErrorIcon from '../../../assets/icons/glyphs/server.svg';
 
-import './_transactiondashboard.scss';
+import {
+	CURRENCY_SYMBOLS,
+	DASHBOARD_LABELS,
+	PLACEHOLDER_BALANCE_ERROR,
+	PLACEHOLDER_BALANCE_LOADING
+} from '../../../constants';
 
-const DASHBOARD_LABELS = {
-	balance: 'Balance',
-	local: 'Localise:',
-	nett: 'SUBTOTAL',
-	received: 'INCOMING',
-	sent: 'OUTGOING'
-};
+import './_transactiondashboard.scss';
 
 /**
  * NOTE:

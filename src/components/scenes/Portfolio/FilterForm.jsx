@@ -5,16 +5,13 @@ import clns from 'classnames';
 import { ControlledForm, Input, Select } from '../../common/Form';
 import { stopScroll } from '../../common/eventHandling';
 
-import { FILTER_CATEGORIES, FILTER_TAGS } from './_constants';
+import {
+	FILTER_CATEGORIES,
+	FILTER_FORM_LABELS,
+	FILTER_TAGS
+} from '../../../constants';
 
 import './_transactionform.scss';
-
-const FILTER_FORM_LABELS = {
-	filter: 'Filter By:',
-	options: 'Filter Options:',
-	reset: 'Reset',
-	submit: 'Done'
-};
 
 const FilterFields = ({ category, name }) => (
 	<React.Fragment>

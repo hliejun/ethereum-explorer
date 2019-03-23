@@ -13,6 +13,14 @@ import {
 
 import Loader from '../Loader';
 
+import {
+	LIST_DEFAULT_FONT_SIZE,
+	LIST_FOOTER_SUBTITLE,
+	LIST_FOOTER_TITLE,
+	LIST_ITEM_DEFAULT_HEIGHT,
+	LIST_JUMPER_TEXT
+} from '../../../constants';
+
 import './_list.scss';
 
 // Refrain from updating if no changes to props and states
@@ -221,10 +229,10 @@ class List extends React.PureComponent {
   			{listObjects && listObjects.length > 0 && (
   				<div className="list__footer">
   					<span className="list__footer-title monotype">
-              End of Transaction History
+  						{LIST_FOOTER_TITLE}
   					</span>
   					<span className="list__footer-subtitle monotype">
-              * capped at last 1000 entries *
+  						{LIST_FOOTER_SUBTITLE}
   					</span>
   				</div>
   			)}
@@ -234,7 +242,9 @@ class List extends React.PureComponent {
   					onClick={this.resetBuffer}
   					type="button"
   				>
-  					<span className="list__jump-label monotype">▲ Back to top ▲</span>
+  					<span className="list__jump-label monotype">
+  						{LIST_JUMPER_TEXT}
+  					</span>
   				</button>
   			)}
   		</div>
@@ -261,12 +271,12 @@ List.propTypes = {
 List.defaultProps = {
 	bottomOffset: 0,
 	className: null,
-	fontSize: 16,
+	fontSize: LIST_DEFAULT_FONT_SIZE,
 	onRefresh: null,
 	placeholder: null,
 	topOffset: 0,
 	unit: 'px',
-	unitBufferHeight: 200
+	unitBufferHeight: LIST_ITEM_DEFAULT_HEIGHT
 };
 
 export default List;

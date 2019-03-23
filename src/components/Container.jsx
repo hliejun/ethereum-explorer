@@ -20,16 +20,22 @@ import {
 import AppBar from './common/AppBar';
 import Notification from './common/Notification';
 
+import {
+	APP_TITLE,
+	NOTIFICATION_DEFAULT_DISMISS,
+	NOTIFICATION_DEFAULT_TITLE
+} from '../constants';
+
 // Attach passthrough app controls by making pages into render props
 const attach = Page => options => props => <Page {...options} {...props} />;
 
 const initialState = {
 	isMobile: false,
-	notifConfirmText: 'Dismiss',
-	notifTitle: 'Notification',
+	notifConfirmText: NOTIFICATION_DEFAULT_DISMISS,
+	notifTitle: NOTIFICATION_DEFAULT_TITLE,
 	pageOptions: [],
 	pageSubtitle: null,
-	pageTitle: 'Tx Ethereum Explorer',
+	pageTitle: APP_TITLE,
 	useBackLink: false
 };
 
