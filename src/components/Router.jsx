@@ -5,7 +5,7 @@ const RouterContext = React.createContext({});
 
 // Provide Router context such as location and history to routed pages
 const Router = ({ children }) => (
-	<BrowserRouter>
+	<BrowserRouter basename={process.env.PUBLIC_URL || ''}>
 		<Route>
 			{routeProps => (
 				<RouterContext.Provider value={routeProps}>

@@ -21,6 +21,9 @@ module.exports = env => {
 		return acc;
 	}, {});
 
+	// Assign public URL
+	keys['process.env.PUBLIC_URL'] = JSON.stringify(env.PUBLIC_URL || '');
+
 	// Configure webpack
 	return {
 		entry: './src/index.js',
