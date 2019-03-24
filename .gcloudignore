@@ -1,0 +1,38 @@
+
+# This file:
+.gcloudignore
+
+# GitHub:
+.git
+.gitignore
+README.md
+CONTRIBUTING.md
+LICENSE.md
+
+# Node.js dependencies:
+node_modules/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+._*
+Thumbs.db
+ehthumbs.db
+
+# Visual Studio Code generated files
+.history
+.vscode
+
+# Source Files
+/src
+
+# Linters
+.eslintrc.*
+.prettierrc.*
+.sass-lint.*
+
+# Compilers/Transpilers
+webpack.config.js
+.babelrc

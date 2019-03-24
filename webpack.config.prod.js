@@ -1,3 +1,7 @@
+const CompressionPlugin = require('compression-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
@@ -50,21 +54,31 @@ module.exports = env => {
 		},
 		plugins: [
 			new webpack.DefinePlugin(keys),
-			new webpack.HotModuleReplacementPlugin()
+			new webpack.HotModuleReplacementPlugin(),
+			new CompressionPlugin(),
+			new HtmlWebpackPlugin({
+				filename: 'index.html',
+				template: './index.html'
+			}),
+			new CopyPlugin([
+				{ from: 'public', to: './' },
+				{
+					from: '404.html',
+					to: './',
+					toType: 'dir'
+				}
+			])
 		],
+		optimization: {
+			splitChunks: {
+				chunks: 'all'
+			}
+		},
 		resolve: { extensions: ['*', '.js', '.jsx'] },
 		output: {
-			path: path.resolve(__dirname, 'dist/'),
-			publicPath: '/dist/',
+			path: path.resolve(__dirname, 'build/'),
+			publicPath: '/',
 			filename: 'bundle.js'
-		},
-		devServer: {
-			contentBase: path.join(__dirname, 'public/'),
-			port: 3000,
-			publicPath: 'http://localhost:3000/dist/',
-			historyApiFallback: true,
-			hotOnly: true
-		},
-		devtool: 'source-map'
+		}
 	};
 };

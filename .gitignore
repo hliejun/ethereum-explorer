@@ -14,9 +14,8 @@ ehthumbs.db
 # NodeJS modules
 /node_modules
 
-# Build files
-build
-dist
-
 # Environment variables
 .env*
+
+# Build files
+build

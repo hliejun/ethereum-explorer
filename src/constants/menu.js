@@ -8,21 +8,41 @@ import TermsIcon from '../assets/icons/glyphs/terms.svg';
 import WebIcon from '../assets/icons/glyphs/link.svg';
 
 export const MENU_ITEMS = {
-	HOME: { icon: HomeIcon, label: 'Home', link: '/app' },
+	HOME: {
+		icon: HomeIcon,
+		label: 'Home',
+		link: '/app'
+	},
 	PORTFOLIO: {
 		icon: PortfolioIcon,
 		label: 'Portfolio',
 		link: '/app/portfolio'
 	},
-	PRIVACY: { icon: PrivacyIcon, label: 'Privacy', link: '/app/privacy' },
-	PROFILE: { icon: ProfileIcon, label: 'Profile', link: '/app/profile' },
+	PRIVACY: {
+		icon: PrivacyIcon,
+		label: 'Privacy',
+		link: '/app/privacy'
+	},
+	PROFILE: {
+		icon: ProfileIcon,
+		label: 'Profile',
+		link: '/app/profile'
+	},
 	REPOSITORY: {
 		icon: RepositoryIcon,
 		label: 'Repository',
 		link: 'https://github.com/hliejun'
 	},
-	SETTINGS: { icon: SettingsIcon, label: 'Settings', link: '/app/settings' },
-	TERMS: { icon: TermsIcon, label: 'Terms of Service', link: '/app/terms' },
+	SETTINGS: {
+		icon: SettingsIcon,
+		label: 'Settings',
+		link: '/app/settings'
+	},
+	TERMS: {
+		icon: TermsIcon,
+		label: 'Terms of Service',
+		link: '/app/terms'
+	},
 	WEBSITE: {
 		icon: WebIcon,
 		label: '@hliejun',

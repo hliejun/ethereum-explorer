@@ -1,0 +1,15 @@
+runtime: nodejs8
+
+handlers:
+  - url: /(.*\.(js))$
+    static_files: build/\1
+    upload: build/.*\.(js)$
+  - url: /(.*\.(ico|png|xml|json))$
+    static_files: build/\1
+    upload: build/.*\.(ico|png|xml|json)$
+  - url: /
+    static_files: build/index.html
+    upload: build/index.html
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
