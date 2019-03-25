@@ -90,7 +90,12 @@
           }
         }
       }
-      updateUrl();
+
+      try {
+        updateUrl();
+      } catch {
+        //... silent the error
+      }
     </script>
   </head>
   <body>

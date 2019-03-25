@@ -46,7 +46,11 @@
         );
       }
 
-      redirect(window.location);
+      try {
+        redirect(window.location);
+      } catch {
+        //... silent the error
+      }
     </script>
   </head>
   <body></body>
