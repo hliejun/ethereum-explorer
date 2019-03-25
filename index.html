@@ -64,7 +64,7 @@
       // the correct url will be waiting in the browser's history for
       // the single page app to route accordingly.
 
-      function redirect() {
+      function updateUrl() {
         const l = window.location;
         if (l.search) {
           const q = {};
@@ -90,9 +90,10 @@
           }
         }
       }
+      updateUrl();
     </script>
   </head>
-  <body onload="redirect()">
+  <body>
     <div id="app-root"></div>
     <div id="modal-root"></div>
     <div id="toaster-root"></div>

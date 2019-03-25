@@ -23,7 +23,7 @@
       // https://username.github.io/repo-name/?p=/one/two&q=a=b~and~c=d#qwe
       // Otherwise, leave segmentCount as 0.
 
-      function updateUrl() {
+      function redirect() {
         const segmentCount = 1;
         const l = window.location;
         l.replace(
@@ -46,8 +46,7 @@
             l.hash
         );
       }
-      
     </script>
   </head>
-  <body onload="updateUrl()"></body>
+  <body onload="redirect()"></body>
 </html>
