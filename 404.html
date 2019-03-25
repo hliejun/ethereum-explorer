@@ -23,9 +23,8 @@
       // https://username.github.io/repo-name/?p=/one/two&q=a=b~and~c=d#qwe
       // Otherwise, leave segmentCount as 0.
 
-      function redirect() {
+      function redirect(l) {
         const segmentCount = 1;
-        const l = window.location;
         l.replace(
           l.protocol +
             '//' +
@@ -48,5 +47,5 @@
       }
     </script>
   </head>
-  <body onload="redirect()"></body>
+  <body onload="redirect(window.location)"></body>
 </html>
