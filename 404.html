@@ -46,14 +46,8 @@
         );
       }
 
-      try {
-        if (window && window.location) {
-          redirect(window.location);
-        }
-      } catch {
-        //... silent the error
-      }
+      // redirect(window.location);
     </script>
   </head>
-  <body></body>
+  <body onload="redirect(window.location)"></body>
 </html>
