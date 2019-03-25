@@ -7,6 +7,8 @@ import Singapore from '../assets/icons/flags/singapore.svg';
 import UnitedKingdom from '../assets/icons/flags/uk.svg';
 import UnitedStates from '../assets/icons/flags/us.svg';
 
+import { LINK_PORTFOLIO } from './menu';
+
 // App
 
 export const APP_ICON = TxIcon;
@@ -15,7 +17,7 @@ export const APP_TITLE = 'Tx Ethereum Explorer';
 
 // App Bar
 
-export const APP_DEFAULT_BACKLINK = '/app/portfolio';
+export const APP_DEFAULT_BACKLINK = LINK_PORTFOLIO;
 
 // Notification
 
@@ -92,7 +94,7 @@ export const CONSTRUCTION_DESCRIPTOR =
 
 export const MISSING_REDIRECT_TEXT = 'Go to Portfolio';
 
-export const MISSING_REDIRECT_LINK = '/app/portfolio';
+export const MISSING_REDIRECT_LINK = LINK_PORTFOLIO;
 
 export const MISSING_TITLE = 'Page Not Found';
 

@@ -96,6 +96,12 @@
   user-select: none;
 }
 
+@mixin select($value) {
+  -webkit-user-select: $value;
+  -moz-user-select: $value;
+  user-select: $value;
+}
+
 @mixin pointer-events($value) {
   -webkit-pointer-events: $value;
   -moz-pointer-events: $value;

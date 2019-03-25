@@ -47,6 +47,7 @@ import {
 	FILTER_FORM_SUBTITLE,
 	FILTER_FORM_TITLE,
 	FORM_VALIDATION,
+	LINK_SETTINGS,
 	PLACEHOLDER_ADDRESS_ERROR,
 	PLACEHOLDER_KEY_ERROR,
 	PORTFOLIO_SECTION_LABELS,
@@ -214,7 +215,7 @@ class Portfolio extends React.PureComponent {
   			className={`portfolio__placeholder portfolio__placeholder--${key}`}
   			errorIcon={ErrorIcon}
   			hasError
-  			onRefresh={() => history.push('/app/settings')}
+  			onRefresh={() => history.push(LINK_SETTINGS)}
   			{...state}
   		/>
   	);

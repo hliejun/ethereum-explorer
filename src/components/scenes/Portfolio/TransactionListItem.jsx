@@ -13,6 +13,7 @@ import {
 	CURRENCY_SYMBOLS,
 	DATE_FORMAT_LONG,
 	DATE_FORMAT_SHORT,
+	LINK_TRANSACTION,
 	LIST_ITEM_LABELS
 } from '../../../constants';
 
@@ -175,7 +176,7 @@ const TransactionListItem = withRouter(
 	({ history, id, ...passthroughProps }) => (
 		<ListItem
 			{...passthroughProps}
-			onClick={() => history.push(`/app/transaction/${id}`)}
+			onClick={() => history.push(`${LINK_TRANSACTION}/${id}`)}
 		/>
 	)
 );

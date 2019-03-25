@@ -142,6 +142,7 @@ const Settings = ({
 									maxLength={SETTINGS_LENGTH_API_KEY}
 									name="apiKey"
 									placeholder={SETTINGS_INPUT_PLACEHOLDER_API_KEY}
+									rows="3"
 									type="textarea"
 									value={apiKey}
 								/>
@@ -181,6 +182,7 @@ const Settings = ({
 									maxLength={SETTINGS_LENGTH_ETH_ADDRESS}
 									name="address"
 									placeholder={SETTINGS_INPUT_PLACEHOLDER_ADDRESS}
+									rows="3"
 									type="textarea"
 									value={address}
 								/>

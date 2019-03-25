@@ -15,6 +15,7 @@ import {
 	LIST_BUFFER_SIZE,
 	CURRENCY_SYMBOLS,
 	FORM_VALIDATION,
+	LINK_TRANSACTION,
 	LIST_DEFAULT_FONT_SIZE,
 	LIST_DIMEN_UNIT,
 	LIST_OFFSET_BOTTOM,
@@ -154,7 +155,7 @@ const TransactionsTable = ({
 				fields={getTableFields(code)}
 				lastPage={Math.max(1, pagination.length)}
 				onPageChange={updatePage}
-				onSelectRow={id => history.push(`/app/transaction/${id}`)}
+				onSelectRow={id => history.push(`${LINK_TRANSACTION}/${id}`)}
 				onSort={setSort}
 				pageItems={pageItems}
 				parser={getTableViewModel(code, rate)}

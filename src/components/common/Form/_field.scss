@@ -252,8 +252,13 @@
 
 // Textarea Type
 
+.field--textarea {
+  @include select(auto);
+}
+
 .field__input--textarea {
   @include appearance(none);
+  @include select(auto);
   background-color: transparent;
   border-color: $field-border;
   border-radius: 0;

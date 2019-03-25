@@ -33,6 +33,7 @@ import {
 	NOTIFICATION_CLIPBOARD,
 	COUNTRY_ICONS,
 	CURRENCY_SYMBOLS,
+	LINK_SETTINGS,
 	PLACEHOLDER_ADDRESS_ERROR,
 	PLACEHOLDER_KEY_ERROR,
 	PLACEHOLDER_TRANSACTION_ERROR,
@@ -125,7 +126,7 @@ const Transaction = ({
 	// Setup placeholder
 	let placeholderState = null;
 	let key = 'transaction';
-	let actionHandler = () => history.push('/app/settings');
+	let actionHandler = () => history.push(LINK_SETTINGS);
 	if (!apiKey) {
 		placeholderState = PLACEHOLDER_KEY_ERROR;
 		key = 'key';
