@@ -61,7 +61,7 @@ module.exports = env => {
 			new CompressionPlugin(),
 			new HtmlWebpackPlugin({
 				filename: 'index.html',
-				template: './index.html'
+				template: env.GH ? 'index.gh.html' : './index.html'
 			}),
 			new CopyPlugin([
 				{ from: 'public', to: './' },

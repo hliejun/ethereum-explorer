@@ -10,7 +10,7 @@
     "build": "webpack --mode production --env.ENVIRONMENT=production --config webpack.config.prod.js --output-public-path='/'",
     "deploy": "gh-pages -d build",
     "lint": "eslint src/",
-    "predeploy": "webpack --mode production --env.ENVIRONMENT=production --env.PUBLIC_URL='/ethereum-explorer' --config webpack.config.prod.js --output-public-path='/ethereum-explorer/'",
+    "predeploy": "webpack --mode production --env.ENVIRONMENT=production --env.GH --env.PUBLIC_URL='/ethereum-explorer' --config webpack.config.prod.js --output-public-path='/ethereum-explorer/'",
     "start": "NODE_ENV=production node server.js",
     "start:dev": "webpack-dev-server --mode development --env.ENVIRONMENT=development --config webpack.config.dev.js --host 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,7 +29,6 @@
     "babel-loader": "^8.0.5",
     "compression-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^5.0.2",
-    "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "dotenv": "^7.0.0",
     "eslint": "^5.14.1",
