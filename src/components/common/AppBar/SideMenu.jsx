@@ -8,6 +8,7 @@ import { stopScrollPropagation } from '../eventHandling';
 import {
 	APP_ICON,
 	APP_TITLE,
+	LINK_HOME,
 	MENU_ITEMS,
 	MENU_LABELS
 } from '../../../constants';
@@ -104,7 +105,7 @@ const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
 		handleClose();
 	};
 	const newTab = url => () => {
-		window.open(url, '_blank');
+		window.open(url, '_blank', 'noopener');
 		close();
 	};
 	return (
@@ -116,7 +117,7 @@ const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
 		>
 			<MenuHeader
 				icon={APP_ICON}
-				link="/app"
+				link={LINK_HOME}
 				onClick={close}
 				title={APP_TITLE}
 			/>
@@ -137,14 +138,8 @@ const SideMenu = React.forwardRef(({ className, handleClose }, ref) => {
 					/>
 				</MenuSection>
 				<MenuSection label={MENU_LABELS.legal}>
-					<MenuItem
-						{...MENU_ITEMS.PRIVACY}
-						onClick={newTab(MENU_ITEMS.PRIVACY.link)}
-					/>
-					<MenuItem
-						{...MENU_ITEMS.TERMS}
-						onClick={newTab(MENU_ITEMS.TERMS.link)}
-					/>
+					<LinkedMenuItem {...MENU_ITEMS.PRIVACY} onClick={close} />
+					<LinkedMenuItem {...MENU_ITEMS.TERMS} onClick={close} />
 				</MenuSection>
 				<MenuSection label={MENU_LABELS.app}>
 					<LinkedMenuItem {...MENU_ITEMS.SETTINGS} onClick={close} />

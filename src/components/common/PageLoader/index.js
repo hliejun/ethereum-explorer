@@ -1,3 +1,9 @@
-import { PortfolioPage, SettingsPage, TransactionPage } from './PageLoader';
+import {
+	PortfolioPage,
+	PrivacyPage,
+	SettingsPage,
+	TermsPage,
+	TransactionPage
+} from './PageLoader';
 
-export { PortfolioPage, SettingsPage, TransactionPage };
+export { PortfolioPage, PrivacyPage, SettingsPage, TermsPage, TransactionPage };

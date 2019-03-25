@@ -9,7 +9,9 @@ import {
 
 // Import pages on-demand
 const Portfolio = lazy(() => import('../../scenes/Portfolio'));
+const Privacy = lazy(() => import('../../scenes/Privacy'));
 const Settings = lazy(() => import('../../scenes/Settings'));
+const Terms = lazy(() => import('../../scenes/Terms'));
 const Transaction = lazy(() => import('../../scenes/Transaction'));
 
 const commonProps = {
@@ -30,6 +32,18 @@ const PortfolioPage = props => {
 	);
 };
 
+const PrivacyPage = props => {
+	return (
+		<Suspense
+			fallback={
+				<Placeholder title={PAGE_LOADER_TITLES.privacy} {...commonProps} />
+			}
+		>
+			<Privacy {...props} />
+		</Suspense>
+	);
+};
+
 const SettingsPage = props => {
 	return (
 		<Suspense
@@ -38,6 +52,18 @@ const SettingsPage = props => {
 			}
 		>
 			<Settings {...props} />
+		</Suspense>
+	);
+};
+
+const TermsPage = props => {
+	return (
+		<Suspense
+			fallback={
+				<Placeholder title={PAGE_LOADER_TITLES.terms} {...commonProps} />
+			}
+		>
+			<Terms {...props} />
 		</Suspense>
 	);
 };
@@ -54,4 +80,4 @@ const TransactionPage = props => {
 	);
 };
 
-export { PortfolioPage, SettingsPage, TransactionPage };
+export { PortfolioPage, PrivacyPage, SettingsPage, TermsPage, TransactionPage };

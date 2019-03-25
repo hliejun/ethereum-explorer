@@ -22,7 +22,9 @@ import Profile from './scenes/Profile';
 
 import {
 	PortfolioPage,
+	PrivacyPage,
 	SettingsPage,
+	TermsPage,
 	TransactionPage
 } from './common/PageLoader';
 
@@ -176,6 +178,16 @@ const Container = ({
 					exact
 					path={`${match.url}/transaction/:id`}
 					render={attach(TransactionPage)(appControl)}
+				/>
+				<Route
+					exact
+					path={`${match.url}/privacy`}
+					render={attach(PrivacyPage)(appControl)}
+				/>
+				<Route
+					exact
+					path={`${match.url}/terms`}
+					render={attach(TermsPage)(appControl)}
 				/>
 				<Route render={attach(Missing)(appControl)} />
 			</Switch>

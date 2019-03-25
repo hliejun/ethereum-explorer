@@ -199,3 +199,12 @@ $transaction-status-background-failed: $error;
 $transaction-status-background-pending: $warning;
 $transaction-status-background-success: $success;
 $transaction-status-content: $highlight-content;
+
+// Privacy Page
+$privacy-terms-content: var(--primary-text);
+$privacy-terms-hint: var(--secondary-text);
+$privacy-terms-link-background-active: var(--secondary-active);
+$privacy-terms-link-background-hover: var(--primary-highlight);
+$privacy-terms-link-background: var(--inverted-background);
+$privacy-terms-link-text-hover: $highlight-content;
+$privacy-terms-link-text: var(--inverted-text);

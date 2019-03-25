@@ -39,7 +39,9 @@ export const MODAL_ACTIVE_CLASS = 'modal-open';
 
 export const PAGE_LOADER_TITLES = {
 	portfolio: 'Portfolio',
+	privacy: 'Privacy',
 	settings: 'Settings',
+	terms: 'Terms of Service',
 	transaction: 'Transaction'
 };
 
@@ -124,6 +126,21 @@ export const DASHBOARD_LABELS = {
 	received: 'INCOMING',
 	sent: 'OUTGOING'
 };
+
+// Privacy
+
+export const PRIVACY_TITLE = 'Privacy Policy';
+
+export const PRIVACY_SUBTITLE = 'Important Information About Personal Data';
+
+// Terms
+
+export const TERMS_TITLE = 'Terms of Service';
+
+export const TERMS_SUBTITLE =
+  'Terms and Conditions for Service Operation and Usage';
+
+// Aggregated / Passthrough Exports
 
 export * from './form';
 export * from './list';

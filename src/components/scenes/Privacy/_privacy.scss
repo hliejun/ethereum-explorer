@@ -1,0 +1,66 @@
+@import '../../../assets/colors';
+
+.privacy__under-construction {
+  color: $privacy-terms-content;
+  overflow-wrap: anywhere;
+
+  .construction__header {
+    margin: 1em 0;
+  }
+}
+
+.privacy .construction__content {
+  max-width: 60em;
+  padding: 1em;
+  width: 100%;
+  text-align: justify;
+}
+
+.privacy__title {
+  font-weight: 500;
+}
+
+.privacy__text {
+  line-height: 1.6;
+  margin: 1em;
+}
+
+.privacy__text-link {
+  background-color: $privacy-terms-link-background;
+  border-radius: 0.5em;
+  color: $privacy-terms-link-text;
+  display: inline-block;
+  font-size: 0.85em;
+  line-height: 1.3;
+  margin: 0 0.25em;
+  padding: 0.1em 0.5em;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.no-touch .privacy__text-link:hover {
+  background-color: $privacy-terms-link-background-hover;
+  color: $privacy-terms-link-text-hover;
+}
+
+.privacy__text-link:active {
+  background-color: $privacy-terms-link-background-active;
+  color: $privacy-terms-link-text-hover;
+}
+
+.privacy__list {
+  margin: 1em 0;
+}
+
+.privacy__list-item {
+  margin: 1em 0;
+}
+
+// Mobile Portrait
+@media only screen and (max-width: 767px) and (orientation: portrait) {
+  .privacy .construction__content {
+    font-size: 0.85em;
+    padding: 0.5em;
+    text-align: left;
+  }
+}
