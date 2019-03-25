@@ -47,10 +47,9 @@
       }
 
       try {
-        if (!window || !window.location) {
-          return;
+        if (window && window.location) {
+          redirect(window.location);
         }
-        redirect(window.location);
       } catch {
         //... silent the error
       }
