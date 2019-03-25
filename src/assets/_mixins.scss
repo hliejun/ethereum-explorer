@@ -71,10 +71,10 @@
 
 // Credit: https://stackoverflow.com/questions/44793453/how-do-i-add-a-top-and-bottom-shadow-while-scrolling-but-only-when-needed
 
-@mixin shadowed-background($background, $shadow) {
+@mixin shadowed-background($background, $rgb-background, $shadow) {
   @include overscroll(auto);
-  background: linear-gradient($background 30%, rgba($background, 0)),
-    linear-gradient(rgba($background, 0), $background 70%) 0 100%,
+  background: linear-gradient($background 30%, rgba($rgb-background, 0)),
+    linear-gradient(rgba($rgb-background, 0), $background 70%) 0 100%,
     linear-gradient(rgba($shadow, 0.1), rgba($shadow, 0)) 100% 0,
     linear-gradient(rgba($shadow, 0), rgba($shadow, 0.1)) 0 100%;
   background-attachment: local, local, scroll, scroll;

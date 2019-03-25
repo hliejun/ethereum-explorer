@@ -10,6 +10,7 @@ const defaultTheme = {
 	'--primary-text': '#263238',
 	'--secondary-active': '#4150a8',
 	'--secondary-background': '#ffffff',
+	'--secondary-background-rgb': '255, 255, 255',
 	'--secondary-hover': '#a6aedc',
 	'--secondary-text': '#607d8b',
 	'--secondary-text-rgb': '96, 125, 139'
@@ -28,6 +29,7 @@ const themes = {
 		'--primary-text': '#90a4ae',
 		'--secondary-active': '#3c948b',
 		'--secondary-background': '#37474f',
+		'--secondary-background-rgb': '55, 71, 79',
 		'--secondary-hover': '#95d4ce',
 		'--secondary-text': '#78909c',
 		'--secondary-text-rgb': '120, 144, 156'

@@ -1,5 +1,9 @@
 @import '../../../assets/mixins';
 
+.portfolio__transaction-table .table-row {
+  @include flex-shrink;
+}
+
 .transaction-table-item__amount {
   @include align-items(flex-end);
   @include flex-direction;

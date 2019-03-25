@@ -15,6 +15,7 @@ $css-vars-use-native: true;
     --primary-text: #263238,
     --secondary-active: #4150a8,
     --secondary-background: #ffffff,
+    --secondary-background-rgb: '255, 255, 255',
     --secondary-hover: #a6aedc,
     --secondary-text-rgb: '96, 125, 139',
     --secondary-text: #607d8b
@@ -125,6 +126,7 @@ $list-jump-content: $highlight-content;
 
 // Table
 $table-background: var(--secondary-background);
+$table-background-rgb: var(--secondary-background-rgb);
 $table-shadow: $primary-shadow;
 
 // Table Header

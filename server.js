@@ -9,4 +9,9 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(9000);
+const MODE = process.env.NODE_ENV;
+const PORT = process.env.PORT || 9000;
+app.listen(PORT, () => {
+	// eslint-disable-next-line no-console
+	console.log(`Server running in ${MODE} mode, listening on port ${PORT}...`);
+});

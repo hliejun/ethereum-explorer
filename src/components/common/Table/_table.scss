@@ -25,7 +25,11 @@
   @include flex-direction;
   @include flex-grow;
   @include justify-content(flex-start);
-  @include shadowed-background($table-background, $table-shadow);
+  @include shadowed-background(
+    $table-background,
+    $table-background-rgb,
+    $table-shadow
+  );
   @include use-flex;
   height: inherit;
   overflow-x: hidden;
