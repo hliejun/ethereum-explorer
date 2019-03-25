@@ -51,6 +51,8 @@ export const DATE_FORMAT_LONG = 'DD/MM/YY h:mmA';
 
 export const DATE_FORMAT_SHORT = 'D/M h:mmA';
 
+export const DATE_TIME_ONE_HOUR = 60 * 60 * 1000;
+
 // Currency
 
 export const CURRENCY_DEFAULT = 'USD';

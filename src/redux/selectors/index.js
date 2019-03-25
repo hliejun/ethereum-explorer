@@ -19,6 +19,8 @@ const getId = (_, props) => props.match.params.id;
 
 export const getAuthToken = ({ authReducer }) => authReducer.sessionAuth;
 
+export const getAuthLastUpdated = ({ authReducer }) => authReducer.lastUpdated;
+
 // Settings data
 
 export const getApiKey = ({ settingsReducer }) => settingsReducer.apiKey;
@@ -135,19 +137,21 @@ export const getTransaction = createSelector(
 	(transactions, id) => (transactions[id] ? { id, ...transactions[id] } : null)
 );
 
-export const getErrorStates = ({ ethereumReducer }) => ({
+// Composite selectors
+
+export const getErrorStates = ({ authReducer, ethereumReducer }) => ({
+	auth: authReducer.error,
 	balance: ethereumReducer.balance.error,
 	currency: ethereumReducer.currency.error,
 	transactions: ethereumReducer.transactions.error
 });
 
-export const getLoadStates = ({ ethereumReducer }) => ({
+export const getLoadStates = ({ authReducer, ethereumReducer }) => ({
+	auth: authReducer.isLoading,
 	balance: ethereumReducer.balance.isLoading,
 	currency: ethereumReducer.currency.isLoading,
 	transactions: ethereumReducer.transactions.isLoading
 });
-
-// Composite selectors
 
 export const getLocalisation = createSelector(
 	[getCode, getRates],

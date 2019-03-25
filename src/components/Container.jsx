@@ -4,7 +4,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import throttle from 'lodash.throttle';
 
-import { getTheme } from '../redux/selectors';
+import {
+	getApiKey,
+	getAuthLastUpdated,
+	getAuthToken,
+	getLoadStates,
+	getTheme
+} from '../redux/selectors';
+
+import { getAuthToken as fetchAuthToken } from '../redux/actions/auth';
+
 import setTheme from './themes';
 
 import Home from './scenes/Home';
@@ -23,7 +32,9 @@ import Notification from './common/Notification';
 import {
 	APP_TITLE,
 	NOTIFICATION_DEFAULT_DISMISS,
-	NOTIFICATION_DEFAULT_TITLE
+	NOTIFICATION_DEFAULT_TITLE,
+	DATE_TIME_ONE_HOUR,
+	SETTINGS_LENGTH_API_KEY
 } from '../constants';
 
 // Attach passthrough app controls by making pages into render props
@@ -39,7 +50,15 @@ const initialState = {
 	useBackLink: false
 };
 
-const Container = ({ isDarkMode, match }) => {
+const Container = ({
+	apiKey,
+	authToken,
+	isDarkMode,
+	isLoading,
+	lastUpdated,
+	match,
+	updateAuthToken
+}) => {
 	// App bar controls
 	const [useBackLink, setUseBackLink] = useState(initialState.useBackLink);
 	const [pageTitle, setPageTitle] = useState(initialState.pageTitle);
@@ -104,6 +123,30 @@ const Container = ({ isDarkMode, match }) => {
 		setTheme(theme);
 	}, [isDarkMode]);
 
+	// Side-effect: Re-authentication
+	useEffect(() => {
+		// Do not re-register if already registering or have invalid key
+		if (
+			isLoading.auth ||
+      !apiKey ||
+      apiKey.length !== SETTINGS_LENGTH_API_KEY
+		) {
+			return;
+		}
+
+		// Given that we are not registering and have a valid key, check:
+		const now = new Date();
+
+		// Attempt to re-auth if no token yet, or if token is expired
+		if (
+			!authToken ||
+      !lastUpdated ||
+      now - new Date(parseInt(lastUpdated, 10)) >= DATE_TIME_ONE_HOUR
+		) {
+			updateAuthToken(apiKey);
+		}
+	}, [apiKey]);
+
 	return (
 		<div className="container">
 			<AppBar
@@ -150,11 +193,33 @@ const Container = ({ isDarkMode, match }) => {
 };
 
 Container.propTypes = {
-	isDarkMode: PropTypes.bool.isRequired
+	apiKey: PropTypes.string,
+	authToken: PropTypes.string,
+	isDarkMode: PropTypes.bool.isRequired,
+	isLoading: PropTypes.objectOf(PropTypes.bool).isRequired,
+	lastUpdated: PropTypes.string,
+	updateAuthToken: PropTypes.func.isRequired
+};
+
+Container.defaultProps = {
+	apiKey: null,
+	authToken: null,
+	lastUpdated: null
 };
 
 const mapStateToProps = state => ({
-	isDarkMode: getTheme(state)
+	apiKey: getApiKey(state),
+	authToken: getAuthToken(state),
+	isDarkMode: getTheme(state),
+	isLoading: getLoadStates(state),
+	lastUpdated: getAuthLastUpdated(state)
 });
 
-export default connect(mapStateToProps)(Container);
+const mapDispatchToProps = dispatch => ({
+	updateAuthToken: token => dispatch(fetchAuthToken(token))
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Container);
