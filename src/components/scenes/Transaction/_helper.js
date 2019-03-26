@@ -6,6 +6,9 @@ export const copyData = (format, data, onCopy) => () => {
 	// Format and embed data
 	const formattedData = format(data);
 	const textArea = document.createElement('textarea');
+	textArea.onfocus = event => {
+		event.preventDefault();
+	};
 	textArea.innerHTML = formattedData;
 	// Copy data
 	document.body.appendChild(textArea);

@@ -37,6 +37,8 @@ const themes = {
 	light: defaultTheme
 };
 
+// Credit: https://itnext.io/css-variables-dynamic-app-themes-86c0db61cbbb
+
 const setTheme = name => {
 	const theme = themes[name] || defaultTheme;
 	const html = document.getElementsByTagName('html')[0];
