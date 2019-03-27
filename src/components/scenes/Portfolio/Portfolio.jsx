@@ -78,7 +78,7 @@ class Portfolio extends React.PureComponent {
 	componentDidMount() {
 		const { address, authToken } = this.props;
 		const { updateBalance, updateRates, updateTransactions } = this.props;
-		const { isLoading, rate, setOptions, setSubtitle, setTitle } = this.props;
+		const { isLoading, setOptions, setSubtitle, setTitle } = this.props;
 
 		// Setup AppBar
 		const { subtitle } = this.state;
@@ -87,7 +87,7 @@ class Portfolio extends React.PureComponent {
 		setOptions(this.options);
 
 		// Fetch/update data
-		if (authToken && !rate && !isLoading.currency) {
+		if (authToken && !isLoading.currency) {
 			updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
 		}
 		if (authToken && address && !isLoading.balance) {

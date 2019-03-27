@@ -111,7 +111,7 @@ const Transaction = ({
 
 	// Update rates
 	useEffect(() => {
-		if (!rates && !isLoading.currency) {
+		if (authToken && !isLoading.currency) {
 			updateRates(authToken, Object.keys(CURRENCY_SYMBOLS));
 		}
 	}, [authToken]);
